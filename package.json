@@ -47,11 +47,14 @@
     "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "start": "jekyll serve -w -l --host 0.0.0.0 --port 4000",
-    "dev": "grunt watch & npm run start",
+    "jekyll-drafts": "cd build/ && jekyll serve -t -w -l -D --host 0.0.0.0 --port 4000",
+    "jekyll-build": "cd build/ && jekyll serve -t -w -l -D --host 0.0.0.0 --port 4000",
+    "gh-build": "npm run dev && npm run jekyll-build",
+    "gh-pre-build": "npm run dev && npm run jekyll-drafts",
+    "dev": "cross-env NODE_ENV=development webpack --config build/webpack.dev.conf.js",
+    "dev1": "grunt watch & npm run start",
     "boil": "git push boilerplate boilerplate:master",
     "push": "git push origin master --tag",
-    "dev1": "cross-env NODE_ENV=development webpack --config build/webpack.dev.conf.js",
     "build1": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "watch1": "cross-env NODE_ENV=development webpack --watch"
   },
