@@ -137,5 +137,11 @@ friends: [
      },{
          title: "尹峰以为",
          href: "http://ingf.github.io/"
+     },{
+         title: "优源博客",
+         href: "https://duter2016.github.io/"
+     },{
+         title: "Hux Blog",
+         href: "huangxuan.me"
      }
 ]
