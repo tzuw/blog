@@ -12,3 +12,6 @@ node_modules
 dist/
 .idea/
 package-lock.json
+src/.jekyll-cache/
+public/assets/main*
+public/assets/vendor*
