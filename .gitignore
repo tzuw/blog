@@ -1,0 +1,14 @@
+_site
+src/_posts/_draft
+src/_posts/_archive
+_archive
+node_modules
+.vscode
+*.log
+*.sh
+.DS_Store
+*/.DS_Store
+*/*/.DS_Store
+dist/
+.idea/
+package-lock.json
