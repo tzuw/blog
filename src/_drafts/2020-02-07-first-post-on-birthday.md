@@ -2,6 +2,7 @@
 layout: post
 title: "'第一篇博文'"
 subtitle: "'First post'"
+date:         2020-02-07 00:00:00
 author: "tzuw"
 header-img:  "public/assets/img/cement.png"
 tags: 主角
