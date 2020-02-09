@@ -52,6 +52,6 @@ tags:
 
 参考
 
-1. https://stackoverflow.com/questions/38148297/in-vue-js-can-a-component-detect-when-the-slot-content-changes/38153639#38153639
-2. https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
-3. https://javascript.ruanyifeng.com/dom/mutationobserver.html
+1. [https://stackoverflow.com/questions/38148297/in-vue-js-can-a-component-detect-when-the-slot-content-changes/38153639#38153639](https://stackoverflow.com/questions/38148297/in-vue-js-can-a-component-detect-when-the-slot-content-changes/38153639#38153639)
+2. [https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+3. [https://javascript.ruanyifeng.com/dom/mutationobserver.html](https://javascript.ruanyifeng.com/dom/mutationobserver.html)

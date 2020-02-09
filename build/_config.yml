@@ -6,7 +6,7 @@ destination: ../dist
 # Site settings
 title: GINGER
 SEOTitle: GINGER
-header-img: public/assets/img/home-bg.jpg
+header-img: public/assets/img/concretewall.jpg
 email: your-email-address-here
 description: "embrace"
 keyword: ""
@@ -143,5 +143,14 @@ friends: [
      },{
          title: "Hux Blog",
          href: "huangxuan.me"
-     }
+     },{
+         title: "一之笔",
+         href: "https://yizibi.github.io/"
+     }, {
+         title: "RAYMOND CAMDEN",
+         href: "https://www.raymondcamden.com/"
+     }, {
+          title: "Jonathan Petitcolas",
+          href: "https://www.jonathan-petitcolas.com/"
+    }
 ]
