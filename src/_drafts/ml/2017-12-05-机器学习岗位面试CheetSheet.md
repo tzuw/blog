@@ -5,7 +5,7 @@ date:   2019-08-11 22:47:42
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
-tags: 機器學習
+categories: [Machine Learning]
 ---
 >> My Cheet sheet
 >

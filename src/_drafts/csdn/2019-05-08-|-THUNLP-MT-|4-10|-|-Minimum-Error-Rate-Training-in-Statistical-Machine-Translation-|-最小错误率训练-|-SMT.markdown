@@ -5,8 +5,7 @@ date:   2019-05-08 23:12:53
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
-tags: 自然語言處理
-
+categories: 神经机器翻译 统计机器翻译
 ---
 本文介绍最小错误率训练方法，主要是笔者对于论文的理解，希望对你有帮助。  
 该论文是THUNLP-MT推荐的机器翻译领域必读的十篇论文之一。 [ 论文传送门](http://aclweb.org/anthology/P03-1021)  

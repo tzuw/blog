@@ -13,7 +13,7 @@ Vue.component('vnode-to-html', {
     render(createElement) {
         return createElement("template", {
             'class': {
-                'template-4-tag-select': true
+                'template-4-select': true
             }
         }, [this.vnode]);
     },
