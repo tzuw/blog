@@ -5,7 +5,8 @@ date:   2019-08-11 22:47:42
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
-tags: 自然語言處理 csdn
+tags: seq2seq csdn
+categories: 神经机器翻译
 ---
 被引用 6824 次，又是一篇高引用神作。也是紧跟在seq2seq模型原论文，列表中 [ THUNLP-MT (6/10)](http://tzuwpku.blog.csdn.net/article/details/90286590)
 ，后面的一篇论文。介绍了现今NLP领域中非常重要的注意力机制。同样介绍注意力机制的论文还有， [ Luong等人的工作](http://aclweb.org/anthology/papers/D/D15/D15-1166/) 。

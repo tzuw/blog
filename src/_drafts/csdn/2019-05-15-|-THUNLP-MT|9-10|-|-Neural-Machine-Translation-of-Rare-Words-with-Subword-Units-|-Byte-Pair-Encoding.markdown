@@ -5,7 +5,8 @@ date:   2019-05-15 15:13:31
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
-tags: 自然語言處理 csdn
+tags: BPE subword csdn
+categories: 神经机器翻译
 
 ---
 Sennrich在ACL’2016发表的论文，主要研究神经机器翻译模型中的未登录词问题，提出了Byte Pair

@@ -5,7 +5,8 @@ date:   2019-08-11 22:47:42
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
-tags: 自然語言處理 
+tags: cs224n 
+categories: NLP
 ---
 ### 作业2 （2017/9/26 15:40:13）
 
