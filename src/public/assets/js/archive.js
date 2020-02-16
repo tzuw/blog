@@ -2,29 +2,7 @@
 Credits: this script is shamelessly borrowed from
 https://github.com/kitian616/jekyll-TeXt-theme
 */
-function onTagSelect(isInit=false) {
-  function queryString() {
-    // This function is anonymous, is executed immediately and
-    // the return value is assigned to QueryString!
-    var i = 0, queryObj = {}, pair;
-    var queryStr = window.location.search.substring(1);
-    var queryArr = queryStr.split('&');
-    for (i = 0; i < queryArr.length; i++) {
-      pair = queryArr[i].split('=');
-      // If first entry with this name
-      if (typeof queryObj[pair[0]] === 'undefined') {
-        queryObj[pair[0]] = pair[1];
-        // If second entry with this name
-      } else if (typeof queryObj[pair[0]] === 'string') {
-        queryObj[pair[0]] = [queryObj[pair[0]], pair[1]];
-        // If third or later entry with this name
-      } else {
-        queryObj[pair[0]].push(pair[1]);
-      }
-    }
-    return queryObj;
-  }
-
+function onTagSelect(isInit=false, name, targetName, query) {
   var setUrlQuery = (function () {
     var baseUrl = window.location.href.split('?')[0];
     return function (query) {
@@ -45,11 +23,11 @@ function onTagSelect(isInit=false) {
     sectionTopArticleIndex.push(index);
   }
 
-  function searchButtonsByTag(_tag/*raw tag*/) {
-    if (!_tag) {
+  function searchButtonsByTag(tag/*raw tag*/) {
+    if (!tag) {
       return $tagShowAll;
     }
-    var _buttons = $articleTags.filter('[data-encode="' + _tag + '"]');
+    var _buttons = $articleTags.filter('[data-' + name + '-encode="' + tag + '"]');
     if (_buttons.length === 0) {
       return $tagShowAll;
     }
@@ -75,7 +53,7 @@ function onTagSelect(isInit=false) {
           result[i] || (result[i] = {});
           result[i][j] = true;
         } else {
-          var tags = $articles.eq(j).data('tags').split(',');
+          var tags = $articles.eq(j).data(name).split(',');
           for (k = 0; k < tags.length; k++) {
             if (tags[k] === tag) {
               result[i] || (result[i] = {});
@@ -103,23 +81,22 @@ function onTagSelect(isInit=false) {
 
     if (target) {
       buttonFocus(target);
-      _tag = target.attr('data-encode');
+      _tag = target.attr('data-' + name + '-encode');
       if (_tag === '' || typeof _tag !== 'string') {
         setUrlQuery();
       } else {
-        setUrlQuery('?tag=' + _tag);
+        setUrlQuery('?' + name + '=' + _tag);
       }
     } else {
       buttonFocus(searchButtonsByTag(tag));
     }
   }
 
-  function onSelect() {
-    $tags = $('.js-tags');
-    $articleTags = $tags.find('.tag-button');
-    $tagShowAll = $tags.find('.tag-button--all');
+  function onSelect(items) {
+    $articleTags = items.find('.tag-button');
+    $tagShowAll = items.find('.tag-button--all');
     // var $result = $('.js-result');
-    $result = $('.template-4-tag-select');
+    $result = $('.template-4-select');
     $sections = $result.find('section');
     sectionArticles = [];
     $lastFocusButton = null;
@@ -130,17 +107,16 @@ function onTagSelect(isInit=false) {
       sectionArticles.push($(this).find('.item'));
     });
 
-    $tags.on('click', 'a', function() {   /* only change */
-      tagSelect($(this).data('encode'), $(this));
+    items.on('click', 'a', function() {   /* only change */
+      tagSelect($(this).data(name + '-encode'), $(this));
       window.onload = function() {
-        $result = $('.template-4-tag-select');
+        $result = $('.template-4-select');
         $sections = $result.find('section');
         document.getElementById("tag_click").innerHTML = $sections;
       }
     });
   }
 
-  var $tags;
   var $articleTags;
   var $tagShowAll;
   // var $result = $('.js-result');
@@ -152,19 +128,53 @@ function onTagSelect(isInit=false) {
   var hasInit = false;
 
   if (isInit) {
-    $( document ).ready(onSelect());
-    var query = queryString(),
-        _tag = query.tag;
-    init();
-    tagSelect(_tag);
+
+    window.onload = function() {
+      if (name === 'tags') {
+        onSelect($('.js-tags'));
+      } else {
+        onSelect($('.js-categories'));
+      }
+      init();
+      tagSelect(targetName);
+    };
   } else {
-    $('.js-tags').off('click' );
-    onSelect();
+    if (name === 'tags') {
+      $('.js-tags').off('click' );
+      onSelect($('.js-tags'));
+    } else {
+      $('.js-categories').off('click');
+      onSelect($('.js-categories'));
+    }
   }
 };
 
 (function(){
- onTagSelect(true);
+   function queryString() {
+     // This function is anonymous, is executed immediately and
+     // the return value is assigned to QueryString!
+     var i = 0, queryObj = {}, pair;
+     var queryStr = window.location.search.substring(1);
+     var queryArr = queryStr.split('&');
+     for (i = 0; i < queryArr.length; i++) {
+       pair = queryArr[i].split('=');
+       // If first entry with this name
+       if (typeof queryObj[pair[0]] === 'undefined') {
+         queryObj[pair[0]] = pair[1];
+         // If second entry with this name
+       } else if (typeof queryObj[pair[0]] === 'string') {
+         queryObj[pair[0]] = [queryObj[pair[0]], pair[1]];
+         // If third or later entry with this name
+       } else {
+         queryObj[pair[0]].push(pair[1]);
+       }
+     }
+     return queryObj;
+   }
+
+  var query = queryString();
+  query.tags && onTagSelect(true, 'tags', query.tags, query);
+  query.categories && onTagSelect(true, 'categories', query.categories, query);
 })();
 
 export {
