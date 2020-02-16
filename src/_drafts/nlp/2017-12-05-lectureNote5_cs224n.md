@@ -4,8 +4,9 @@ title: "cs224n 课堂笔记5"
 date:   2019-08-11 22:47:42                    
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
-catalog:   false
-tags: 自然語言處理
+catalog: false
+tags: cs224n 
+categories: NLP
 ---
 ## 课堂笔记5 cs224n 
 

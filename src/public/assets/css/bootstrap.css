@@ -4395,16 +4395,22 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-default .navbar-nav > li > a {
   color: #777;
+  border-bottom: 1px solid transparent;
+  padding: 0; /*removing spacing*/
+  /*margin: 14px; !*add spacing*!*/
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #333;
   background-color: transparent;
+  border-bottom-color: white;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #555;
+  /*background-color: transparent;*/
+  border-bottom-color: white;
   background-color: #e7e7e7;
 }
 .navbar-default .navbar-nav > .disabled > a,

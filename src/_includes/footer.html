@@ -292,3 +292,11 @@ function setTime() {
 }
 setInterval(setTime, 1000);
 </script>
+
+<script type="text/javascript">
+$('.navbar-nav a').click(function(e) {
+    e.stopPropagation();
+    $('.navbar-nav a').removeClass('active');
+    $(this).addClass('active');
+});
+</script>
