@@ -1,0 +1,46 @@
+- name: 编程语言
+  subCategories:
+  - name: Python
+  - name: Java
+  - name: Javascript
+  - name: Typescript
+  - name: html
+
+- name: 后端框架
+  subCategories:
+  - name: Spring
+    subCategories:
+      - name: Spring Boot
+  - name: Netty
+
+- name: 前端框架
+  subCategories:
+  - name: vue.js
+  - name: webpack
+
+- name: 开发工具
+  subCategories:
+    - name: idea
+
+- name: 中间件
+  subCategories:
+  - name: ElasticSearch
+  - name: Kafka
+  - name: zookeeper
+
+- name: 数据库
+  subCategories:
+  - name: Redis
+  - name: MySQL
+
+- name: NLP
+  subCategories:
+  - name: 机器翻译
+    subCategories:
+      - name: 统计机器翻译
+      - name: 神经机器翻译
+
+- name: Machine Learning
+  subCategories:
+  - name: 生成式模型
+  - name: 判别式模型

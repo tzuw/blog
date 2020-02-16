@@ -1,0 +1,248 @@
+---
+title: Category
+layout: default
+description: "并非是忘本，而是有一种满足、豪情、难以割舍和无法回避。"
+header-img: public/assets/img/cement.png
+---
+
+{% include intro-header.html type='page' short=true %}
+
+{% comment %} get category hierarchy from categories.yml {% endcomment %}
+
+{% assign categoryHierarchies = "" %}
+{% for entry in site.data.categories %}
+    {% assign firstCategoryName = entry.name %}
+    {% if entry.subCategories %}
+        {% for subEntry in entry.subCategories %}
+            {% if entry.subCategories %}
+                {% assign secondCategoryName = subEntry.name %}
+                {% if subEntry.subCategories %}
+                    {% for thirdEntry in subEntry.subCategories %}
+                        {% assign thirdCategoryName = thirdEntry.name %}
+                        {% assign categoryHierarchies = categoryHierarchies | append: firstCategoryName %}
+                        {% assign categoryHierarchies = categoryHierarchies | append: '-' %}
+                        {% assign categoryHierarchies = categoryHierarchies | append: secondCategoryName %}
+                        {% assign categoryHierarchies = categoryHierarchies | append: '-' %}
+                        {% assign categoryHierarchies = categoryHierarchies | append: thirdCategoryName %}
+                        {% assign categoryHierarchies = categoryHierarchies | append: '||' %}
+                    {% endfor %}
+                {% else %}
+                    {% assign categoryHierarchies = categoryHierarchies | append: firstCategoryName %}
+                    {% assign categoryHierarchies = categoryHierarchies | append: '-' %}
+                    {% assign categoryHierarchies = categoryHierarchies | append: secondCategoryName %}
+                    {% assign categoryHierarchies = categoryHierarchies | append: '-' %}
+                    {% assign categoryHierarchies = categoryHierarchies | append: '||' %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% assign categoryHierarchies = categoryHierarchies | append: firstCategoryName %}
+        {% assign categoryHierarchies = categoryHierarchies | append: '-' %}
+        {% assign categoryHierarchies = categoryHierarchies | append: '-' %}
+        {% assign categoryHierarchies = categoryHierarchies | append: '||' %}
+    {% endif %}
+{% endfor %}
+
+{% assign categoryHierarchyList = categoryHierarchies | split: '||' %}
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <section class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <!--            {% for entry in categoryHierarchyList %}-->
+            <!--            <h6>{{ entry }}</h6>-->
+            <!--            {% endfor %}-->
+            {% capture category_toc %}
+            {% assign entry_first_category_last = categoryHierarchyList[0] | split: '-' %}
+            {% assign entry_first_category_last = '' %}
+            {% assign entry_second_category_last = '' %}
+            <div class="js-categories">
+            {% for entry in categoryHierarchyList %}
+                {% assign _entry = entry | split: '-' %}
+                {% assign entry_first_category = _entry[0] %}
+                {% capture entry_first_category_html %}
+                    <a style="cursor: pointer;" data-categories-encode="{{ entry_first_category | strip | url_encode }}">{{ entry_first_category }}</a>
+                {% endcapture %}
+                {% assign entry_second_category = _entry[1] %}
+                {% capture entry_second_category_html %}
+                    <a style="cursor: pointer;" data-categories-encode="{{ entry_second_category | strip | url_encode }}">{{ entry_second_category }}</a>
+                {% endcapture %}
+                {% assign entry_third_category = _entry[2] %}
+                {% capture entry_third_category_html %}
+                    <a style="cursor: pointer;" data-categories-encode="{{ entry_third_category | strip | url_encode }}">{{ entry_third_category }}</a>
+                {% endcapture %}
+
+                {% comment %} 不同一级分类 {% endcomment %}
+                {% if entry_first_category_last != entry_first_category %}
+                    {% assign has_third_category = false %}
+                    <br/> {{ entry_first_category_html }}:
+
+                    {% comment %} 判断有没有三级分类。这里不需判断二级分类是否相等 {% endcomment %}
+                    {% if entry_third_category != nil %}
+                        {% assign has_third_category = true %}
+                        <br/> &nbsp; &nbsp; {{ entry_second_category_html }}: {{ entry_third_category_html }}
+                    {% else %}
+                        {{ entry_second_category_html }}
+                    {% endif %}
+
+                {% comment %} 同一个一级分类 {% endcomment %}
+                {% else %}
+                    {% comment %} 二级分类不相等，且有三级分类 {% endcomment %}
+                    {% if entry_second_category_last != entry_second_category and entry_third_category != nil %}
+                        <br/> &nbsp; &nbsp; {{ entry_second_category_html }}: {{ entry_third_category_html }}
+                        {% assign has_third_category = true %}
+                    {% comment %} 二级分类不相等，且没有三级分类, 且有过三级分类在此一级分类下 {% endcomment %}
+                    {% elsif entry_second_category_last != entry_second_category and entry_third_category == nil and has_third_category %}
+                        <br/> &nbsp; &nbsp; {{ entry_second_category_html }}:
+                    {% comment %} 二级分类相等，有或无三级分类 {% endcomment %}
+                    {% else %}
+                        {% if entry_third_category %}
+                            {{ entry_third_category_html }}
+                        {% else %}
+                            {{ entry_second_category_html }}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                {% assign entry_first_category_last = entry_first_category %}
+                {% assign entry_second_category_last = entry_second_category %}
+            {% endfor %}
+            </div>
+            {% endcapture %}
+
+            <div class="js-categories">
+                {{ category_toc }}
+                <a style="cursor: pointer;" class="tag-button--all" data-categories-encode="">
+                    Show All
+                </a>
+            </div>
+
+            <hr/>
+
+            <!-- Article List -->
+            {% capture html4ArticleTitles %}
+            {%- assign _sorted_list = site.posts -%}
+            {%- assign _sorted_list = _sorted_list | sort: 'date' -%}
+            {%- assign _sorted_list = _sorted_list | reverse -%}
+            {%- for _article in _sorted_list -%}
+                {%- assign _tags = '' -%}
+                {%- assign _tag_names = '' -%}
+                {%- for _tag_entry in _article.tags -%}
+                    {%- assign _tag_encode = _tag_entry | strip | url_encode -%}
+                    {%- if forloop.last -%}
+                        {%- assign _tags = _tags | append: _tag_encode -%}
+                        {%- assign _tag_names = _tag_names | append: _tag_entry -%}
+                    {%- else -%}
+                        {%- assign _tags = _tags | append: _tag_encode | append: ',' -%}
+                        {%- assign _tag_names = _tag_names | append: _tag_entry | append: ',' -%}
+                    {%- endif -%}
+                {%- endfor -%}
+
+                {%- assign _categories = '' -%}
+                {%- assign _category_names = '' -%}
+                {%- for _category_entry in _article.categories -%}
+                    {%- assign _category_encode = _category_entry | strip | url_encode -%}
+                    {%- if forloop.last -%}
+                        {%- assign _categories = _categories | append: _category_encode -%}
+                        {%- assign _category_names = _category_names | append: _category_entry -%}
+                    {%- else -%}
+                        {%- assign _categories = _categories | append: _category_encode | append: ',' -%}
+                        {%- assign _category_names = _category_names | append: _category_entry | append: ',' -%}
+                    {%- endif -%}
+                {%- endfor -%}
+
+                <!-- capture tags for every article -->
+                {% capture article_tags %}
+                {% for tag_p in site.tags %}
+                    {%- if _tag_names contains tag_p[0] -%}
+                        {%- assign tagName = tag_p[0] -%}
+                        {%- if site.data.tagLevels[tagName].level == 1 -%}
+                            {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append: firstTagAmount %}
+                            {%- elsif site.data.tagLevels[tagName].level == 2 -%}
+                                {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append: secondTagAmount %}
+                            {%- elsif site.data.tagLevels[tagName].level == 3 -%}
+                                {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append: thirdTagAmount %}
+                            {%- elsif site.data.tagLevels[tagName].level == 4 -%}
+                                {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append:  fourthTagAmount %}
+                            {% else %}
+                                {%- assign tagColorId = 'tag-0-0' -%}
+                        {%- endif -%}
+                        <a href="{{ site.baseurl }}/tags.html?tags={{ tag_p[0] | url_encode }}"
+                           class="tag-button {{ tagColorId }}"
+                           title="{{ tag_p[0] }}" rel="{{ tag_p[1].size }}">
+                            {{ tag_p[0] }}
+                            <sup>{{tag_p[1].size}}</sup>
+                        </a>
+                    {%- endif -%}
+                {% endfor %}
+                {% endcapture %}
+
+                {% comment %} group by year {% endcomment %}
+
+                {%- assign _currentdate = _article.date | date: '%Y' -%}
+                {%- if _currentdate != _date -%}
+
+                {%- unless forloop.first -%}</section>{%- endunless -%}
+                <section>
+                <!-- section here is used for separate years -->
+
+                <span class="fa listing-seperator">
+                    <span class="tag-text">{{ _currentdate }}</span>
+                </span>
+                {%- assign _date = _currentdate -%}
+                {%- endif -%}
+
+                <div class="post-preview item" data-tags="{{ _tags }}" data-categories="{{ _categories }}">
+                    <a href="{{ _article.url | prepend: site.baseurl }}">
+                        <h2  class="post-title">
+                            {{ _article.date | date_to_string }} &nbsp; &nbsp; &nbsp; {{ _article.title }}
+                        </h2>
+                        {% if _article.subtitle %}
+                        <h3 class="post-subtitle">{{ _article.subtitle }}</h3>
+                        {% endif %}
+                        <!-- capture tags for every article -->
+                        <div class="post-content-preview">
+                            {% if post.lang == 'en' %}
+                                {{ _article.content | strip_html | truncate:300 }}
+                            {% else %}
+                                {{ _article.content | strip_html | truncate:200 }}
+                            {% endif %}
+                        </div>
+                    </a>
+                    <br/>
+                    <p class="post-meta">
+                        {{ _article.date | date: "%B %-d, %Y" }} &nbsp;|&nbsp;
+                        约{{ _article.content | strip_html | strip_newlines | remove: " " | size | divided_by: 350 | plus: 1 }}分钟读完
+                        大约{{ _article.content | strip_html | strip_newlines | remove: " " | size }}个字
+                        {% if has_article_tags == false %}
+                        {% else %}
+                            &nbsp;|&nbsp;
+                            <span class="tags tags-sup js-tags">
+                                {{ article_tags }}
+                            </span>
+                        {% endif %}
+                        <span class="tags tags-sup js-categories">
+                        {% for category in _article.categories %}
+                            <a href="{{ site.baseurl }}/categories.html?categories={{ category }}" title="{{ category }}"><font color="#9acd32">☖{{ category }}</font></a>
+                        {% endfor %}
+                        </span>
+                    </p>
+                    <hr/>
+                </div>
+
+                <h5></h5>
+                <!-- h5 is used as a delimiter here -->
+
+            {% endfor %}
+            {% endcapture %}
+
+            <div class="mini-post-list js-result">
+                <div id="app">
+                    <archive-pagination>
+                        <div id="tag_click">{{ html4ArticleTitles }}</div>
+                    </archive-pagination>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</div>

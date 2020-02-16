@@ -3,6 +3,10 @@
 
         <vnode-to-html :vnode="$slots.default" @html="html4ArticleTitles = $event"/>
 
+        <div v-html="item" v-for="(item,index) in articleTitlesTemp" :key="index">
+            {{ item }}
+        </div>
+
         <b-pagination
                 v-model="currentPage"
                 :total-rows="totalRows"
@@ -13,14 +17,10 @@
             <li class="page-item active"><a class="page-link">Total {{ totalRows }}</a></li>
         </ul>
 
-        <div v-html="item" v-for="(item,index) in articleTitlesTemp" :key="index">
-            {{ item }}
-        </div>
     </div>
 </template>
 
 <script>
-    // let dup = require('../public/assets/js/archive.js');
     import { onTagSelect } from '../public/assets/js/archive';
     export default {
         name: 'ArchivePagination',
@@ -69,7 +69,8 @@
                 /**
                  * Code that will run only after the entire view has been re-rendered
                  */
-                onTagSelect();
+                onTagSelect(false, 'tags');
+                onTagSelect(false, 'categories');
             })
         },
         props: {
