@@ -1,6 +1,6 @@
 ---
 layout: page
-description: "世界上有很多东西"
+description: "世界上有很多的东西"
 hide-in-nav: true
 title: "HOME"
 ---
@@ -52,6 +52,7 @@ title: "HOME"
         {%- endif -%}
     {% endfor %}
     {% endcapture %}
+    <br/>
     <p class="post-meta">
         {{ post.date | date: "%B %-d, %Y" }} &nbsp;|&nbsp;
         约{{ post.content | strip_html | strip_newlines | remove: " " | size | divided_by: 350 | plus: 1 }}分钟读完

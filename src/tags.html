@@ -210,10 +210,7 @@ https://github.com/kitian616/jekyll-TeXt-theme
 						{% endif %}
 						<span class="tags tags-sup js-categories">
                         {% for category in _article.categories %}
-                            {% if forloop.first == true %}
-                                <font color="#9acd32">☖</font>
-                            {% endif %}
-                                <font color="#9acd32">{{ category }}</font>
+							<a href="{{ site.baseurl }}/categories.html?categories={{ category }}" title="{{ category }}"><font color="#9acd32">☖{{ category }}</font></a>
                         {% endfor %}
                         </span>
 					</p>
