@@ -15,3 +15,5 @@ package-lock.json
 src/.jekyll-cache/
 public/assets/main*
 public/assets/vendor*
+src/public/assets/main*
+src/public/assets/vendor*

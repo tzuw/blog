@@ -152,5 +152,8 @@ friends: [
      }, {
           title: "Jonathan Petitcolas",
           href: "https://www.jonathan-petitcolas.com/"
+    }, {
+         title: "TechBridge 技術共筆部落格",
+         href: "https://blog.techbridge.cc/"
     }
 ]
