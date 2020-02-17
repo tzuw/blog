@@ -1547,7 +1547,7 @@ img::-moz-selection {
   font-size: 13px;
 }
 .mini-post-list .post-preview > .post-meta {
-  position: absolute;
+  /*position: absolute;*/
   right: 5px;
   bottom: 0px;
   margin: 0px;
