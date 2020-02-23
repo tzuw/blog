@@ -36,6 +36,7 @@
             }
         },
         created() {
+            console.log(this.itemType)
         },
         beforeDestroy: function() {
             this.observer.disconnect();
@@ -56,11 +57,11 @@
 
             /* MutationObserver */
             this.observer = new MutationObserver(function(mutations) {
-                this.parseArticleTitlesHtml(document.getElementById('tag_click').outerHTML);
+                this.parseArticleTitlesHtml(document.getElementById('htmlToVue').outerHTML);
             }.bind(this));
 
             this.observer.observe(
-                document.getElementById('tag_click'),
+                document.getElementById('htmlToVue'),
                 { attributes: true, childList: true, characterData: true, subtree: true }
             );
         },
@@ -69,11 +70,12 @@
                 /**
                  * Code that will run only after the entire view has been re-rendered
                  */
-                onTagSelect(false, 'tags');
-                onTagSelect(false, 'categories');
+                (this.itemType === 'tag') && onTagSelect(false, 'tags');
+                (this.itemType === 'category') && onTagSelect(false, 'categories');
             })
         },
         props: {
+            itemType: String
         },
         methods: {
             parseArticleTitlesHtml: function(html4Titles) {
@@ -85,9 +87,9 @@
                 temp = temp.split("<section>").join("").split("</section>").join(""); // delete <section>
 
                 /**
-                 * eliminate tag_click id, which should only be found in template during replacing html content in slot.
+                 * eliminate htmlToVue id, which should only be found in template during replacing html content in slot.
                  */
-                this.articleTitles = temp.replace("<div id=\"tag_click\">","")
+                this.articleTitles = temp.replace("<div id=\"htmlToVue\">","")
                     .split(this.delimiter).slice(0, -1);
 
                 /**

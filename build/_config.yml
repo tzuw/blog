@@ -155,5 +155,53 @@ friends: [
     }, {
          title: "TechBridge 技術共筆部落格",
          href: "https://blog.techbridge.cc/"
+    }, {
+         title: "冰封承诺",
+         href: ""
+    }, {
+         title: "梁音",
+         href: ""
+    }, {
+         title: "ChenYuan",
+         href: ""
+    }, {
+         title: "米米的博客",
+         href: ""
+    }, {
+         title: "星光的博客",
+         href: ""
+    }, {
+         title: "UncleChen",
+         href: ""
+    }, {
+         title: "横云断岭",
+         href: ""
+    }, {
+         title: "tidy的个人博客",
+         href: ""
+    }, {
+         title: "背不起来的就写下来吧",
+         href: ""
+    }, {
+         title: "forever杨的个人博客",
+         href: ""
+    }, {
+         title: "JerryQu的小站",
+         href: ""
+    }, {
+         title: "OneBlog开源博客",
+         href: ""
+    }, {
+         title: "Parian's Blog",
+         href: ""
+    }, {
+         title: "bieleyang的博客",
+         href: ""
+    }, {
+         title: "散尽浮华-博客园",
+         href: ""
+    }, {
+         title: "王清培-博客园",
+         href: ""
     }
 ]

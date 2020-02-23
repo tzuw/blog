@@ -1475,6 +1475,7 @@ img::-moz-selection {
 #tag_cloud .tag:active,
 #tag_cloud a.focus,
 #tag_cloud .tag.focus {
+  border: 2px black solid;
   /*background-color: #0085a1 !important;*/
 }
 #tag_cloud a.focus,
@@ -1718,14 +1719,14 @@ img::-moz-selection {
   background-color: blanchedalmond;
 }
 .tag-4-little {
-  background-color: lightgray;
+  background-color: darkgray;
 }
 .tag-4-medium {
-  background-color: darkgray;
+  background-color: gray;
 }
 .tag-4-lots {
   background-color: lightslategray;
 }
 .tag-0-0 {
-  background-color: indianred;
+  background-color: lightgray;
 }

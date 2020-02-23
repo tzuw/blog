@@ -37,19 +37,39 @@ categories: [Web安全]
 
 #### # 最终方案与检验
 
-主要的环境，依托于某平台进行登录，并且需要自行解决跨站请求伪造攻击。将原来通过 Set-Cookie 传递 token 到前端的方法改成了，通过 response header 传递的方法，并且将 csrf token 保存于服务端的 session中；另外由于，没有了登录校验来保护 csrf token 的获取，因此在每个请求又加上了 Refer 校验（设置拦截器，检查请求的 domain ）。
+主要的环境，依托于某平台进行登录，并且需要自行解决跨站请求伪造攻击。将原来通过 Set-Cookie 传递 token 到前端的方法改成了，通过 response header 传递的方法，并且将 csrf token 保存于服务端的 session 中；另外由于，没有了登录校验来保护 csrf token 的获取，因此在每个请求又加上了 Refer 校验（设置拦截器，检查请求的 domain ）。
 
-并且，有下面几种情况，服务端需要生成或更新 csrf token：（1）当前端 cookies 中的某个校验 token 被某平台更新后，我们的服务端同步更新；（2）当调用请求 token 的接口时，服务端 session 中的 token 与请求所携带的不一致时，或者第一次调用时未携带 token 时，需要重新生成 token。一个可能的情况是，当服务端 session 的 token 已经被更新，而前端在请求时所携带的却是旧的/错的 token时。。。（感觉只要攻击者盗取了你的 session id，那么什么 csrf token 阿的阿猫阿狗，都没有什么软用。此时，就体现了 Refer 校验的重要性。当攻击者掌握了你的 domain，又知道你的 session id，感觉也就无力回天了；所以，每次登录后一定要记得登出）
+并且，当下面几种情况发生时，服务端需要生成或更新 csrf token：
+
+（1）第一次登录平台，并开启服务页面时；
+
+（2）在平台的校验 token 更新时（即开启新的 session ），将 csrf token 更新，并且同步更新我们服务端自己的 session id。如此，就可以较好的保证平台 session 过期时我们的服务端也能获取新  token 和 新 session id，每次发请求的时候都是使用者我本人，一个伪造的请求很大概率会持有的是过期的 token 和 session id；
+
+当调用请求 token 的接口时，服务端 session 中的 token 与请求的 header 里所携带的不一致时，拦截请求。
+
+~~（感觉只要攻击者盗取了你的 session id，那么什么 csrf token 阿的阿猫阿狗，都没有什么软用。此时，就体现了 Refer 校验的重要性。当攻击者掌握了你的 domain，又知道你的 session id，感觉也就无力回天了；所以，每次登录后一定要记得登出）~~
 
 大概的伪代码如下，
 
-- 于后端接口生成 csrf token，并通过 response header 传递到前端。
+```java
+public void getToken() {
+	if ( null == request.getSession().getAttribute('csrfToken').equals() ||		
+		cookiesSetByPlatformBeingRefreshed ) {
+		String newToken = generateNewToken();
+		response.setHttpHeader('csrfToken', newToken);
+	}
+}
 
-- 从 header 中获取 token，并同步保存到 vuex 的 state 中？*这或许就看你想要多频繁的更新这个 token，因为 vuex 的 state 是保存于内存中，一刷新值就没了，就算保存于 sessionStorage 中也是窗口关闭值就没了。若保存于 vuex 的 state 或者 sessionStorage中，即是在每次刷新页面时更新；若保存于 cookie 或者  localStorage 中，则可以根据 cookie 的失效来决定何时刷新 token，并依据情况执行重新强制登出更新 csrf token。*
+public void shouldDoIntercept() {
+	if (request.getRequestURI() not in ignores && !request.getSession().getAttribute(
+		'csrfToken').equals(request.getHttpHeader('csrfToken'))) {
+		return true;
+		}
+	return false;
+}
+```
 
-  *然而，*因为此次的登录依托于别人家的平台，需要自行处理跨站请求伪造攻击，所以考虑将 token 保存于 sessionStorage 中在每次刷新页面时都将 csrf token 更新，并且同步更新 session id。如此，就可以较好的保证每次刷新页面获取新  token 和 新 session id，每次发请求时都是使用者我本人，一个伪造的请求很大概率会持有的是过期的 token 和 session id。
-
-- 于后端校验 session 中的 token 和请求所携带的是否一致，并进行拦截。
+最后，通过使用 Burp Suite 请求拦截器来发送错误的 token 来检验接口的安全性。
 
 
 

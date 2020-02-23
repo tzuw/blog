@@ -5,7 +5,7 @@ date:   2019-08-11 22:47:42
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
-tags: seq2seq csdn
+tags: [seq2seq, LSTM, csdn, 注意力机制]
 categories: 神经机器翻译
 ---
 被引用 6824 次，又是一篇高引用神作。也是紧跟在seq2seq模型原论文，列表中 [ THUNLP-MT (6/10)](http://tzuwpku.blog.csdn.net/article/details/90286590)
