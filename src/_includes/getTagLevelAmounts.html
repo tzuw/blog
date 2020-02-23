@@ -1,0 +1,69 @@
+
+{% comment %} get tag levels from tagLevels.yml {% endcomment %}
+
+{%- assign firstTagCount = 0 -%}
+{%- assign secondTagCount = 0 -%}
+{%- assign thirdTagCount = 0 -%}
+{%- assign fourthTagCount = 0 -%}
+{%- assign tagColorId = 'tag-0-0' -%}
+{%- for post in site.posts-%}
+{%- for tagName in post.tags -%}
+{%- if site.data.tagLevels[tagName].level == 1 -%}
+{%- assign firstTagCount=firstTagCount | plus: 1 -%}
+{%- endif -%}
+{%- if site.data.tagLevels[tagName].level == 2 -%}
+{%- assign secondTagCount=secondTagCount | plus: 1 -%}
+{%- endif -%}
+{%- if site.data.tagLevels[tagName].level == 3 -%}
+{%- assign thirdTagCount=thirdTagCount | plus: 1 -%}
+{%- endif -%}
+{%- if site.data.tagLevels[tagName].level == 4 -%}
+{%- assign fourthTagCount=fourthTagCount | plus: 1 -%}
+{%- endif -%}
+{%- endfor -%}
+{%- endfor -%}
+
+<!--<h1>{{ firstTagCount }}</h1>-->
+<!--<h1>{{ secondTagCount }}</h1>-->
+<!--<h1>{{ thirdTagCount }}</h1>-->
+<!--<h1>{{ fourthTagCount }}</h1>-->
+
+{%- if firstTagCount < 5 -%}
+{%- assign firstTagAmount = 'little' -%}
+{%- endif -%}
+{%- if firstTagCount >= 5 and firstTagCount < 20 -%}
+{%- assign firstTagAmount = 'medium' -%}
+{%- endif -%}
+{%- if firstTagCount > 20 -%}
+{%- assign firstTagAmount = 'lots' -%}
+{%- endif -%}
+
+{%- if secondTagCount < 10 -%}
+{%- assign secondTagAmount = 'little' -%}
+{%- endif -%}
+{%- if secondTagCount >= 10 and secondTagCount < 20 -%}
+{%- assign secondTagAmount = 'medium' -%}
+{%- endif -%}
+{%- if secondTagCount > 20 -%}
+{%- assign secondTagAmount = 'lots' -%}
+{%- endif -%}
+
+{%- if thirdTagCount < 10 -%}
+{%- assign thirdTagAmount = 'little' -%}
+{%- endif -%}
+{%- if thirdTagCount >= 10 and thirdTagCount < 20 -%}
+{%- assign thirdTagAmount = 'medium' -%}
+{%- endif -%}
+{%- if thirdTagCount > 20 -%}
+{%- assign thirdTagAmount = 'lots' -%}
+{%- endif -%}
+
+{%- if fourthTagCount < 10 -%}
+{%- assign fourthTagAmount = 'little' -%}
+{%- endif -%}
+{%- if fourthTagCount >= 10 and fourthTagCount < 20 -%}
+{%- assign fourthTagAmount = 'medium' -%}
+{%- endif -%}
+{%- if fourthTagCount > 20 -%}
+{%- assign fourthTagAmount = 'lots' -%}
+{%- endif -%}

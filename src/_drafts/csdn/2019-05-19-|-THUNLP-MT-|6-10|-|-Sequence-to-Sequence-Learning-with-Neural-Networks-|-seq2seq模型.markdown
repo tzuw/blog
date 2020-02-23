@@ -6,7 +6,7 @@ author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
 tags: seq2seq csdn
-categories: 神经机器翻译
+categories: [神经机器翻译, NLP]
 
 ---
 本文介绍NLP领域重要的seq2seq模型，包含了模型的基本原理和 Sutskever

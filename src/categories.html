@@ -7,7 +7,10 @@ header-img: public/assets/img/cement.png
 
 {% include intro-header.html type='page' short=true %}
 
+{% include getTagLevelAmounts.html %}
+
 {% comment %} get category hierarchy from categories.yml {% endcomment %}
+{% comment %} TODO: add category dynamically from every posts {% endcomment %}
 
 {% assign categoryHierarchies = "" %}
 {% for entry in site.data.categories %}
@@ -61,15 +64,18 @@ header-img: public/assets/img/cement.png
                 {% assign _entry = entry | split: '-' %}
                 {% assign entry_first_category = _entry[0] %}
                 {% capture entry_first_category_html %}
-                    <a style="cursor: pointer;" data-categories-encode="{{ entry_first_category | strip | url_encode }}">{{ entry_first_category }}</a>
+                    <a class="tag-button" style="cursor: pointer;" data-categories-encode="{{ entry_first_category | strip | url_encode }}"
+                        title="{{ entry_first_category }}">{{ entry_first_category }}</a>
                 {% endcapture %}
                 {% assign entry_second_category = _entry[1] %}
                 {% capture entry_second_category_html %}
-                    <a style="cursor: pointer;" data-categories-encode="{{ entry_second_category | strip | url_encode }}">{{ entry_second_category }}</a>
+                    <a class="tag-button" style="cursor: pointer;" data-categories-encode="{{ entry_second_category | strip | url_encode }}"
+                        title="{{ entry_second_category }}">{{ entry_second_category }}</a>
                 {% endcapture %}
                 {% assign entry_third_category = _entry[2] %}
                 {% capture entry_third_category_html %}
-                    <a style="cursor: pointer;" data-categories-encode="{{ entry_third_category | strip | url_encode }}">{{ entry_third_category }}</a>
+                    <a class="tag-button" style="cursor: pointer;" data-categories-encode="{{ entry_third_category | strip | url_encode }}"
+                        title="{{ entry_third_category }}">{{ entry_third_category }}</a>
                 {% endcapture %}
 
                 {% comment %} 不同一级分类 {% endcomment %}
@@ -109,8 +115,26 @@ header-img: public/assets/img/cement.png
             </div>
             {% endcapture %}
 
-            <div class="js-categories">
+            {% comment %} capture undefined categories {% endcomment %}
+            {% capture undefiedCategories%}
+            {% assign tmp_categories = '' %}
+            {% for _post in site.posts %}
+            {% for _category in _post.categories %}
+            {% unless categoryHierarchies contains _category %}
+                {% unless tmp_categories contains _category %}
+                <a class="tag-button" style="cursor: pointer;" data-categories-encode="{{ _category | strip | url_encode }}"
+                   title="{{ _category }}">{{ _category }}</a>
+                {% assign tmp_categories = tmp_categories | append: _category %}
+                {% endunless %}
+            {% endunless %}
+            {% endfor %}
+            {% endfor %}
+            {% endcapture %}
+
+            <div id="tag_cloud" class="js-categories">
                 {{ category_toc }}
+                <span style="font-size: 14px">Undefined: </span> {{ undefiedCategories }}
+                <br/>
                 <a style="cursor: pointer;" class="tag-button--all" data-categories-encode="">
                     Show All
                 </a>
@@ -169,8 +193,8 @@ header-img: public/assets/img/cement.png
                         <a href="{{ site.baseurl }}/tags.html?tags={{ tag_p[0] | url_encode }}"
                            class="tag-button {{ tagColorId }}"
                            title="{{ tag_p[0] }}" rel="{{ tag_p[1].size }}">
-                            {{ tag_p[0] }}
-                            <sup>{{tag_p[1].size}}</sup>
+                           #{{ tag_p[0] }}
+                           <sup>{{tag_p[1].size}}</sup>
                         </a>
                     {%- endif -%}
                 {% endfor %}
@@ -202,9 +226,9 @@ header-img: public/assets/img/cement.png
                         <!-- capture tags for every article -->
                         <div class="post-content-preview">
                             {% if post.lang == 'en' %}
-                                {{ _article.content | strip_html | truncate:300 }}
+                                {{ _article.content | strip_html | truncate:500 }}
                             {% else %}
-                                {{ _article.content | strip_html | truncate:200 }}
+                                {{ _article.content | strip_html | truncate:400 }}
                             {% endif %}
                         </div>
                     </a>
@@ -222,7 +246,8 @@ header-img: public/assets/img/cement.png
                         {% endif %}
                         <span class="tags tags-sup js-categories">
                         {% for category in _article.categories %}
-                            <a href="{{ site.baseurl }}/categories.html?categories={{ category }}" title="{{ category }}"><font color="#9acd32">☖{{ category }}</font></a>
+                            {%- if forloop.first -%}&nbsp;|&nbsp;{%- endif -%}
+                            <a data-categories-encode="{{ category | strip | url_encode }}" title="{{ category }}"><font color="#9acd32">☖{{ category }}</font></a>
                         {% endfor %}
                         </span>
                     </p>
@@ -237,12 +262,11 @@ header-img: public/assets/img/cement.png
 
             <div class="mini-post-list js-result">
                 <div id="app">
-                    <archive-pagination>
-                        <div id="tag_click">{{ html4ArticleTitles }}</div>
+                    <archive-pagination item-type="category">
+                        <div id="htmlToVue">{{ html4ArticleTitles }}</div>
                     </archive-pagination>
                 </div>
             </div>
-
         </section>
     </div>
 </div>

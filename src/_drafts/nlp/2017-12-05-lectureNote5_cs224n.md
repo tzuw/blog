@@ -5,7 +5,7 @@ date:   2019-08-11 22:47:42
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog: false
-tags: cs224n 
+tags: [Language Model, cs224n, RNN, BiRNN]
 categories: NLP
 ---
 ## 课堂笔记5 cs224n 

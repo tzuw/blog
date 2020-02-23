@@ -5,7 +5,7 @@ date:   2019-05-01 23:55:00
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
-tags: [levenshtein distance, csdn]
+tags: [levenshtein distance, 动态规划, csdn]
 
 ---
 本文讨论通过Levenshtein distance和单源最短路径搜索算法来推断两个字符串（句子）之间最佳的编辑操作序列。使用到的知识有：动态规划 和

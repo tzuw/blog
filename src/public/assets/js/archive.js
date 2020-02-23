@@ -34,14 +34,6 @@ function onTagSelect(isInit=false, name, targetName, query) {
     return _buttons;
   }
 
-  function buttonFocus(target) {
-    if (target) {
-      target.addClass('focus');
-      $lastFocusButton && !$lastFocusButton.is(target) && $lastFocusButton.removeClass('focus');
-      $lastFocusButton = target;
-    }
-  }
-
   function tagSelect(tag/*raw tag*/, target) {
     var result = {}, $articles;
     var i, j, k, _tag;
@@ -80,7 +72,8 @@ function onTagSelect(isInit=false, name, targetName, query) {
     hasInit || ($result.removeClass('d-none'), hasInit = true);
 
     if (target) {
-      buttonFocus(target);
+      buttonFocus(searchButtonsByTag(tag));
+      // buttonFocus(target);
       _tag = target.attr('data-' + name + '-encode');
       if (_tag === '' || typeof _tag !== 'string') {
         setUrlQuery();
@@ -98,10 +91,6 @@ function onTagSelect(isInit=false, name, targetName, query) {
     // var $result = $('.js-result');
     $result = $('.template-4-select');
     $sections = $result.find('section');
-    sectionArticles = [];
-    $lastFocusButton = null;
-    sectionTopArticleIndex = [];
-    hasInit = false;
 
     $sections.each(function () {
       sectionArticles.push($(this).find('.item'));
@@ -109,26 +98,27 @@ function onTagSelect(isInit=false, name, targetName, query) {
 
     items.on('click', 'a', function() {   /* only change */
       tagSelect($(this).data(name + '-encode'), $(this));
+      let tagTitle = this.title ? ' - ' + this.title : "";
+      document.getElementById("intro-header-item").innerHTML = '<h3>' + name + tagTitle + '</h3>';
       window.onload = function() {
         $result = $('.template-4-select');
         $sections = $result.find('section');
-        document.getElementById("tag_click").innerHTML = $sections;
+        document.getElementById(htmlToVue).innerHTML = $sections;
       }
     });
   }
 
-  var $articleTags;
-  var $tagShowAll;
-  // var $result = $('.js-result');
-  var $result;
-  var $sections;
   var sectionArticles = [];
-  var $lastFocusButton = null;
-  var sectionTopArticleIndex = [];
-  var hasInit = false;
+  var $articleTags;
+  var $sections;
+  var $result;
+  var $tagShowAll;
+  var hasInit;
 
   if (isInit) {
-
+    // var $result = $('.js-result');
+    var sectionTopArticleIndex = [];
+    hasInit = false;
     window.onload = function() {
       if (name === 'tags') {
         onSelect($('.js-tags'));
@@ -137,8 +127,11 @@ function onTagSelect(isInit=false, name, targetName, query) {
       }
       init();
       tagSelect(targetName);
+      document.getElementById("intro-header-item").innerHTML =
+          '<h3>' + name + ' - ' + decodeURI(targetName).replace( /\+/g, ' ' ) + '</h3>';
     };
   } else {
+    hasInit = true;
     if (name === 'tags') {
       $('.js-tags').off('click' );
       onSelect($('.js-tags'));
@@ -172,9 +165,20 @@ function onTagSelect(isInit=false, name, targetName, query) {
      return queryObj;
    }
 
+  window.buttonFocus = function (target) {
+    if (target) {
+      target.addClass('focus');
+      window.lastFocusButton && !window.lastFocusButton.is(target) && window.lastFocusButton.removeClass('focus');
+      window.lastFocusButton = target;
+    }
+  };
+
+  var lastFocusButton = null;
   var query = queryString();
   query.tags && onTagSelect(true, 'tags', query.tags, query);
   query.categories && onTagSelect(true, 'categories', query.categories, query);
+  (!query.tags && '/tags.html' === window.location.pathname) && buttonFocus($('.js-tags').find('.tag-button--all'));
+  (!query.categories && '/categories.html' === window.location.pathname) && buttonFocus($('.js-categories').find('.tag-button--all'));
 })();
 
 export {

@@ -12,74 +12,7 @@ https://github.com/kitian616/jekyll-TeXt-theme
 <!-- Page Header -->
 {% include intro-header.html type='page' short=true %}
 
-{% comment %} get tag levels from tagLevels.yml {% endcomment %}
-
-{%- assign firstTagCount = 0 -%}
-{%- assign secondTagCount = 0 -%}
-{%- assign thirdTagCount = 0 -%}
-{%- assign fourthTagCount = 0 -%}
-{%- assign tagColorId = 'tag-0-0' -%}
-{%- for post in site.posts-%}
-{%- for tagName in post.tags -%}
-	{%- if site.data.tagLevels[tagName].level == 1 -%}
-	{%- assign firstTagCount=firstTagCount | plus: 1 -%}
-	{%- endif -%}
-	{%- if site.data.tagLevels[tagName].level == 2 -%}
-	{%- assign secondTagCount=secondTagCount | plus: 1 -%}
-	{%- endif -%}
-	{%- if site.data.tagLevels[tagName].level == 3 -%}
-	{%- assign thirdTagCount=thirdTagCount | plus: 1 -%}
-	{%- endif -%}
-	{%- if site.data.tagLevels[tagName].level == 4 -%}
-	{%- assign fourthTagCount=fourthTagCount | plus: 1 -%}
-	{%- endif -%}
-{%- endfor -%}
-{%- endfor -%}
-
-<!--<h1>{{ firstTagCount }}</h1>-->
-<!--<h1>{{ secondTagCount }}</h1>-->
-<!--<h1>{{ thirdTagCount }}</h1>-->
-<!--<h1>{{ fourthTagCount }}</h1>-->
-
-{%- if firstTagCount < 10 -%}
-{%- assign firstTagAmount = 'little' -%}
-{%- endif -%}
-{%- if firstTagCount >= 10 and firstTagCount < 20 -%}
-{%- assign firstTagAmount = 'medium' -%}
-{%- endif -%}
-{%- if firstTagCount > 20 -%}
-{%- assign firstTagAmount = 'lots' -%}
-{%- endif -%}
-
-{%- if secondTagCount < 10 -%}
-{%- assign secondTagAmount = 'little' -%}
-{%- endif -%}
-{%- if secondTagCount >= 10 and secondTagCount < 20 -%}
-{%- assign secondTagAmount = 'medium' -%}
-{%- endif -%}
-{%- if secondTagCount > 20 -%}
-{%- assign secondTagAmount = 'lots' -%}
-{%- endif -%}
-
-{%- if thirdTagCount < 10 -%}
-{%- assign thirdTagAmount = 'little' -%}
-{%- endif -%}
-{%- if thirdTagCount >= 10 and thirdTagCount < 20 -%}
-{%- assign thirdTagAmount = 'medium' -%}
-{%- endif -%}
-{%- if thirdTagCount > 20 -%}
-{%- assign thirdTagAmount = 'lots' -%}
-{%- endif -%}
-
-{%- if fourthTagCount < 10 -%}
-{%- assign fourthTagAmount = 'little' -%}
-{%- endif -%}
-{%- if fourthTagCount >= 10 and fourthTagCount < 20 -%}
-{%- assign fourthTagAmount = 'medium' -%}
-{%- endif -%}
-{%- if fourthTagCount > 20 -%}
-{%- assign fourthTagAmount = 'lots' -%}
-{%- endif -%}
+{% include getTagLevelAmounts.html %}
 
 <!-- Main Content -->
 <div class="container">
@@ -102,9 +35,9 @@ https://github.com/kitian616/jekyll-TeXt-theme
 				{%- endif -%}
 				<a data-sort="{{ site.posts.size | minus: tag[1].size | prepend: '0000' | slice: -4, 4 }}"
 					data-tags-encode="{{ tag[0] | strip | url_encode }}"
-					class="{{ tagColorId }}"
+					class="tag-button {{ tagColorId }}"
 					title="{{ tag[0] }}" rel="{{ tag[1].size }}">
-					{{ tag[0] }}
+					#{{ tag[0] }}
 					<sup>{{tag[1].size}}</sup>
 				</a>
 			{% endfor %}
@@ -157,7 +90,7 @@ https://github.com/kitian616/jekyll-TeXt-theme
 				   data-tags-encode="{{ tag_p[0] | strip | url_encode }}"
 				   class="tag-button {{ tagColorId }}"
 				   title="{{ tag_p[0] }}" rel="{{ tag_p[1].size }}">
-					{{ tag_p[0] }}
+					#{{ tag_p[0] }}
 					<sup>{{tag_p[1].size}}</sup>
 				</a>
 				{%- endif -%}
@@ -190,9 +123,9 @@ https://github.com/kitian616/jekyll-TeXt-theme
 					<!-- capture tags for every article -->
 					<div class="post-content-preview">
 						{% if post.lang == 'en' %}
-						{{ _article.content | strip_html | truncate:300 }}
+						{{ _article.content | strip_html | truncate:500 }}
 						{% else %}
-						{{ _article.content | strip_html | truncate:200 }}
+						{{ _article.content | strip_html | truncate:400 }}
 						{% endif %}
 					</div>
 					</a>
@@ -204,12 +137,13 @@ https://github.com/kitian616/jekyll-TeXt-theme
 						{% if has_article_tags == false %}
 						{% else %}
 							&nbsp;|&nbsp;
-							<span id='tag_cloud' class="tags tags-sup js-tags">
+							<span class="tags tags-sup js-tags">
 							{{ article_tags }}
 							</span>
 						{% endif %}
 						<span class="tags tags-sup js-categories">
                         {% for category in _article.categories %}
+                            {%- if forloop.first -%}&nbsp;|&nbsp;{%- endif -%}
 							<a href="{{ site.baseurl }}/categories.html?categories={{ category }}" title="{{ category }}"><font color="#9acd32">☖{{ category }}</font></a>
                         {% endfor %}
                         </span>
@@ -224,8 +158,8 @@ https://github.com/kitian616/jekyll-TeXt-theme
 			{% endcapture %}
 			<div class="mini-post-list js-result">
 				<div id="app">
-					<archive-pagination>
-						<div id="tag_click">{{ html4ArticleTitles }}</div>
+					<archive-pagination item-type="tag">
+						<div id="htmlToVue">{{ html4ArticleTitles }}</div>
 					</archive-pagination>
 				</div>
 			</div>
