@@ -5,7 +5,7 @@ date:   2019-05-07 21:44:48
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
-tags: 自然語言處理
+tags: Transformer模型
 categories: 神经机器翻译
 ---
 该论文由Vaswani在2017年发布，他已经将近两岁了呢，针对该模型提出的应用和变种层出不穷。此外，该论文也是THUNLP-MT推荐的必读十篇论文之一哦！  

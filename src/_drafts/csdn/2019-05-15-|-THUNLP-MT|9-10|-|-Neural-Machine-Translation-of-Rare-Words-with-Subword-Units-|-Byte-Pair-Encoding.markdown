@@ -5,7 +5,7 @@ date:   2019-05-15 15:13:31
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
-tags: BPE subword csdn
+tags: [BPE, back-off model, subword, csdn]
 categories: 神经机器翻译
 
 ---

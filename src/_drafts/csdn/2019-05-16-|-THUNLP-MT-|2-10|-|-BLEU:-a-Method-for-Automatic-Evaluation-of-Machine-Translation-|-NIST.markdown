@@ -5,8 +5,8 @@ date:   2019-05-16 23:46:24
 author:  "tzuw"
 header-img: "img/post-bg-2015.jpg"
 catalog:   false
-tags: BLEU csdn
-categories: 神经机器翻译
+tags: [BLEU, NIST, csdn]
+categories: [神经机器翻译, NLP]
 
 ---
 本文讨论BLEU评价指标的主要原理。原论文由IBM发表于ACL’02，是老生常谈的一篇论文了。BLEU指标如今经常在机器翻译任务的评价中使用。 (被引用

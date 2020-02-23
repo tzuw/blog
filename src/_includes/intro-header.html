@@ -37,14 +37,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         {% for tag in page.tags %}
-                        <a class="tag" href="{{ site.baseurl }}/tags.html?tags={{ tag | url_encode }}" title="{{ tag }}">{{ tag }}</a>
+                        <a class="tag" href="{{ site.baseurl }}/tags.html?tags={{ tag | url_encode }}" title="{{ tag }}">#{{ tag }}</a>
                         {% endfor %}
+                        <span>
+                        {% for category in page.categories %}
+                        <a class="tag" href="{{ site.baseurl }}/categories.html?categories={{ category }}" title="{{ category }}">☖{{ category }}</a>
+                        {% endfor %}
+                        </span>
                     </div>
                     <h1>{{ page.title }}</h1>
                     {% comment %} always create a h2 for keeping the margin {% endcomment %}
                     <h2 class="subheading">{{ page.subtitle }}</h2>
                     <span class="meta">
-                        Posted by {% if page.author %}{{ page.author }}{% else %}{{ site.title }}{% endif %} on {{ page.date | date: "%B %-d, %Y" }}
+                        {{ page.date | date: "%B %-d, %Y" }}
                     </span>
                     <span>
                         约{{ page.content | strip_html | strip_newlines | remove: " " | size | divided_by: 350 | plus: 1 }}分钟读完
@@ -81,14 +86,18 @@
                 <div class="post-heading">
                     <div class="tags">
                         {% for tag in page.tags %}
-                        <a class="tag" href="{{ site.baseurl }}/tags.html?tags={{ tag | url_encode }}" title="{{ tag }}">{{ tag }}</a>
+                        <a class="tag" href="{{ site.baseurl }}/tags.html?tags={{ tag | url_encode }}" title="{{ tag }}">#{{ tag }}</a>
                         {% endfor %}
+                        <span>
+                        {% for category in page.categories %}
+                        <a class="tag" href="{{ site.baseurl }}/categories.html?categories={{ category }}" title="{{ category }}">☖{{ category }}</a>
+                        {% endfor %}
+                        </span>
                     </div>
                     <h1>{{ page.title }}</h1>
                     {% comment %} always create a h2 for keeping the margin {% endcomment %}
                     <h2 class="subheading">{{ page.subtitle }}</h2>
-                    <span class="meta">Posted by {% if page.author %}{{ page.author }}{% else %}{{ site.title }}{% endif %}
-                        on {{ page.date | date: "%B %-d, %Y" }}</span>
+                    <span class="meta">{{ page.date | date: "%B %-d, %Y" }}</span>
                 </div>
             </div>
         </div>
@@ -106,7 +115,7 @@
         {% else %}
         <div class="site-heading">
         {% endif %}
-          <h1>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</h1>
+          <h3 id="intro-header-item">{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</h3>
           <span class="subheading">{{ page.description }}</span>
         </div>
       </div>
