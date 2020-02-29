@@ -68,8 +68,8 @@ header-img: public/assets/img/cement.png
             {% endunless %}
 
             <li>
-                <a href="{{ post.url }}">{{ post.title }}</a>
                 {{ post.date | date:"%Y/%m/%d：" }}
+                <a href="{{ post.url }}">{{ post.title }}</a>
                 {% for category in post.categories %}
                 <a href="{{ site.baseurl }}/categories.html?categories={{ category }}" title="{{ category }}"><font color="#9acd32">☖{{ category }}</font></a>
                 {% endfor %}
