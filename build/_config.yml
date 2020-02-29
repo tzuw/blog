@@ -203,5 +203,8 @@ friends: [
     }, {
          title: "王清培-博客园",
          href: ""
-    }
+    }, {
+         title: "嘟嘟独立博客",
+         href: "http://tengj.top/2017/05/05/javabook/"
+   }
 ]
