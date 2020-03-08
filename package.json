@@ -49,14 +49,14 @@
   "scripts": {
     "jekyll-drafts": "cd build/ && jekyll serve -t -w -l -D --host 0.0.0.0 --port 4000",
     "jekyll-build": "cd build/ && jekyll serve -t -w -l --host 0.0.0.0 --port 4000",
-    "gh-build": "npm run dev && npm run jekyll-build",
-    "gh-pre-build": "npm run dev && npm run jekyll-drafts",
+    "gh-build": "grunt && npm run dev && npm run jekyll-build",
+    "gh-pre-build": "grunt &&  npm run dev && npm run jekyll-drafts",
     "dev": "cross-env NODE_ENV=development webpack --config build/webpack.dev.conf.js",
-    "dev1": "grunt watch & npm run start",
+    "grunt": "grunt watch",
     "boil": "git push boilerplate boilerplate:master",
     "push": "git push origin master --tag",
-    "build1": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "watch1": "cross-env NODE_ENV=development webpack --watch"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "watch": "cross-env NODE_ENV=development webpack --watch"
   },
   "description": "William Blog ========",
   "main": "Gruntfil.js",
