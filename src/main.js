@@ -24,9 +24,8 @@ Vue.component('vnode-to-html', {
 
 const app = new Vue({
     el: '#app',
-    delimiters: ['${', '}'],
+    delimiters: ['#{', '}'],
     components: {
         archivePagination: ArchivePagination,
     }
 });
-
