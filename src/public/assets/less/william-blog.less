@@ -646,15 +646,16 @@ samp {
     .serif;
     color: @gray;
     font-size: 14px;
-    //font-style: italic;
     margin-top: 0;
+    //font-style: italic;
     > a {
       text-decoration: none;
-      color: @gray-dark;
+      color: @gray;
+      cursor: pointer;
       &:hover,
       &:focus {
         color: @brand-primary;
-        text-decoration: underline;
+        //text-decoration: underline;
       }
     }
   }
@@ -677,14 +678,14 @@ samp {
 
 // Hux add home-page post-content-preview
 .post-content-preview {
-  font-size: 13px;
-  font-style: italic;
+  font-size: 12px;
+  //font-style: italic;
   color: #a3a3a3;
   &:hover {
     color: @brand-primary;
   }
   @media only screen and (min-width: 768px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 
@@ -906,13 +907,13 @@ img::-moz-selection {
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 999em;
     padding: 0 10px 0 10px;
-    color: rgba(255, 255, 255, 1);
     line-height: 24px;
-    font-size: 12px;
     text-decoration: none;
     margin: 0 1px;
-    margin-bottom: 6px;
     cursor: pointer;
+    //color: rgba(255, 255, 255, 1);
+    //font-size: 12px;
+    //margin-bottom: 6px;
     > sup {
       margin-left: -2px;
       font-weight: 700;
@@ -920,9 +921,9 @@ img::-moz-selection {
     &:hover,
     &:active {
       color: white;
-      border-color: white;
-      background-color: rgba(255, 255, 255, 0.4);
+      border-color: lightgray;
       text-decoration: none;
+      //background-color: rgba(255, 255, 255, 0.4);
     }
     @media only screen and (min-width: 768px) {
       margin-right: 5px;
@@ -944,25 +945,27 @@ img::-moz-selection {
     transition-property: all;
     transition-duration: 0.4s;
     transition-timing-function: ease;
-    font-size: 14px;
     border: none;
-    line-height: 28px;
     margin: 0 2px;
-    margin-bottom: 8px;
+    //line-height: 28px;
+    //font-size: 12px;
+    margin-bottom: 2px;
     //background: #f3f5f5;
     &:hover,
     &:active,
     &.focus {
-      border: black solid;
-      //background-color: #0085a1 !important;
+      background-color: skyblue !important;
+      //border: 0.5px lightgray solid;
     }
-    &.focus{
-      box-shadow: rgba(0,0,0,.117647) 0 1px 6px, rgba(0,0,0,.239216) 0 1px 4px;
+    &.focus {
+      //box-shadow: rgba(0,0,0,.117647) 0 1px 6px, rgba(0,0,0,.239216) 0 1px 4px;
     }
     &.tag-button--all {
       font-weight: 700;
       //color: #0085a1!important;
+      background-color: lightgray;
       &:hover, &:active, &.focus{
+        background-color: skyblue !important;
         //background-color: #e4e4e4 !important;
       }
     }
@@ -973,9 +976,9 @@ img::-moz-selection {
 }
 
 .tag-comments {
-  font-size: 12px;
+  //font-size: 12px;
   @media only screen and (min-width: 768px) {
-    font-size: 14px;
+    //font-size: 14px;
   }
 }
 
@@ -1193,40 +1196,53 @@ img::-moz-selection {
 
 .tag-1-little {
   background-color: lightgreen;
+  font-size: 8px;
 }
 .tag-1-medium {
   background-color: forestgreen;
+  font-size: 9px;
 }
 .tag-1-lots {
   background-color: darkseagreen;
+  font-size: 10px;
 }
 .tag-2-little {
   background-color: lightskyblue;
+  font-size: 8px;
 }
 .tag-2-medium {
   background-color: deepskyblue;
+  font-size: 9px;
 }
 .tag-2-lots {
   background-color: cornflowerblue;
+  font-size: 10px;
 }
 .tag-3-little {
   background-color: seashell;
+  font-size: 8px;
 }
 .tag-3-medium {
   background-color: lavenderblush;
+  font-size: 9px;
 }
 .tag-3-lots {
   background-color: blanchedalmond;
+  font-size: 10px;
 }
 .tag-4-little {
   background-color: lightgray;
+  font-size: 8px;
 }
 .tag-4-medium {
   background-color: darkgray;
+  font-size: 9px;
 }
 .tag-4-lots {
   background-color: lightslategray;
+  font-size: 10px;
 }
 .tag-0-0 {
-  background-color: firebrick;
+  background-color: lightgray;
+  font-size: 8px;
 }
