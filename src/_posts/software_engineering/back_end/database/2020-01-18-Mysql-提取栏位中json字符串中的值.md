@@ -118,4 +118,4 @@ FROM my_table;
 
 **参考资料**
 
-- https://dev.mysql.com/doc/refman/8.0/en/comments.html
+- [https://dev.mysql.com/doc/refman/8.0/en/comments.html](https://dev.mysql.com/doc/refman/8.0/en/comments.html)

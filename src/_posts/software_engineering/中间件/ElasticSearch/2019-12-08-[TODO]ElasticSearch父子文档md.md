@@ -25,7 +25,7 @@ MySQL "LIKE %keyword% " 是一个全表的操作，检索效率差，除非将�
 
 来源: rockybean 教程
 
-![](../public/assets/img/in-post/es-parent-child-vs-nested.png)
+![](public/assets/img/in-post/es-parent-child-vs-nested.png)
 
 ### 参考资料
 

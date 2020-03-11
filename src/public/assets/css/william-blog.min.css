@@ -308,42 +308,40 @@ button.paper-button {
   background-color: #ffffcc;
 }
 .highlight .c {
-  color: #008800;
+  color: #aaaaaa;
   font-style: italic;
 }
 /* Comment */
 .highlight .err {
-  color: #a61717;
-  background-color: #e3d2d2;
+  color: #F00000;
+  background-color: #F0A0A0;
 }
 /* Error */
 .highlight .k {
-  color: #000080;
-  font-weight: bold;
+  color: #0000aa;
 }
 /* Keyword */
 .highlight .cm {
-  color: #008800;
+  color: #aaaaaa;
   font-style: italic;
 }
 /* Comment.Multiline */
 .highlight .cp {
-  color: #008080;
+  color: #4c8317;
 }
 /* Comment.Preproc */
 .highlight .c1 {
-  color: #008800;
+  color: #aaaaaa;
   font-style: italic;
 }
 /* Comment.Single */
 .highlight .cs {
-  color: #008800;
-  font-weight: bold;
+  color: #0000aa;
+  font-style: italic;
 }
 /* Comment.Special */
 .highlight .gd {
-  color: #000000;
-  background-color: #ffdddd;
+  color: #aa0000;
 }
 /* Generic.Deleted */
 .highlight .ge {
@@ -355,12 +353,12 @@ button.paper-button {
 }
 /* Generic.Error */
 .highlight .gh {
-  color: #999999;
+  color: #000080;
+  font-weight: bold;
 }
 /* Generic.Heading */
 .highlight .gi {
-  color: #000000;
-  background-color: #ddffdd;
+  color: #00aa00;
 }
 /* Generic.Inserted */
 .highlight .go {
@@ -376,7 +374,8 @@ button.paper-button {
 }
 /* Generic.Strong */
 .highlight .gu {
-  color: #aaaaaa;
+  color: #800080;
+  font-weight: bold;
 }
 /* Generic.Subheading */
 .highlight .gt {
@@ -384,54 +383,83 @@ button.paper-button {
 }
 /* Generic.Traceback */
 .highlight .kc {
-  color: #000080;
-  font-weight: bold;
+  color: #0000aa;
 }
 /* Keyword.Constant */
 .highlight .kd {
-  color: #000080;
-  font-weight: bold;
+  color: #0000aa;
 }
 /* Keyword.Declaration */
 .highlight .kn {
-  color: #000080;
-  font-weight: bold;
+  color: #0000aa;
 }
 /* Keyword.Namespace */
 .highlight .kp {
-  color: #000080;
-  font-weight: bold;
+  color: #0000aa;
 }
 /* Keyword.Pseudo */
 .highlight .kr {
-  color: #000080;
-  font-weight: bold;
+  color: #0000aa;
 }
 /* Keyword.Reserved */
 .highlight .kt {
-  color: #000080;
-  font-weight: bold;
+  color: #00aaaa;
 }
 /* Keyword.Type */
 .highlight .m {
-  color: #0000FF;
+  color: #009999;
 }
 /* Literal.Number */
 .highlight .s {
-  color: #0000FF;
+  color: #aa5500;
 }
 /* Literal.String */
 .highlight .na {
-  color: #FF0000;
+  color: #1e90ff;
 }
 /* Name.Attribute */
+.highlight .nb {
+  color: #00aaaa;
+}
+/* Name.Builtin */
+.highlight .nc {
+  color: #00aa00;
+  text-decoration: underline;
+}
+/* Name.Class */
+.highlight .no {
+  color: #aa0000;
+}
+/* Name.Constant */
+.highlight .nd {
+  color: #888888;
+}
+/* Name.Decorator */
+.highlight .ni {
+  color: #800000;
+  font-weight: bold;
+}
+/* Name.Entity */
+.highlight .nf {
+  color: #00aa00;
+}
+/* Name.Function */
+.highlight .nn {
+  color: #00aaaa;
+  text-decoration: underline;
+}
+/* Name.Namespace */
 .highlight .nt {
-  color: #000080;
+  color: #1e90ff;
   font-weight: bold;
 }
 /* Name.Tag */
+.highlight .nv {
+  color: #aa0000;
+}
+/* Name.Variable */
 .highlight .ow {
-  font-weight: bold;
+  color: #0000aa;
 }
 /* Operator.Word */
 .highlight .w {
@@ -439,67 +467,83 @@ button.paper-button {
 }
 /* Text.Whitespace */
 .highlight .mf {
-  color: #0000FF;
+  color: #009999;
 }
 /* Literal.Number.Float */
 .highlight .mh {
-  color: #0000FF;
+  color: #009999;
 }
 /* Literal.Number.Hex */
 .highlight .mi {
-  color: #0000FF;
+  color: #009999;
 }
 /* Literal.Number.Integer */
 .highlight .mo {
-  color: #0000FF;
+  color: #009999;
 }
 /* Literal.Number.Oct */
 .highlight .sb {
-  color: #0000FF;
+  color: #aa5500;
 }
 /* Literal.String.Backtick */
 .highlight .sc {
-  color: #800080;
+  color: #aa5500;
 }
 /* Literal.String.Char */
 .highlight .sd {
-  color: #0000FF;
+  color: #aa5500;
 }
 /* Literal.String.Doc */
 .highlight .s2 {
-  color: #0000FF;
+  color: #aa5500;
 }
 /* Literal.String.Double */
 .highlight .se {
-  color: #0000FF;
+  color: #aa5500;
 }
 /* Literal.String.Escape */
 .highlight .sh {
-  color: #0000FF;
+  color: #aa5500;
 }
 /* Literal.String.Heredoc */
 .highlight .si {
-  color: #0000FF;
+  color: #aa5500;
 }
 /* Literal.String.Interpol */
 .highlight .sx {
-  color: #0000FF;
+  color: #aa5500;
 }
 /* Literal.String.Other */
 .highlight .sr {
-  color: #0000FF;
+  color: #009999;
 }
 /* Literal.String.Regex */
 .highlight .s1 {
-  color: #0000FF;
+  color: #aa5500;
 }
 /* Literal.String.Single */
 .highlight .ss {
-  color: #0000FF;
+  color: #0000aa;
 }
 /* Literal.String.Symbol */
+.highlight .bp {
+  color: #00aaaa;
+}
+/* Name.Builtin.Pseudo */
+.highlight .vc {
+  color: #aa0000;
+}
+/* Name.Variable.Class */
+.highlight .vg {
+  color: #aa0000;
+}
+/* Name.Variable.Global */
+.highlight .vi {
+  color: #aa0000;
+}
+/* Name.Variable.Instance */
 .highlight .il {
-  color: #0000FF;
+  color: #009999;
 }
 /* Literal.Number.Integer.Long */
 .highlighter-rouge .highlight {
@@ -507,7 +551,7 @@ button.paper-button {
   border-radius: 6px;
 }
 .highlighter-rouge .highlight pre {
-  font-size: 14px;
+  font-size: 10px;
   line-height: 1.5;
   color: #555;
   background: transparent;
@@ -1192,12 +1236,12 @@ samp {
 }
 .post-preview > .post-meta > a {
   text-decoration: none;
-  color: #404040;
+  color: #ccc;
+  cursor: pointer;
 }
 .post-preview > .post-meta > a:hover,
 .post-preview > .post-meta > a:focus {
   color: #0085A1;
-  text-decoration: underline;
 }
 @media only screen and (min-width: 768px) {
   .post-preview > a > .post-title {
@@ -1213,8 +1257,7 @@ samp {
   }
 }
 .post-content-preview {
-  font-size: 13px;
-  font-style: italic;
+  font-size: 12px;
   color: #a3a3a3;
 }
 .post-content-preview:hover {
@@ -1417,12 +1460,9 @@ img::-moz-selection {
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 999em;
   padding: 0 10px 0 10px;
-  color: #ffffff;
   line-height: 24px;
-  font-size: 12px;
   text-decoration: none;
   margin: 0 1px;
-  margin-bottom: 6px;
   cursor: pointer;
 }
 .tags a > sup,
@@ -1435,8 +1475,7 @@ img::-moz-selection {
 .tags a:active,
 .tags .tag:active {
   color: white;
-  border-color: white;
-  background-color: rgba(255, 255, 255, 0.4);
+  border-color: lightgray;
   text-decoration: none;
 }
 @media only screen and (min-width: 768px) {
@@ -1461,11 +1500,9 @@ img::-moz-selection {
   transition-property: all;
   transition-duration: 0.4s;
   transition-timing-function: ease;
-  font-size: 14px;
   border: none;
-  line-height: 28px;
   margin: 0 2px;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
 }
 #tag_cloud a:hover,
 #tag_cloud .tag:hover,
@@ -1473,28 +1510,27 @@ img::-moz-selection {
 #tag_cloud .tag:active,
 #tag_cloud a.focus,
 #tag_cloud .tag.focus {
-  border: black solid;
-}
-#tag_cloud a.focus,
-#tag_cloud .tag.focus {
-  box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.239216) 0 1px 4px;
+  background-color: skyblue !important;
 }
 #tag_cloud a.tag-button--all,
 #tag_cloud .tag.tag-button--all {
   font-weight: 700;
+  background-color: lightgray;
+}
+#tag_cloud a.tag-button--all:hover,
+#tag_cloud .tag.tag-button--all:hover,
+#tag_cloud a.tag-button--all:active,
+#tag_cloud .tag.tag-button--all:active,
+#tag_cloud a.tag-button--all.focus,
+#tag_cloud .tag.tag-button--all.focus {
+  background-color: skyblue !important;
 }
 @media only screen and (min-width: 768px) {
   #tag_cloud {
     margin-bottom: 25px;
   }
 }
-.tag-comments {
-  font-size: 12px;
-}
 @media only screen and (min-width: 768px) {
-  .tag-comments {
-    font-size: 14px;
-  }
 }
 .t:first-child {
   margin-top: 0px;
@@ -1680,40 +1716,53 @@ img::-moz-selection {
 }
 .tag-1-little {
   background-color: lightgreen;
+  font-size: 8px;
 }
 .tag-1-medium {
   background-color: forestgreen;
+  font-size: 9px;
 }
 .tag-1-lots {
   background-color: darkseagreen;
+  font-size: 10px;
 }
 .tag-2-little {
   background-color: lightskyblue;
+  font-size: 8px;
 }
 .tag-2-medium {
   background-color: deepskyblue;
+  font-size: 9px;
 }
 .tag-2-lots {
   background-color: cornflowerblue;
+  font-size: 10px;
 }
 .tag-3-little {
   background-color: seashell;
+  font-size: 8px;
 }
 .tag-3-medium {
   background-color: lavenderblush;
+  font-size: 9px;
 }
 .tag-3-lots {
   background-color: blanchedalmond;
+  font-size: 10px;
 }
 .tag-4-little {
   background-color: lightgray;
+  font-size: 8px;
 }
 .tag-4-medium {
   background-color: darkgray;
+  font-size: 9px;
 }
 .tag-4-lots {
   background-color: lightslategray;
+  font-size: 10px;
 }
 .tag-0-0 {
-  background-color: firebrick;
+  background-color: lightgray;
+  font-size: 8px;
 }
