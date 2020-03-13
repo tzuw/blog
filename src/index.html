@@ -8,6 +8,7 @@ title: "HOME"
 {% include getTagLevelAmounts.html %}
 
 {% for post in paginator.posts %}
+{% if post.istodo != true %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
         <h2 class="post-title">
@@ -18,14 +19,14 @@ title: "HOME"
             {{ post.subtitle }}
         </h3>
         {% endif %}
-        <div class="post-content-preview">
-            {% if post.lang == 'en' %}
-                {{ post.content | strip_html | truncate:1000 | markdownify}}
-            {% else %}
-                {{ post.content | strip_html | truncate:800 | markdownify}}
-            {% endif %}
-        </div>
     </a>
+    <div class="post-content-preview">
+        {% if post.lang == 'zh' %}
+            {{ post.content }}
+        {% else %}
+            {{ post.content }}
+        {% endif %}
+    </div>
 
     <!-- capture tags for every article -->
     {% assign has_article_tags = false %}
@@ -76,6 +77,7 @@ title: "HOME"
     <hr/>
     <!--  Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %}-->
 </div>
+{% endif %}
 {% endfor %}
 
 <!-- Pager -->

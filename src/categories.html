@@ -229,14 +229,12 @@ header-img: public/assets/img/cement.png
                         {% if _article.subtitle %}
                         <h3 class="post-subtitle">{{ _article.subtitle }}</h3>
                         {% endif %}
-                        <!-- capture tags for every article -->
-                        <div class="post-content-preview">
-                            {% if post.lang == 'en' %}
-                                {{ _article.content | strip_html | truncate:500 | markdownify}}
-                            {% else %}
-                                {{ _article.content | strip_html | truncate:400 | markdownify}}}
-                            {% endif %}
-                        </div>
+                        {% if post.excerpt %}
+                            <div class="post-content-preview">
+                            {{ post.excerpt }}
+                            </div>
+                        {% else %}
+                        {% endif %}
                     </a>
                     <br/>
                     <p class="post-meta">
