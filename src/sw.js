@@ -15,25 +15,25 @@ const CACHE = CACHE_NAMESPACE + 'precache-then-runtime';
 const PRECACHE_LIST = [
   "./",
   "./offline.html",
-  "./public/assets/js/jquery.min.js",
-  "./public/assets/js/bootstrap.min.js",
-  "./public/assets/js/william-blog.min.js",
-  "./public/assets/js/snackbar.js",
-  "./public/assets/img/icon_wechat.png",
-  "./public/assets/img/avatar-hux.jpg",
-  "./public/assets/img/home-bg.jpg",
-  "./public/assets/img/404-bg.jpg",
-  "./public/assets/css/william-blog.min.css",
-  "./public/assets/css/bootstrap.min.css"
+  "./js/jquery.min.js",
+  "./js/bootstrap.min.js",
+  "./js/william-blog.min.js",
+  "./js/snackbar.js",
+  "./img/icon_wechat.png",
+  "./img/avatar-hux.jpg",
+  "./img/home-bg.jpg",
+  "./img/404-bg.jpg",
+  "./css/william-blog.min.css",
+  "./css/bootstrap.min.css"
   // "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css",
   // "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/fonts/fontawesome-webfont.woff2?v=4.6.3",
   // "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"
 ]
 const HOSTNAME_WHITELIST = [
   self.location.hostname,
-  "huangxuan.me",
-  "yanshuo.io",
-  "cdnjs.cloudflare.com"
+  // "huangxuan.me",
+  // "yanshuo.io",
+  // "cdnjs.cloudflare.com"
 ]
 const DEPRECATED_CACHES = ['precache-v1', 'runtime', 'main-precache-v1', 'main-runtime']
 

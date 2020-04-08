@@ -2,7 +2,7 @@
 title: Archive
 layout: default
 description: "日常搬砖。"
-header-img: public/assets/img/cement.png
+header-img: img/cement.png
 ---
 
 <!-- Page Header -->
@@ -46,7 +46,7 @@ header-img: public/assets/img/cement.png
             <ul style="list-style: none;">
             <li>
                 &nbsp;&nbsp;{{ post.date | date: '%Y/%m/%d' }}&nbsp;&nbsp;
-                <a href="{{ post.url }}">{{ post.title }}</a>
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
             </li>
             </ul>
         {% endif %}
@@ -79,7 +79,7 @@ header-img: public/assets/img/cement.png
 
             <li>
                 &nbsp;&nbsp;{{ post.date | date: '%Y/%m/%d' }}&nbsp;&nbsp
-                <a href="{{ post.url }}">{{ post.title }}</a>
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
             </li>
           {% endfor %}
         </ul>
