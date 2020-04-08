@@ -2,20 +2,20 @@
 #src/_posts/_draft
 #src/_posts/_archive
 #.vscode
+#public/assets/main*
+#public/assets/vendor*
 _archive
 node_modules
 *.log
 *.sh
 dist/
-.idea/
 package-lock.json
-src/.jekyll-cache/
-#public/assets/main*
-#public/assets/vendor*
 src/public/assets/main*
 src/public/assets/vendor*
 src/_drafts/*
 
+src/.jekyll-cache/
+.idea/
 .jekyll-cache/*
 .DS_Store
 */.DS_Store

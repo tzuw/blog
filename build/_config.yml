@@ -8,20 +8,22 @@ title: GINGER
 SEOTitle: GINGER
 header-img: public/assets/img/concretewall.jpg
 email: your-email-address-here
-description: "embrace"
-keyword: ""
-url: ""              # your host, for absolute URL
-baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
+description: "latte-a-little-sugar"
+#keyword: ""
+#url: ""              # your host, for absolute URL
+#baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
+
+#encoding: utf-8
 
 # Publish posts or collection documents with a future date.
 future: true
 
 # SNS settings
 RSS: false
-weibo_username:
-zhihu_username:
-github_username:
-twitter_username:
+#weibo_username:
+#zhihu_username:
+#github_username:
+#twitter_username:
 #facebook_username:
 #linkedin_username:  firstname-lastname-idxxxx
 
@@ -31,9 +33,10 @@ highlighter: rouge
 #permalink: pretty
 paginate: 10
 paginate_path: "/article/page:num/"
-#exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md", "src"]
-exclude: ["components"]
 anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
+exclude: ["components"]
+#exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md", "src"]
+
 # If you have timezone issue (e.g. #68) in China, uncomment to use this:
 # timezone: CN
 
@@ -77,8 +80,8 @@ netease_comment: false
 # ba_track_id: [your track id]
 
 # Google Analytics
-ga_track_id: ''            # Format: UA-xxxxxx-xx
-ga_domain:
+#ga_track_id: ''            # Format: UA-xxxxxx-xx
+#ga_domain:
 
 
 
@@ -106,106 +109,105 @@ page-mathjax: false
 
 
 
-# Friends
 friends: [
-     {
-         title: "Su",
-         href: "http://su.gallery/"
-     },{
-         title: "乱序",
-         href: "http://mida.re/"
-     },{
-         title: "Sherry Wu",
-         href: "https://xuechundesign.github.io"
-     },{
-         title: "Luke 的自留地",
-         href: "http://hmqk1995.github.io"
-     },{
-         title: "Ebn's Blog",
-         href: "http://ebnbin.com/"
-     },{
-         title: "SmdCn's Blog",
-         href: "http://blog.smdcn.net"
-     },{
-         title: "JiyinYiyong",
-         href: "http://tiye.me/"
-     },{
-         title: "David's Game",
-         href: "https://www.ruoyaowu.com/"
-     },{
-         title: "DHong Say",
-         href: "http://dhong.co"
-     },{
-         title: "尹峰以为",
-         href: "http://ingf.github.io/"
-     },{
-         title: "优源博客",
-         href: "https://duter2016.github.io/"
-     },{
-         title: "Hux Blog",
-         href: "huangxuan.me"
-     },{
-         title: "一之笔",
-         href: "https://yizibi.github.io/"
-     }, {
-         title: "RAYMOND CAMDEN",
-         href: "https://www.raymondcamden.com/"
-     }, {
-          title: "Jonathan Petitcolas",
-          href: "https://www.jonathan-petitcolas.com/"
-    }, {
-         title: "TechBridge 技術共筆部落格",
-         href: "https://blog.techbridge.cc/"
-    }, {
-         title: "冰封承诺",
-         href: ""
-    }, {
-         title: "梁音",
-         href: ""
-    }, {
-         title: "ChenYuan",
-         href: ""
-    }, {
-         title: "米米的博客",
-         href: ""
-    }, {
-         title: "星光的博客",
-         href: ""
-    }, {
-         title: "UncleChen",
-         href: ""
-    }, {
-         title: "横云断岭",
-         href: ""
-    }, {
-         title: "tidy的个人博客",
-         href: ""
-    }, {
-         title: "背不起来的就写下来吧",
-         href: ""
-    }, {
-         title: "forever杨的个人博客",
-         href: ""
-    }, {
-         title: "JerryQu的小站",
-         href: ""
-    }, {
-         title: "OneBlog开源博客",
-         href: ""
-    }, {
-         title: "Parian's Blog",
-         href: ""
-    }, {
-         title: "bieleyang的博客",
-         href: ""
-    }, {
-         title: "散尽浮华-博客园",
-         href: ""
-    }, {
-         title: "王清培-博客园",
-         href: ""
-    }, {
-         title: "嘟嘟独立博客",
-         href: "http://tengj.top/2017/05/05/javabook/"
-   }
+{
+  title: "Su",
+  href: "http://su.gallery/"
+},{
+  title: "乱序",
+  href: "http://mida.re/"
+},{
+  title: "Sherry Wu",
+  href: "https://xuechundesign.github.io"
+},{
+  title: "Luke 的自留地",
+  href: "http://hmqk1995.github.io"
+},{
+  title: "Ebn's Blog",
+  href: "http://ebnbin.com/"
+},{
+  title: "SmdCn's Blog",
+  href: "http://blog.smdcn.net"
+},{
+  title: "JiyinYiyong",
+  href: "http://tiye.me/"
+},{
+  title: "David's Game",
+  href: "https://www.ruoyaowu.com/"
+},{
+  title: "DHong Say",
+  href: "http://dhong.co"
+},{
+  title: "尹峰以为",
+  href: "http://ingf.github.io/"
+},{
+  title: "优源博客",
+  href: "https://duter2016.github.io/"
+},{
+  title: "Hux Blog",
+  href: "huangxuan.me"
+},{
+  title: "一之笔",
+  href: "https://yizibi.github.io/"
+}, {
+  title: "RAYMOND CAMDEN",
+  href: "https://www.raymondcamden.com/"
+}, {
+  title: "Jonathan Petitcolas",
+  href: "https://www.jonathan-petitcolas.com/"
+}, {
+  title: "TechBridge 技術共筆部落格",
+  href: "https://blog.techbridge.cc/"
+}, {
+  title: "冰封承诺",
+  href: ""
+}, {
+  title: "梁音",
+  href: ""
+}, {
+  title: "ChenYuan",
+  href: ""
+}, {
+  title: "米米的博客",
+  href: ""
+}, {
+  title: "星光的博客",
+  href: ""
+}, {
+  title: "UncleChen",
+  href: ""
+}, {
+  title: "横云断岭",
+  href: ""
+}, {
+  title: "tidy的个人博客",
+  href: ""
+}, {
+  title: "背不起来的就写下来吧",
+  href: ""
+}, {
+  title: "forever杨的个人博客",
+  href: ""
+}, {
+  title: "JerryQu的小站",
+  href: ""
+}, {
+  title: "OneBlog开源博客",
+  href: ""
+}, {
+  title: "Parian's Blog",
+  href: ""
+}, {
+  title: "bieleyang的博客",
+  href: ""
+}, {
+  title: "散尽浮华-博客园",
+  href: ""
+}, {
+  title: "王清培-博客园",
+  href: ""
+}, {
+  title: "嘟嘟独立博客",
+  href: "http://tengj.top/2017/05/05/javabook/"
+}
 ]
