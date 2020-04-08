@@ -5,7 +5,7 @@ title: "在 csrf token 的保护之下"
 subtitle: "Under the protection of csrf token"
 date: 2020-02-17 21:10:00
 author: "tzuw"
-header-img:  "public/assets/img/cement.png"
+header-img:  "img/cement.png"
 tags: [csrf, security, session, cookies, httpheader] 
 
 categories: [Web安全]

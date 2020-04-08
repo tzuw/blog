@@ -8,7 +8,7 @@ header-style: text
 tags: [MutationObserver]
 categories: [前端]
 ---
-![mutationObserver](/public/assets/img/in-post/mutationObserver.png)
+![mutationObserver](/blog/img/in-post/mutationObserver.png)
 
 
 
@@ -18,7 +18,7 @@ categories: [前端]
 
 事情是这样的，在建站初fork的博客在标签云归档的地方使用了**[ jekyll-TeXt-theme](https://github.com/kitian616/jekyll-TeXt-theme)**，好死不死我想给归档加入一个分页的功能，并且还要再列表中每个文章标题的下面加入该文所包含的标签列表，而且标签还要带有超链接。如下图，
 
-![mutationObserver](/public/assets/img/in-post/tag-cloud-example.png)
+![tagCloud](/blog/img/in-post/tag-cloud-example.png)
 
 
 

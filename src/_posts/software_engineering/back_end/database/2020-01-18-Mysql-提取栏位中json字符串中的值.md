@@ -4,7 +4,7 @@ title: "Mysql提取json中的数据-笔记"
 subtitle: "extracting data from json string in Mysql"
 date: 2020-01-18 21:10:00
 author: "tzuw"
-header-img:  "public/assets/img/cement.png"
+header-img:  "img/cement.png"
 tags: [json_extract, 学习笔记] 
 categories: [MySQL]
 ---

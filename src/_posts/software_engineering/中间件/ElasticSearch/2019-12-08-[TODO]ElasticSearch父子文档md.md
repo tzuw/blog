@@ -4,7 +4,7 @@ title: "ElasticSearch父子文档结构 vs. Nested 结构"
 subtitle: "Parent-Child Structure vs. Nested Structure"
 date: 2019-12-08 21:17:00
 author: "tzuw"
-header-img:  "public/assets/img/cement.png"
+header-img:  "img/cement.png"
 tags: [ES, MySQL, 学习笔记]
 categories: [ElasticSearch, 中间件]
 ---
@@ -25,7 +25,7 @@ MySQL "LIKE %keyword% " 是一个全表的操作，检索效率差，除非将�
 
 来源: rockybean 教程
 
-![](public/assets/img/in-post/es-parent-child-vs-nested.png)
+![](img/in-post/es-parent-child-vs-nested.png)
 
 ### 参考资料
 

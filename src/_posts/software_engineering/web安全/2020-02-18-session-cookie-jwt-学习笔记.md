@@ -4,7 +4,7 @@ title: "Session, JWT, Cookie 学习笔记"
 subtitle: "My note for Session, JWT, Cookie 学习"
 date: 2019-09-18 21:10:00
 author: "tzuw"
-header-img: "public/assets/img/cement.png"
+header-img: "img/cement.png"
 tags: [Session, JWT, Cookie, 学习笔记] 
 categories: [Web安全]
 ---

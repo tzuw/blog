@@ -4,7 +4,7 @@ title: "Java中反序列化带有Iterable类型field的对象?"
 subtitle: "Shouldn't deserialzing a instance contained a Iterable field in Java"
 date: 2019-10-01 20:50:00
 author: "tzuw"
-header-img:  "public/assets/img/cement.png"
+header-img:  "img/cement.png"
 tags: [反序列化, Iterable, 学习笔记] 
 categories: [Java]
 ---

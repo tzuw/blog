@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import { onTagSelect } from '../public/assets/js/archive';
+    import { onTagSelect } from '../js/archive';
     export default {
         name: 'ArchivePagination',
         data: function() {

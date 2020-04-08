@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="latte-a-little-sugar">
+    <meta name="keywords"  content="">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="ElasticSearch父子文档结构 vs. Nested 结构 - GINGER">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="MySQL “LIKE %keyword% “ 是一个全表的操作，检索效率差，除非将数据取出放在内存备用，但是随着数据量的上升，内存将无法负荷。因此，ElasticSearch 作为一个基于 Lucene 的分布式搜寻引擎已然是一个热门的大数据分析中间件。下面介绍 ES 中的两种数据结构：
+
+父子文档结构
+
+类似于关系型数据库中的一对多关系，一个父文档可以对应多个子文档。
+
+Nested 结...">
+    
+    <meta property="article:published_time" content="2019-12-09T05:17:00Z">
+    
+    
+    <meta property="article:author" content="tzuw">
+    
+    
+    <meta property="article:tag" content="ES">
+    
+    <meta property="article:tag" content="MySQL">
+    
+    <meta property="article:tag" content="学习笔记">
+    
+    
+    <meta property="og:image" content="http://0.0.0.0:4000/blog/blog/img/sword.jpg">
+    <meta property="og:url" content="http://0.0.0.0:4000/elasticsearch/%E4%B8%AD%E9%97%B4%E4%BB%B6/2019/12/09/TODO-ElasticSearch%E7%88%B6%E5%AD%90%E6%96%87%E6%A1%A3md.html">
+    <meta property="og:site_name" content="GINGER">
+
+    <title>ElasticSearch父子文档结构 vs. Nested 结构 - GINGER</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/blog/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/blog/img/sword.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://0.0.0.0:4000/blog/elasticsearch/%E4%B8%AD%E9%97%B4%E4%BB%B6/2019/12/09/TODO-ElasticSearch%E7%88%B6%E5%AD%90%E6%96%87%E6%A1%A3md.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/blog/css/william-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/blog/">GINGER</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/blog/">Home</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/about.html">About</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/archive.html">Archive</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/categories.html">Category</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/tags.html">Tag</a>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script type="module">
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/blog/img/cement.png" width="0" height="0"> -->
+
+<!-- Post Header -->
+
+
+
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/blog/img/cement.png');
+        background: ;
+    }
+
+    
+</style>
+
+<header class="intro-header" >
+
+    <div class="header-mask"></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/blog/tags.html?tags=ES" title="ES">#ES</a>
+                        
+                        <a class="tag" href="/blog/tags.html?tags=MySQL" title="MySQL">#MySQL</a>
+                        
+                        <a class="tag" href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">#学习笔记</a>
+                        
+                        <span>
+                        
+                        <a class="tag" href="/blog/categories.html?categories=ElasticSearch" title="ElasticSearch">☖ElasticSearch</a>
+                        
+                        <a class="tag" href="/blog/categories.html?categories=中间件" title="中间件">☖中间件</a>
+                        
+                        </span>
+                    </div>
+                    <h1>ElasticSearch父子文档结构 vs. Nested 结构</h1>
+                    
+                    <h2 class="subheading">Parent-Child Structure vs. Nested Structure</h2>
+                    <span class="meta">
+                        December 9, 2019
+                    </span>
+                    <span>
+                        约2分钟读完
+                        大约670个字
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+
+                <div id="app">
+                    <p>MySQL “LIKE %keyword% “ 是一个全表的操作，检索效率差，除非将数据取出放在内存备用，但是随着数据量的上升，内存将无法负荷。因此，ElasticSearch 作为一个基于 Lucene 的分布式搜寻引擎已然是一个热门的大数据分析中间件。下面介绍 ES 中的两种数据结构：</p>
+
+<h3 id="父子文档结构">父子文档结构</h3>
+
+<p>类似于关系型数据库中的一对多关系，一个父文档可以对应多个子文档。</p>
+
+<h3 id="nested-结构">Nested 结构</h3>
+
+<h3 id="对比图">对比图</h3>
+
+<p>来源: rockybean 教程</p>
+
+<p><img src="img/in-post/es-parent-child-vs-nested.png" alt="" /></p>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+  <li><a href="https://zhuanlan.zhihu.com/p/32112952">https://zhuanlan.zhihu.com/p/32112952</a></li>
+  <li><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/parent-child.html">https://www.elastic.co/guide/cn/elasticsearch/guide/current/parent-child.html</a></li>
+  <li><a href="https://blog.csdn.net/laoyang360/article/details/82950393">https://blog.csdn.net/laoyang360/article/details/82950393</a></li>
+  <li><a href="https://blog.csdn.net/u010454030/article/details/77840606">https://blog.csdn.net/u010454030/article/details/77840606</a></li>
+  <li><a href="https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742">https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742</a></li>
+  <li><a href="https://stackoverflow.com/questions/49941244/elastic-search-parent-child-vs-nested-document">https://stackoverflow.com/questions/49941244/elastic-search-parent-child-vs-nested-document</a></li>
+  <li><a href="https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742">https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742</a></li>
+</ol>
+
+                </div>
+
+                <!-- 版权声明 -->
+                <div style="color: brown;">
+    <hr>
+    <p>
+        <strong>版权声明</strong>：
+        本文由 <a href="http://0.0.0.0:4000">tzuw</a> 在 2019年12月09日发表。
+        大多是学习笔记和分享，才疏学浅，欢迎指正。本文采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">CC BY-NC-SA 4.0</a>许可协议，非商业转载请注明出处，不得用于商业目的。
+        <br>
+        文章题目及链接：<a href="/elasticsearch/%E4%B8%AD%E9%97%B4%E4%BB%B6/2019/12/09/TODO-ElasticSearch%E7%88%B6%E5%AD%90%E6%96%87%E6%A1%A3md.html">《ElasticSearch父子文档结构 vs. Nested 结构》</a>
+    </p>
+    <hr>
+</div>
+
+
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/%E5%89%8D%E7%AB%AF/javascript/2019/10/19/Javascript-%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E7%B3%96%E6%95%B4%E7%90%86.html" data-toggle="tooltip" data-placement="top" title="[更新中] Javascript-常用语法糖整理">
+                        Previous<br>
+                        <span>[更新中] Javascript-常用语法糖整理</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/%E5%90%8E%E7%AB%AF/java/wiki/2020/01/11/Java-%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E7%B3%96.html" data-toggle="tooltip" data-placement="top" title="Java 常用语法糖整理">
+                        Next<br>
+                        <span>Java 常用语法糖整理</span>
+                        </a>
+                </li>
+                
+            </ul>
+            <hr style="visibility: hidden;">
+
+            
+
+            
+        </div>
+
+    <!-- Side Catalog Container -->
+    
+
+<!-- Sidebar Container -->
+        <div class="
+            col-lg-8 col-lg-offset-2
+            col-md-10 col-md-offset-1
+            sidebar-container">
+
+            <!-- Featured Tags -->
+            
+
+
+
+
+            <!-- Friends Blog -->
+            
+<hr>
+<h5>WATCH LIST</h5>
+<ul class="list-inline">
+  
+  <li><a href="http://su.gallery/">Su</a></li>
+  
+  <li><a href="http://mida.re/">乱序</a></li>
+  
+  <li><a href="https://xuechundesign.github.io">Sherry Wu</a></li>
+  
+  <li><a href="http://hmqk1995.github.io">Luke 的自留地</a></li>
+  
+  <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
+  
+  <li><a href="http://blog.smdcn.net">SmdCn's Blog</a></li>
+  
+  <li><a href="http://tiye.me/">JiyinYiyong</a></li>
+  
+  <li><a href="https://www.ruoyaowu.com/">David's Game</a></li>
+  
+  <li><a href="http://dhong.co">DHong Say</a></li>
+  
+  <li><a href="http://ingf.github.io/">尹峰以为</a></li>
+  
+  <li><a href="https://duter2016.github.io/">优源博客</a></li>
+  
+  <li><a href="huangxuan.me">Hux Blog</a></li>
+  
+  <li><a href="https://yizibi.github.io/">一之笔</a></li>
+  
+  <li><a href="https://www.raymondcamden.com/">RAYMOND CAMDEN</a></li>
+  
+  <li><a href="https://www.jonathan-petitcolas.com/">Jonathan Petitcolas</a></li>
+  
+  <li><a href="https://blog.techbridge.cc/">TechBridge 技術共筆部落格</a></li>
+  
+  <li><a href="">冰封承诺</a></li>
+  
+  <li><a href="">梁音</a></li>
+  
+  <li><a href="">ChenYuan</a></li>
+  
+  <li><a href="">米米的博客</a></li>
+  
+  <li><a href="">星光的博客</a></li>
+  
+  <li><a href="">UncleChen</a></li>
+  
+  <li><a href="">横云断岭</a></li>
+  
+  <li><a href="">tidy的个人博客</a></li>
+  
+  <li><a href="">背不起来的就写下来吧</a></li>
+  
+  <li><a href="">forever杨的个人博客</a></li>
+  
+  <li><a href="">JerryQu的小站</a></li>
+  
+  <li><a href="">OneBlog开源博客</a></li>
+  
+  <li><a href="">Parian's Blog</a></li>
+  
+  <li><a href="">bieleyang的博客</a></li>
+  
+  <li><a href="">散尽浮华-博客园</a></li>
+  
+  <li><a href="">王清培-博客园</a></li>
+  
+  <li><a href="http://tengj.top/2017/05/05/javabook/">嘟嘟独立博客</a></li>
+  
+</ul>
+
+
+        </div>
+    </div>
+</div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+
+
+
+
+
+
+
+    <!-- async load function -->
+    <script>
+        function async(u, c) {
+          var d = document, t = 'script',
+              o = d.createElement(t),
+              s = d.getElementsByTagName(t)[0];
+          o.src = u;
+          if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+          s.parentNode.insertBefore(o, s);
+        }
+    </script>
+    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+    <script>
+        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+            anchors.options = {
+              visible: 'hover',
+              placement: 'right',
+              // icon: '#'
+            };
+            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+        })
+    </script>
+    <style>
+        /* place left on bigger screen */
+        @media all and (min-width: 800px) {
+            .anchorjs-link{
+                position: absolute;
+                left: -0.75em;
+                font-size: 1.1em;
+                margin-top : -0.1em;
+            }
+        }
+    </style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; GINGER 2020
+                    <span id="htmer_time" style=""></span>
+                    <br>
+                    Powered by Huxpro, Jekyll, Maintained By <a href="">tzuw</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=tzuw&repo=tzuw.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/blog/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="/blog/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/william-blog.min.js"></script>
+
+<!-- Service Worker -->
+
+<script src="/blog/js/snackbar.js"></script>
+<script src="/blog/js/sw-registration.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+<!-- Side Catalog -->
+
+
+
+<!-- Multi-Lingual -->
+
+
+<!-- 计算网站运行时间 -->
+<script language=JavaScript>
+function secondToDate(second) {
+ if (!second) {
+     return 0;
+ }
+
+ var time = new Array(0, 0, 0, 0, 0);
+
+ if (second >= 365 * 24 * 3600) {
+     time[0] = parseInt(second / (365 * 24 * 3600));
+     second %= 365 * 24 * 3600;
+ }
+
+ if (second >= 24 * 3600) {
+     time[1] = parseInt(second / (24 * 3600));
+     second %= 24 * 3600;
+ }
+
+ if (second >= 3600) {
+     time[2] = parseInt(second / 3600);
+     second %= 3600;
+ }
+
+ if (second >= 60) {
+     time[3] = parseInt(second / 60);
+     second %= 60;
+ }
+
+ if (second > 0) {
+     time[4] = second;
+ }
+ return time;
+}
+<!-- 动态显示网站运行时间 -->
+function setTime() {
+    var create_time = Math.round(new Date(Date.UTC(2020, 01, 08, 0, 0, 0)).getTime() / 1000);
+    var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000);
+    currentTime = secondToDate((timestamp - create_time));
+    currentTimeHtml = '本站已运行' + currentTime[0] + '年' + currentTime[1] + '天' + currentTime[2] + '时' + currentTime[3] + '分' + currentTime[4] + '秒';
+    document.getElementById("htmer_time").innerHTML = currentTimeHtml;
+}
+setInterval(setTime, 1000);
+</script>
+
+<script type="text/javascript">
+$('.navbar-nav a').click(function(e) {
+    e.stopPropagation();
+    $('.navbar-nav a').removeClass('active');
+    $(this).addClass('active');
+});
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/blog/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+
+    <script type="text/javascript" src="/blog/vendor.9ee51f46156dea4393fc.js"></script><script type="text/javascript" src="/blog/main.0a6f256f3cf60dcdae56.js"></script>
+
+</body>
+
+</html>

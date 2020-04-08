@@ -4,7 +4,7 @@ title: "[更新中] Javascript-常用语法糖整理"
 subtitle: "[Updating] Javascript-common-syntactic-sugar"
 date: 2019-10-18 21:10:00
 author: "tzuw"
-header-img:  "public/assets/img/cement.png"
+header-img:  "img/cement.png"
 tags: [ES5, ES6, 语法糖, Syntactic-sugar, 学习笔记] 
 categories: [前端, Javascript]
 ---

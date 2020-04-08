@@ -1,0 +1,2392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="latte-a-little-sugar">
+    <meta name="keywords"  content="">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="HOME - GINGER">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="世界上有很多的东西">
+    
+    <meta property="og:image" content="http://0.0.0.0:4000/blog/blog/img/sword.jpg">
+    <meta property="og:url" content="http://0.0.0.0:4000/">
+    <meta property="og:site_name" content="GINGER">
+
+    <title>HOME - GINGER</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/blog/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/blog/img/sword.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://0.0.0.0:4000/blog/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/blog/css/william-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/blog/">GINGER</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/blog/">Home</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/about.html">About</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/archive.html">Archive</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/categories.html">Category</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/tags.html">Tag</a>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script type="module">
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Page Header -->
+
+
+
+
+
+
+
+<header class="intro-header" style="background-image: url('/blog/img/concretewall.jpg')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="site-heading" id="tag-heading">
+        
+          <h3 id="intro-header-item">HOME</h3>
+          <span class="subheading">世界上有很多的东西</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+    
+        <!-- USE SIDEBAR -->
+        <!-- PostList Container -->
+        <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            postlist-container
+        ">
+            <div id="app">
+                
+<!--<h1>0</h1>-->
+<!--<h1>0</h1>-->
+<!--<h1>0</h1>-->
+<!--<h1>7</h1>-->
+
+
+
+<div class="post-preview">
+    <a href="/blog/java/spring/2020/02/19/Spring-IOC.html">
+        <h2 class="post-title">
+            Sping - Inversion of Control - 笔记
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Learning Sping IOC
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <h3 id="java-反射机制">Java 反射机制</h3>
+
+<p>使得程序在<strong>运行时</strong>，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意的方法和属性。（包括私有属性和方法）</p>
+
+<p>这是一种动态获取信息，动态调用对象的方法。</p>
+
+<p>举例而言，</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+</pre></td><td class="rouge-code"><pre><span class="c1">// Employee.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+  
+  <span class="kd">public</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+  
+ 	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">printEmployeeName</span><span class="o">()</span> <span class="o">{}</span>
+<span class="o">}</span>
+
+<span class="c1">// CoffeeMaker.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CoffeeMaker</span> <span class="kd">extends</span> <span class="nc">Employee</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="nc">String</span> <span class="n">nickName</span><span class="o">;</span>
+  
+  <span class="kd">protected</span> <span class="nc">String</span> <span class="n">birthday</span><span class="o">;</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setInfo</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">nickName</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">private</span> <span class="kt">void</span> <span class="nf">setBirthday</span><span class="o">(</span><span class="nc">String</span> <span class="n">date</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">birthday</span> <span class="o">=</span> <span class="n">date</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// Test.java getFields(); getMethods();</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printFields</span><span class="o">(</span><span class="nc">Class</span> <span class="n">clazz</span><span class="o">)</span> <span class="o">{</span>    
+    <span class="c1">// get all available public  fields</span>
+    <span class="nc">Field</span><span class="o">[]</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">clazz</span><span class="o">.</span><span class="na">getFields</span><span class="o">();</span>
+    <span class="c1">// clazz.getDeclaredFields(), clazz.getDeclaredMethods()</span>
+    
+    <span class="k">for</span> <span class="o">(</span><span class="nc">Field</span> <span class="n">field</span> <span class="o">:</span> <span class="n">fields</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">// int modifeirs = field.getModifiers(); 访问权限</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">field</span><span class="o">.</span><span class="na">getType</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> 
+                        <span class="s">" "</span> <span class="o">+</span> <span class="n">field</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">printFields</span><span class="o">(</span><span class="nc">CoffeeMakerclass</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>  
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>此外，上文提到 Java 的反射机制还能够自由的调用类的私有方法/变量，只要在成功获取方法/变量后，将访问权限修改后，通过 invoke()  / set() 方法就可以调用。</p>
+
+<p>还可以很逆天的修改私有常量。</p>
+
+<h3 id="spring-ioc">Spring IOC</h3>
+
+<p>依赖注入 (Dependency Injection) 其实就是，控制翻转( Inversion of Control)，就是<strong>把底层类作为参数传入上层类</strong>，实现上层类对下层类的控制。如此一来，底层类的修改就不会牵一发而动全身了，比如 <a href="https://www.zhihu.com/question/23277575">[4]</a> 中的只是要把轮胎尺寸改成动态配置，如果没有加入依赖注入的概念，那么要修改一堆代码。</p>
+
+<p>有3种 DI 方法，</p>
+
+<p>（1）构造函数传入</p>
+
+<p>（2）Setter 方法</p>
+
+<p>（3）接口传递</p>
+
+<p>需要有一个，控制反转容器 ( IoC Container )来配置 DI 。在 Spring 中可以通过 xml 配置文件、设定由自动扫描包来达成，或者由一个设定类(被标注 @Configuration)的类来实现。</p>
+
+<p>对于大型项目，自动扫描包是比较常见的方法，毕竟有太多东西需要注入了。Spring IoC 可以找到路径下使用 @Component, @Service, @Controller, @Repository … 的类。并且，这些类被称为 Bean，它们的 id 默认是首字母小写的类名。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre>// xml 配置文件
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="na">xmlns:context=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"
+        http://www.springframework.org/schema/beans        
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context                
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- id 表示组件的名字，class表示组件类 --&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"coffeeMaker"</span> <span class="na">class=</span><span class="s">"com.test.CoffeeMaker"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="c1">// 设置自动扫描包的范围</span>
+<span class="c1">// 于配置文件中设置   &lt;context:component-scan base-package="com.test"/&gt;</span>
+<span class="c1">// 于入口类处设置</span>
+<span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">value</span><span class="o">=</span> <span class="s">"com.test"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printFields</span><span class="o">(</span><span class="nc">Class</span> <span class="n">clazz</span><span class="o">)</span> <span class="o">{</span>    
+    <span class="nc">Field</span><span class="o">[]</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">clazz</span><span class="o">.</span><span class="na">getFields</span><span class="o">();</span>    
+    <span class="k">for</span> <span class="o">(</span><span class="nc">Field</span> <span class="n">field</span> <span class="o">:</span> <span class="n">fields</span><span class="o">)</span> <span class="o">{</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">field</span><span class="o">.</span><span class="na">getType</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> 
+                        <span class="s">" "</span> <span class="o">+</span> <span class="n">field</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">printFields</span><span class="o">(</span><span class="nc">CoffeeMakerclass</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span> 
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+  <li><a href="https://juejin.im/post/598ea9116fb9a03c335a99a4">https://juejin.im/post/598ea9116fb9a03c335a99a4</a></li>
+  <li><a href="https://codertw.com/程式語言/11422/">https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/11422/</a></li>
+  <li><a href="http://tengj.top/2016/04/28/javareflect/">http://tengj.top/2016/04/28/javareflect/</a></li>
+  <li><a href="https://www.zhihu.com/question/23277575">https://www.zhihu.com/question/23277575</a></li>
+  <li><a href="https://www.zhihu.com/question/23277575/answer/169698662">Spring IoC有什么好处呢？ - Mingqi的回答 - 知乎</a></li>
+  <li><a href="https://www.jianshu.com/p/64aac6461d5b">https://www.jianshu.com/p/64aac6461d5b</a></li>
+</ol>
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        February 19, 2020 &nbsp;|&nbsp;
+        约8分钟读完
+        大约2638个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=Java" title="Java">Java&nbsp;</a>
+        &nbsp;
+        <a href="/blog/categories.html?categories=Spring" title="Spring">Spring&nbsp;</a>
+        
+
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-4-medium"
+       title="学习笔记" rel="7"
+       href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" >
+        #学习笔记
+        <sup>7</sup>
+    </a><a class="tag-button tag-0-0"
+       title="configuration" rel="1"
+       href="/blog/tags.html?tags=configuration" >
+        #configuration
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="反射机制" rel="1"
+       href="/blog/tags.html?tags=%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6" >
+        #反射机制
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="Spring-IOC" rel="1"
+       href="/blog/tags.html?tags=Spring-IOC" >
+        #Spring-IOC
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="IOC" rel="1"
+       href="/blog/tags.html?tags=IOC" >
+        #IOC
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="反转控制" rel="1"
+       href="/blog/tags.html?tags=%E5%8F%8D%E8%BD%AC%E6%8E%A7%E5%88%B6" >
+        #反转控制
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="DI" rel="1"
+       href="/blog/tags.html?tags=DI" >
+        #DI
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="依赖注入" rel="1"
+       href="/blog/tags.html?tags=%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5" >
+        #依赖注入
+        <sup>1</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
+    <a href="/blog/web%E5%AE%89%E5%85%A8/2020/02/18/under-the-protection-of-csrf-token.html">
+        <h2 class="post-title">
+            在 csrf token 的保护之下
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Under the protection of csrf token
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <h4 id="-前情提要"># 前情提要</h4>
+
+<p>为了避免跨站请求在你不知情的情况下，对你的后端接口发一些恶意的增删改查请求，需要给来自前端页面的请求加上csrf token，来确保服务器能够识别这个请求真的是使用者自己发的。</p>
+
+<h4 id="-最初的思路"># 最初的思路</h4>
+
+<p>约定一个接口，在返回的时候给前端 vuex 的 state 里保存一个 csrf token，使前端在之后每次请求后端时都带着 token。即是一个由服务端生成 token ，并且于服务端进行校验的过程。采用了在响应时在前端的 cookies 里加入 csrf token 的方法，同时也一直有一个疑问：由于前端需要向后端请求一个 token，那么就必然会有一个接口会不需要校验 csrf token，那会不会存在不安全的可能。</p>
+
+<p>就当时的了解而言，csrf token 主要是保护那些重要的接口，比如增加、删除和修改；于是，对于一个单纯获取 csrf token 的接口而言，是不是可以不进行校验呢？答案是肯定的。因为，就算攻击者拿到了你的 csrf token，他还是需要知道你的 session id 才能通过后端的校验，也就是这个用来请求 csrf token 的接口相比较于其他，少了一些校验。并且，这个获取 csrf token 的接口一般而言都是和登录的功能绑定的，也就是你需要能够正常的登录（让服务端确认你就是使用者本人），才能获取 csrf token。然而，也是有那种获取 csrf token 的接口只是一个普通的接口的情况，那风险或许就会比较高了。</p>
+
+<h4 id="-谷歌到的解决方案"># 谷歌到的解决方案</h4>
+
+<p>下面的陈诉整理自参考资料的第 <a href="https://blog.techbridge.cc/2017/02/25/csrf-introduction/">[1]</a>,<a href="https://stackoverflow.com/questions/20504846/why-is-it-common-to-put-csrf-prevention-tokens-in-cookies">[2]</a>,<a href="https://security.stackexchange.com/questions/175536/does-a-csrf-cookie-need-to-be-httponly">[3]</a>项。</p>
+
+<ol>
+  <li>由服务端生成 csrf token，并通过 response header（或者通过 Set-Cookie）将 token 传递到前端，并且让之后需要前端需要校验的接口都带上。在服务端完成校验，校验成功前端接口的请求才会正常执行，否则会被后端拦截。
+    <ul>
+      <li>放在 header 里会容易被攻击者从别的 domain 进行获取，因此为以防万一还可以加上 Referer 校验。</li>
+      <li>放在 cookie 里面就不存在这个问题，因为攻击者是无法获取使用者domain下的 cookie 的，但是需要将 cookies 的 Http-only 设置为 false。目前，Django, AngualrJS 等都是采用这种方式。</li>
+      <li>一般比较普遍的做法是通过 Set-Cookie 向前端传递 csrf token。</li>
+    </ul>
+  </li>
+  <li>通过在 response body 里面加入 csrf token传递到前端，目前 Express 是采用这种方式。</li>
+  <li>Double Submit Cookie ，一种完全不用在服务端存东西的方法。也就是说不需要担心 session id 被盗取后，csrf token 也会失效？它的方法主要是，由服务端生成 csrf token 并且保存于前端的 cookie 中；当前端进行请求时，服务端会比较请求中带的 token 和他来自的 domain 下的 cookie 的 csrf token 值是否一致；也就是说，攻击者的请求（来自于另一个domain）一定无法通过校验 ，因为攻击者的 domain 下是无法存在一个 使用者 domian 的 cookie 的。当然，如果攻击者掌握了使用者的 domain，那就另当别论了，这个后面可以再深入了解下 ( -&gt; <a href="https://security.stackexchange.com/questions/59470/double-submit-cookies-vulnerabilities">double-submit-cookies-vulnerabilities</a> )。</li>
+</ol>
+
+<h4 id="-最终方案与检验"># 最终方案与检验</h4>
+
+<p>主要的环境，依托于某平台进行登录，并且需要自行解决跨站请求伪造攻击。将原来通过 Set-Cookie 传递 token 到前端的方法改成了，通过 response header 传递的方法，并且将 csrf token 保存于服务端的 session 中；另外由于，没有了登录校验来保护 csrf token 的获取，因此在每个请求又加上了 Refer 校验（设置拦截器，检查请求的 domain ）。</p>
+
+<p>并且，当下面几种情况发生时，服务端需要生成或更新 csrf token：</p>
+
+<p>（1）第一次登录平台，并开启服务页面时；</p>
+
+<p>（2）在平台的校验 token 更新时（即开启新的 session ），将 csrf token 更新，并且同步更新我们服务端自己的 session id。如此，就可以较好的保证平台 session 过期时我们的服务端也能获取新  token 和 新 session id，每次发请求的时候都是使用者我本人，一个伪造的请求很大概率会持有的是过期的 token 和 session id；</p>
+
+<p>当调用请求 token 的接口时，服务端 session 中的 token 与请求的 header 里所携带的不一致时，拦截请求。</p>
+
+<p><del>（感觉只要攻击者盗取了你的 session id，那么什么 csrf token 阿的阿猫阿狗，都没有什么软用。此时，就体现了 Refer 校验的重要性。当攻击者掌握了你的 domain，又知道你的 session id，感觉也就无力回天了；所以，每次登录后一定要记得登出）</del></p>
+
+<p>大概的伪代码如下，</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="rouge-code"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">getToken</span><span class="o">()</span> <span class="o">{</span>
+	<span class="k">if</span> <span class="o">(</span> <span class="kc">null</span> <span class="o">==</span> <span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">).</span><span class="na">equals</span><span class="o">()</span> <span class="o">||</span>		
+		<span class="n">cookiesSetByPlatformBeingRefreshed</span> <span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">newToken</span> <span class="o">=</span> <span class="n">generateNewToken</span><span class="o">();</span>
+		<span class="n">response</span><span class="o">.</span><span class="na">setHttpHeader</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">,</span> <span class="n">newToken</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoIntercept</span><span class="o">()</span> <span class="o">{</span>
+	<span class="k">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">()</span> <span class="n">not</span> <span class="n">in</span> <span class="n">ignores</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span>
+		<span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">).</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getHttpHeader</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">)))</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="o">}</span>
+	<span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>最后，通过使用 Burp Suite 请求拦截器来发送错误的 token 来检验接口的安全性。</p>
+
+<h4 id="-参考资料"># 参考资料</h4>
+
+<ol>
+  <li>https://blog.techbridge.cc/2017/02/25/csrf-introduction/</li>
+  <li>https://stackoverflow.com/questions/20504846/why-is-it-common-to-put-csrf-prevention-tokens-in-cookies</li>
+  <li>https://security.stackexchange.com/questions/175536/does-a-csrf-cookie-need-to-be-httponly</li>
+  <li>https://stackoverflow.com/questions/54258233/do-i-have-to-store-tokens-in-cookies-or-localstorage-or-session</li>
+</ol>
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        February 18, 2020 &nbsp;|&nbsp;
+        约8分钟读完
+        大约2776个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=Web安全" title="Web安全">Web安全&nbsp;</a>
+        
+
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-0-0"
+       title="csrf" rel="1"
+       href="/blog/tags.html?tags=csrf" >
+        #csrf
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="security" rel="1"
+       href="/blog/tags.html?tags=security" >
+        #security
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="session" rel="1"
+       href="/blog/tags.html?tags=session" >
+        #session
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="cookies" rel="1"
+       href="/blog/tags.html?tags=cookies" >
+        #cookies
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="httpheader" rel="1"
+       href="/blog/tags.html?tags=httpheader" >
+        #httpheader
+        <sup>1</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
+    <a href="/blog/%E5%89%8D%E7%AB%AF/2020/02/08/start-from-mutation-observer.html">
+        <h2 class="post-title">
+            从 MutationObserver 开始
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Start from MutationObserver
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <p><img src="/blog/img/in-post/mutationObserver.png" alt="mutationObserver" /></p>
+
+<p>本文阐述对一则 <a href="https://stackoverflow.com/a/38153639">stackoverflow</a> 回答的理解。</p>
+
+<h3 id="前情提要">前情提要</h3>
+
+<p>事情是这样的，在建站初fork的博客在标签云归档的地方使用了<strong><a href="https://github.com/kitian616/jekyll-TeXt-theme"> jekyll-TeXt-theme</a></strong>，好死不死我想给归档加入一个分页的功能，并且还要再列表中每个文章标题的下面加入该文所包含的标签列表，而且标签还要带有超链接。如下图，</p>
+
+<p><img src="/blog/img/in-post/tag-cloud-example.png" alt="tagCloud" /></p>
+
+<p>于是就需要将原先 js 代码控制的标签点击事件得到的 html 传入自建的 vue.js 的组件，以使用BootstrapVue 中的分页插件。据了解 <a href="https://stackoverflow.com/a/56067320">[1] </a><a href="https://github.com/sverrirs/jekyll-paginate-v2/issues/9">[2]</a> 这么的麻烦是因为，gh-pages所支持的插件 jekyll-pagination 版本没有支持对标签或类别的分页。<a href="https://pages.github.com/versions/">这里</a>有一份 gh-pages 支持的插件版本。当然，下面也有人回答解决办法，但是我有看，却还没有懂 …</p>
+
+<p>所以，又经过了一系列谷歌后，决定通过混合别的插件来实现分页的功能，即使用BootstrapVue中的组件。<a href="https://bootstrap-vue.js.org/docs/components/pagination/">组件的文档</a>很全，但是要混合原来的代码使用的话，就需要将原先 每次由点击事件修改的文章标题列表注入 vue.js 中，以及了解 js 代码和 vue.js 代码如何互相交互。那就需要用到，基于 vue 中的 slot api，它的作用主要是在组件间传递 html 代码。</p>
+
+<h3 id="解决办法">解决办法</h3>
+
+<p>原回答提供了两种方案在 vue 组件中监听 slot 变量的变化。</p>
+
+<p>（1）使用 vue 来 $emit 事件</p>
+
+<p>​		需要使用三个 vue 组件来控制，当一个 vue 组件中的 html 有修改，由一个专门触发事件的组件来触发 slot 值修改的事件，给另一个组件接收，以此来达到对 slot 值修改的监听。</p>
+
+<p>（2）使用 MutationObserver</p>
+
+<p>​		不需要两个vue组件，而是能够直接监听某部分html ( DOM tree ) 的修改。由于需要监听修改，并根据修改来修改 vue 组件的变量来是 BootstrapVue 进行分页操作，所以需要将 MutationObserver 放置在 vue.js 的 mounted 中进行监听，通常我们将组件被挂载后需要执行的代码放在那里。</p>
+
+<hr />
+
+<p>另外，由于是将点击事件修改后的 html 传入 vue 组件进行分页，所以由此生成的html的标签按钮并没有在原来的点击事件的监听中，于是还需要重新绑定点击事件。这就涉及到需要等经过分页处理的 html 生成之后在进行绑定。原始的 js 代码使用了 $( document ).ready() 来实现，但是我实际在 vue 组件中使用时还是无法达到我要的效果。经过谷歌，window.onload() 事件和 (document).ready() 事件在 vue 组件中使用并不像在原来 js 代码中那样直接。于是，此处使用了 vue.js 的 updated <a href="https://vuejs.org/v2/api/#updated">api</a>，通常我们将由变量修改所引起的 virtual DOM 变化后需要进行的操作放在那里。</p>
+
+<p>综上，我将对原始代码的标签点击事件造成的 DOM tree 修改的监听放在 vue 组建的 mounted 里，使用 MutationObserver来监听；而在 vue 组件的 updated 中，重新绑定对修改后 DOM tree 中标签的点击事件。</p>
+
+<p>​</p>
+
+<p>参考</p>
+
+<ol>
+  <li><a href="https://stackoverflow.com/questions/38148297/in-vue-js-can-a-component-detect-when-the-slot-content-changes/38153639#38153639">https://stackoverflow.com/questions/38148297/in-vue-js-can-a-component-detect-when-the-slot-content-changes/38153639#38153639</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver">https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver</a></li>
+  <li><a href="https://javascript.ruanyifeng.com/dom/mutationobserver.html">https://javascript.ruanyifeng.com/dom/mutationobserver.html</a></li>
+</ol>
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        February 8, 2020 &nbsp;|&nbsp;
+        约5分钟读完
+        大约1471个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=前端" title="前端">前端&nbsp;</a>
+        
+
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-0-0"
+       title="MutationObserver" rel="1"
+       href="/blog/tags.html?tags=MutationObserver" >
+        #MutationObserver
+        <sup>1</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
+    <a href="/blog/2020/02/07/first-post-on-birthday.html">
+        <h2 class="post-title">
+            '第一篇博文'
+        </h2>
+        
+        <h3 class="post-subtitle">
+            'First post'
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <h1 id="事情是这样的主角的剑断了于是他开始了搬砖为了自己的剑成为了工地打杂">事情是这样的，主角的剑断了，于是他开始了搬砖，为了自己的剑，成为了工地打杂。</h1>
+
+<p>此博客目前采用 jekyll + vue + webpack 构建。刚开始遇到了很多的问题。比如：</p>
+
+<ol>
+  <li>
+    <p>博客项目的架构应该要怎么安排，自动构建和脚手架都应该要怎么使用(Grunt/Gulp/Yeoman)；</p>
+  </li>
+  <li>
+    <p>如何在 jekyll 中加入 vue 的组件，比如在 jekyll 构建中使用 BootstrapVue 的分页插件 B-Pagination；</p>
+  </li>
+  <li>
+    <p>如何把 js 处理后的 html  作为变量在传回去给vue组件；</p>
+  </li>
+  <li>
+    <p>vue框架的生命周期；</p>
+  </li>
+  <li>
+    <p>标签云和其他 jquery 插件的使用；</p>
+  </li>
+  <li>
+    <p>Medium 和 Matters 是什么东西；</p>
+
+    <p>……</p>
+  </li>
+</ol>
+
+<p>感觉，每个都可以用力的研究下。</p>
+
+<p>经过了来来回回的谷歌和断点调试，终于在今天很不容易地把施工现场布置地有一个雏形。</p>
+
+<p>两柄锋利的剑撞击，可能会有两柄短剑。但是，主角的剑从来就只有一把，来的不明不白。</p>
+
+<p>​		……</p>
+
+<p>主角的剑断了，但是血瓶和啥还是有的，满满的摆放在施工现场。他为了剑，会把带不走的选择放弃。他为了剑，一砖一瓦，一篇篇，一遍遍，</p>
+
+<p>​		……</p>
+
+<p>反派死于话多，江湖无名再见。</p>
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        February 7, 2020 &nbsp;|&nbsp;
+        约2分钟读完
+        大约456个字
+
+        
+
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-0-0"
+       title="主角" rel="1"
+       href="/blog/tags.html?tags=%E4%B8%BB%E8%A7%92" >
+        #主角
+        <sup>1</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
+    <a href="/blog/mysql/2020/01/19/Mysql-%E6%8F%90%E5%8F%96%E6%A0%8F%E4%BD%8D%E4%B8%ADjson%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%80%BC.html">
+        <h2 class="post-title">
+            Mysql提取json中的数据-笔记
+        </h2>
+        
+        <h3 class="post-subtitle">
+            extracting data from json string in Mysql
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <p>MySQL的功能还是很强大的，竟可以在 select 的同时解析 json 字符串，从中提取所需要的数据。恰好用到相关 api 来处理 嵌套 json 和 json 嵌套 json array 的情况，所以下面简单记录下 api 的使用方法，大多数内容是从<a href="https://dev.mysql.com/doc/refman/5.7/en/json.html">官网</a>整理而来。（因为有些东西它可能用一次，然后就会忘记了。）</p>
+
+<p>table_name = my_table</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">id</th>
+      <th style="text-align: center">sample_json_str</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">sample_json_str_1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">sample_json_str_2</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre></td><td class="rouge-code"><pre><span class="err">//</span><span class="w"> </span><span class="err">纯捏造范例数据</span><span class="w"> </span><span class="err">sample_json_str</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contact_book_female_middle_school"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"dates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"expired"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-09-11"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"updated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-09-11"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"info"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lisa"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"woman"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"上海"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"small_country"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"road"</span><span class="p">:</span><span class="w"> </span><span class="s2">"small_road"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"phone_numbers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"home"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1234</span><span class="p">,</span><span class="w"> </span><span class="mi">5678</span><span class="p">],</span><span class="w">
+        </span><span class="nl">"work"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">9101112</span><span class="p">,</span><span class="w"> </span><span class="mi">13141516</span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"nicknames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Lis"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Liz"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Lizzy"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Lili"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"woman"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"北京"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mountain_country"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"road"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mountain_road"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"phone_numbers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"home"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1234</span><span class="p">,</span><span class="w"> </span><span class="mi">5678</span><span class="p">,</span><span class="w"> </span><span class="mi">12345678</span><span class="p">],</span><span class="w">
+        </span><span class="nl">"work"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1314</span><span class="p">,</span><span class="w"> </span><span class="mi">520</span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"nicknames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Mary"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Mae"</span><span class="p">,</span><span class="w"> </span><span class="s2">"May"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Maria"</span><span class="p">]</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>需要将数据提取出来变成： sheet_name = “contact”, col = [ name, nickname1, nickname2, … , gender, address_concated, phone_number_home1, phone_number_home2, … , phone_number_work1, … , phone_number2, … , ]</p>
+
+<pre><code class="language-mysql">SELECT id,
+	json_extract( t.sample_json_str, '$.source' ) AS name,
+	json_extract( t.sample_json_str, '$.dates.expired' ) AS expired_date,
+	json_extract( t.sample_json_str, '$.dates.created' ) AS created_date,
+	 
+	-- 需要提取 name-city-phoneNumberWork 格式的数据
+  REPLACE(REPLACE(REPLACE(REPLACE(
+     JSON_EXTRACT(`contacts`, '$.info[0].name', '$.info[0].address.city',
+          '$.info[0].phone_numbers.work[0]'),
+          '[', ''), ']', ''), '\"', ''), ', ', '-') AS first_girl_infos,
+
+  -- 字符串替换 woman-&gt;girl, man-&gt;boy
+  CASE 
+  	WHEN JSON_EXTRACT(`contacts`, '$.info[0].gender') = 'woman' THEN 'girl'
+  	WHEN JSON_EXTRACT(`contacts`, '$.info[0].gender') = 'man' THEN 'boy'
+  	ELSE 'UNK'
+  END AS gender
+        
+FROM my_table;
+	
+-- demo: https://rextester.com/OUQFX46681
+</code></pre>
+
+<p><strong>划重点</strong></p>
+
+<ul>
+  <li>
+    <p>’$**.target_field’ 代表满足 key=target_field 的任意路径</p>
+  </li>
+  <li>
+    <p>仍然存在的问题：</p>
+
+    <ul>
+      <li>
+        <p>只取了第一个 gril 的信息出来，若里面每个 girl 都要取，数据无法按行排并且也无法事先知道有几个。</p>
+      </li>
+      <li>
+        <p>两列中的 array 数据可以做 element-wise 拼接？</p>
+
+        <ul>
+          <li>
+            <p>CONCAT() 能直接拼接两列字符串数据，例如：</p>
+
+            <pre><code class="language-mysql">SELECT CONCAT(`name`, ' ', `email`) as password_email FROM `table`;
+</code></pre>
+          </li>
+          <li>Python 里面的 numpy 可以实现</li>
+          <li>MySQL 无法实现，比较正确的做法应该使用多张表，然后建立外键来关联。况且MySQL也并没有 Array 这种数据形态。
+            <ul>
+              <li>相关参考资料
+                <ul>
+                  <li>https://stackoverflow.com/questions/17371639/how-to-store-arrays-in-mysql 建议不要使用array</li>
+                  <li>https://dba.stackexchange.com/questions/252554/storing-arrays-in-mysql</li>
+                  <li>https://makitweb.com/how-to-store-array-in-mysql-with-php/</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>参考资料</strong></p>
+
+<ul>
+  <li><a href="https://dev.mysql.com/doc/refman/8.0/en/comments.html">https://dev.mysql.com/doc/refman/8.0/en/comments.html</a></li>
+</ul>
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        January 19, 2020 &nbsp;|&nbsp;
+        约7分钟读完
+        大约2242个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=MySQL" title="MySQL">MySQL&nbsp;</a>
+        
+
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-4-medium"
+       title="学习笔记" rel="7"
+       href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" >
+        #学习笔记
+        <sup>7</sup>
+    </a><a class="tag-button tag-0-0"
+       title="json_extract" rel="1"
+       href="/blog/tags.html?tags=json_extract" >
+        #json_extract
+        <sup>1</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
+    <a href="/blog/%E5%90%8E%E7%AB%AF/java/wiki/2020/01/11/Java-%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E7%B3%96.html">
+        <h2 class="post-title">
+            Java 常用语法糖整理
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Java 常用语法糖整理
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <h3 id="释义">释义</h3>
+
+<p>语法糖，指的是能让程序员更容易表达逻辑的语法，方便开发。</p>
+
+<p>语法盐，指的是程序语言中的防呆设计。</p>
+
+<p>语法糖精，程序语言的过度设计，让编程变得不直观。</p>
+
+<h3 id="举例---常用java语法糖">举例 - 常用Java语法糖</h3>
+
+<ul>
+  <li>
+    <p>switch支持 String 与枚举类型</p>
+  </li>
+  <li>
+    <p>泛型</p>
+  </li>
+  <li>
+    <p>自动装箱与拆箱：原始类型与对应的封装类互相转换。</p>
+  </li>
+  <li>
+    <p>方法变长参数：允许函数传一个或者多个参数，且写法是一样的。</p>
+  </li>
+  <li>
+    <p>枚举</p>
+  </li>
+  <li>
+    <p>内部类</p>
+  </li>
+  <li>
+    <p>条件编译断言</p>
+  </li>
+  <li>
+    <p>数值字面量</p>
+  </li>
+  <li>
+    <p>for-each</p>
+  </li>
+  <li>
+    <p>try-with-resource</p>
+  </li>
+  <li>
+    <p>Lambda表达式</p>
+
+    <p>https://stackoverflow.com/questions/47407180/do-lambda-expressions-have-any-use-other-than-saving-lines-of-code</p>
+  </li>
+</ul>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+  <li><a href="https://zhuanlan.zhihu.com/p/65696212">https://zhuanlan.zhihu.com/p/65696212</a></li>
+  <li><a href="https://www.cnblogs.com/qingshanli/p/9375040.html">https://www.cnblogs.com/qingshanli/p/9375040.html</a></li>
+  <li><a href="https://juejin.im/post/5e3147fdf265da3e3113a7b2">https://juejin.im/post/5e3147fdf265da3e3113a7b2</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/65696212">https://zhuanlan.zhihu.com/p/65696212</a></li>
+</ol>
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        January 11, 2020 &nbsp;|&nbsp;
+        约2分钟读完
+        大约493个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=后端" title="后端">后端&nbsp;</a>
+        &nbsp;
+        <a href="/blog/categories.html?categories=Java" title="Java">Java&nbsp;</a>
+        &nbsp;
+        <a href="/blog/categories.html?categories=wiki" title="wiki">wiki&nbsp;</a>
+        
+
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-4-medium"
+       title="学习笔记" rel="7"
+       href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" >
+        #学习笔记
+        <sup>7</sup>
+    </a><a class="tag-button tag-0-0"
+       title="语法糖" rel="2"
+       href="/blog/tags.html?tags=%E8%AF%AD%E6%B3%95%E7%B3%96" >
+        #语法糖
+        <sup>2</sup>
+    </a><a class="tag-button tag-0-0"
+       title="Syntactic-sugar" rel="2"
+       href="/blog/tags.html?tags=Syntactic-sugar" >
+        #Syntactic-sugar
+        <sup>2</sup>
+    </a><a class="tag-button tag-0-0"
+       title="语法盐" rel="1"
+       href="/blog/tags.html?tags=%E8%AF%AD%E6%B3%95%E7%9B%90" >
+        #语法盐
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="语法糖精" rel="1"
+       href="/blog/tags.html?tags=%E8%AF%AD%E6%B3%95%E7%B3%96%E7%B2%BE" >
+        #语法糖精
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="Syntactic-salt" rel="1"
+       href="/blog/tags.html?tags=Syntactic-salt" >
+        #Syntactic-salt
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="Syntatctic-saccharin" rel="1"
+       href="/blog/tags.html?tags=Syntatctic-saccharin" >
+        #Syntatctic-saccharin
+        <sup>1</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
+    <a href="/blog/elasticsearch/%E4%B8%AD%E9%97%B4%E4%BB%B6/2019/12/09/TODO-ElasticSearch%E7%88%B6%E5%AD%90%E6%96%87%E6%A1%A3md.html">
+        <h2 class="post-title">
+            ElasticSearch父子文档结构 vs. Nested 结构
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Parent-Child Structure vs. Nested Structure
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <p>MySQL “LIKE %keyword% “ 是一个全表的操作，检索效率差，除非将数据取出放在内存备用，但是随着数据量的上升，内存将无法负荷。因此，ElasticSearch 作为一个基于 Lucene 的分布式搜寻引擎已然是一个热门的大数据分析中间件。下面介绍 ES 中的两种数据结构：</p>
+
+<h3 id="父子文档结构">父子文档结构</h3>
+
+<p>类似于关系型数据库中的一对多关系，一个父文档可以对应多个子文档。</p>
+
+<h3 id="nested-结构">Nested 结构</h3>
+
+<h3 id="对比图">对比图</h3>
+
+<p>来源: rockybean 教程</p>
+
+<p><img src="img/in-post/es-parent-child-vs-nested.png" alt="" /></p>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+  <li><a href="https://zhuanlan.zhihu.com/p/32112952">https://zhuanlan.zhihu.com/p/32112952</a></li>
+  <li><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/parent-child.html">https://www.elastic.co/guide/cn/elasticsearch/guide/current/parent-child.html</a></li>
+  <li><a href="https://blog.csdn.net/laoyang360/article/details/82950393">https://blog.csdn.net/laoyang360/article/details/82950393</a></li>
+  <li><a href="https://blog.csdn.net/u010454030/article/details/77840606">https://blog.csdn.net/u010454030/article/details/77840606</a></li>
+  <li><a href="https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742">https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742</a></li>
+  <li><a href="https://stackoverflow.com/questions/49941244/elastic-search-parent-child-vs-nested-document">https://stackoverflow.com/questions/49941244/elastic-search-parent-child-vs-nested-document</a></li>
+  <li><a href="https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742">https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742</a></li>
+</ol>
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        December 9, 2019 &nbsp;|&nbsp;
+        约2分钟读完
+        大约670个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=ElasticSearch" title="ElasticSearch">ElasticSearch&nbsp;</a>
+        &nbsp;
+        <a href="/blog/categories.html?categories=中间件" title="中间件">中间件&nbsp;</a>
+        
+
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-4-medium"
+       title="学习笔记" rel="7"
+       href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" >
+        #学习笔记
+        <sup>7</sup>
+    </a><a class="tag-button tag-0-0"
+       title="ES" rel="1"
+       href="/blog/tags.html?tags=ES" >
+        #ES
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="MySQL" rel="1"
+       href="/blog/tags.html?tags=MySQL" >
+        #MySQL
+        <sup>1</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
+    <a href="/blog/%E5%89%8D%E7%AB%AF/javascript/2019/10/19/Javascript-%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E7%B3%96%E6%95%B4%E7%90%86.html">
+        <h2 class="post-title">
+            [更新中] Javascript-常用语法糖整理
+        </h2>
+        
+        <h3 class="post-subtitle">
+            [Updating] Javascript-common-syntactic-sugar
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <p>最近需要用到一些前端代码，所以赶紧来看看相关的语法糖，加速开发。</p>
+
+<h3 id="this">this</h3>
+
+<p>在 js 的代码中，在没有任何知识的前提下，最让人费解的就是 var self = this; 这段代码了。后来了解到，它的出现其实和代码中的作用域有关：</p>
+
+<ul>
+  <li>在一个<strong>对象内部</strong>，this指向的是这个对象；</li>
+  <li>在普通函数内部，this指向的是 Window Object；</li>
+  <li>在没有被赋值给变量的匿名函数中，this 指向了 Window Object；</li>
+  <li>并且，在层叠函数中，内层函数会有新的作用域，this 的指向也会发生改变；</li>
+</ul>
+
+<h3 id="bindthis">.bind(this)</h3>
+
+<p>如果你觉得 var self = this; 太麻烦，每次还得多加一行，你也可以使用 .bind(this) 来达到一眼一样的目的。使用方法：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">timer</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">seconds</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="c1">// var self = this;</span>
+  <span class="nx">start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+      <span class="c1">// self.seconds++</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">seconds</span><span class="o">++</span>
+    <span class="p">},</span> <span class="mi">1000</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">timer</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nx">seconds</span><span class="p">)</span>
+<span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">3500</span><span class="p">)</span>
+
+<span class="c1">// the bind function 其实就是返回了一个带有 this 作用域的新的方法。</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="语法糖箭头函数">语法糖：箭头函数</h3>
+
+<p>箭头函数也可以有这个效果，匿名函数中的 this 不再指向 Window，而是指向声明它的对象。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">timer</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">seconds</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nx">start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">seconds</span><span class="o">++</span>
+    <span class="p">},</span> <span class="mi">1000</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">timer</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nx">seconds</span><span class="p">)</span>
+<span class="p">},</span> <span class="mi">3500</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="语法糖解构赋值">语法糖：解构赋值</h3>
+
+<h3 id="语法糖剩余参数和拓展符">语法糖：剩余参数和拓展符</h3>
+
+<h3 id="语法糖模板字符串">语法糖：模板字符串</h3>
+
+<h3 id="语法糖let--const-声明">语法糖：let &amp; const 声明</h3>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+  <li><a href="https://ponyfoo.com/books/practical-modern-javascript"><strong>《Pratical Modern JavaScript》</strong></a></li>
+  <li><a href="https://stackoverflow.com/questions/337878/var-self-this"><strong>https://stackoverflow.com/questions/337878/var-self-this</strong></a></li>
+  <li><a href="https://segmentfault.com/a/1190000010159725">https://segmentfault.com/a/1190000010159725</a></li>
+  <li><a href="https://pjchender.blogspot.com/2016/03/javascriptthisbug.html">https://pjchender.blogspot.com/2016/03/javascriptthisbug.html</a></li>
+</ol>
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        October 19, 2019 &nbsp;|&nbsp;
+        约3分钟读完
+        大约1000个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=前端" title="前端">前端&nbsp;</a>
+        &nbsp;
+        <a href="/blog/categories.html?categories=Javascript" title="Javascript">Javascript&nbsp;</a>
+        
+
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-4-medium"
+       title="学习笔记" rel="7"
+       href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" >
+        #学习笔记
+        <sup>7</sup>
+    </a><a class="tag-button tag-0-0"
+       title="ES5" rel="1"
+       href="/blog/tags.html?tags=ES5" >
+        #ES5
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="ES6" rel="1"
+       href="/blog/tags.html?tags=ES6" >
+        #ES6
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="语法糖" rel="2"
+       href="/blog/tags.html?tags=%E8%AF%AD%E6%B3%95%E7%B3%96" >
+        #语法糖
+        <sup>2</sup>
+    </a><a class="tag-button tag-0-0"
+       title="Syntactic-sugar" rel="2"
+       href="/blog/tags.html?tags=Syntactic-sugar" >
+        #Syntactic-sugar
+        <sup>2</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
+    <a href="/blog/java/2019/10/02/java-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%B8%A6%E6%9C%89iterable%E7%B1%BB%E5%9E%8Bfield%E7%9A%84%E5%AF%B9%E8%B1%A1.html">
+        <h2 class="post-title">
+            Java中反序列化带有Iterable类型field的对象?
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Shouldn't deserialzing a instance contained a Iterable field in Java
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <h3 id="前情提要">前情提要</h3>
+
+<pre><code class="language-Java">Device sampleDevice = JSON.parseObject(str1, Device.class);
+</code></pre>
+
+<p>在使用 fastjson 将字符串直接反序列化 Java 对象的时候（而不是通过 JSON 一个 feild 一个 feild 的解析来构造 pojo，遇到复杂对象会很难让人看懂代码写的是啥），遇到了报错:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="nc">Exception</span> <span class="n">in</span> <span class="n">thread</span> <span class="s">"main"</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">JSONException</span><span class="o">:</span> <span class="n">syntax</span> <span class="n">error</span><span class="o">,</span> <span class="n">expect</span> <span class="o">{,</span> <span class="n">actual</span> <span class="o">[,</span> <span class="n">pos</span> <span class="mi">105</span><span class="o">,</span> <span class="n">fieldName</span> <span class="n">fun</span><span class="o">,</span> <span class="n">fastjson</span><span class="o">-</span><span class="n">version</span> <span class="mf">1.2</span><span class="o">.</span><span class="mi">47</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">JavaBeanDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">JavaBeanDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">451</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">JavaBeanDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">JavaBeanDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">271</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">JavaBeanDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">JavaBeanDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">267</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">DefaultJSONParser</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="nc">DefaultJSONParser</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">661</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">MapDeserializer</span><span class="o">.</span><span class="na">parseMap</span><span class="o">(</span><span class="nc">MapDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">192</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">MapDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">MapDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">59</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">MapDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">MapDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">41</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">FastjsonASMDeserializer_1_Device</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">Unknown</span> <span class="nc">Source</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">JavaBeanDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">JavaBeanDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">267</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">DefaultJSONParser</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="nc">DefaultJSONParser</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">661</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="no">JSON</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">365</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="no">JSON</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">269</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="no">JSON</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">488</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">serialization_tutorial</span><span class="o">.</span><span class="na">main</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="n">main</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">53</span><span class="o">)</span>
+
+<span class="nc">Process</span> <span class="n">finished</span> <span class="n">with</span> <span class="n">exit</span> <span class="n">code</span> <span class="mi">1</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>意思大概是 fieldName fun 里面的数据无法正常解析，这是因为 fun 所对应的数据形态是一个 Iterable，导致 fastjson 无法解析。范例代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre></td><td class="rouge-code"><pre><span class="nd">@Builder</span>
+<span class="nd">@NoArgsConstructor</span>
+<span class="nd">@AllArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Device</span> <span class="o">{</span>
+	<span class="nd">@Getter</span>
+	<span class="nd">@Setter</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">deviceNo</span><span class="o">;</span>
+
+	<span class="nd">@Getter</span>
+	<span class="nd">@Setter</span>
+	<span class="kd">private</span> <span class="nc">GradeWithValue</span> <span class="n">grade</span><span class="o">;</span>
+
+	<span class="nd">@Getter</span>
+	<span class="nd">@Setter</span>
+	<span class="kd">private</span> <span class="nc">Status</span> <span class="nc">Status</span><span class="o">;</span>
+
+	<span class="nd">@Getter</span>
+	<span class="nd">@Setter</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">description</span><span class="o">;</span>
+
+	<span class="nd">@Getter</span>
+	<span class="nd">@Setter</span>
+	<span class="kd">private</span> <span class="nc">Timezone</span> <span class="n">timeZone</span><span class="o">;</span>
+
+	<span class="nd">@Getter</span>
+	<span class="nd">@Setter</span>
+	<span class="c1">//	@JSONField(serializeUsing=SupportAppNamesCodec.class, deserializeUsing=SupportAppNamesCodec.class)</span>
+	<span class="kd">private</span> <span class="nc">HashMap</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Iterator</span><span class="o">&lt;</span><span class="nc">AppName</span><span class="o">&gt;&gt;</span> <span class="n">supportAppNames</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">Device</span> <span class="o">(</span><span class="nc">String</span> <span class="n">deviceNo</span><span class="o">,</span> <span class="nc">GradeWithValue</span> <span class="n">grade</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">deviceNo</span> <span class="o">=</span> <span class="n">deviceNo</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">grade</span> <span class="o">=</span> <span class="n">grade</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="解决方法">解决方法</h3>
+
+<ol>
+  <li>
+    <p>将反序列化逻辑封装在自定义的 deserializer 和 serializer，并通过注解指定 fastjson 在序列化/反序列化的时候使用的工具类。这种方法代码需根据实际业务修改，只是将原本的 JSON 字符串反序列化操作进行封装，代码无法复用。</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nd">@JSONField</span><span class="o">(</span><span class="n">serializeUsing</span><span class="o">=</span><span class="nc">SupportAppNamesCodec</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">deserializeUsing</span><span class="o">=</span><span class="nc">SupportAppNamesCodec</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>在类中添加某个 List 属性时，为了不让调用者直接通过引用修改数据，所以将 get 方法设计成返回一个不可变集合</p>
+
+    <ul>
+      <li>
+        <p>返回 Iterable (记得要 disable the remove api, 其实就是 Collections.unmodifiableList) ，或者 Enumeration</p>
+
+        <p>在类中添加某个 List 属性时，为了不让调用者进行修改，所以在该属性的 get 方法时实际返回的是一个 Iterable，即 List 所实现的一个接口，get 方法封装了类对于该属性的实现。因为 Iterable 接口中方法只包含用于遍历的相关方法，不包含改变内部元素的方法。如果 get 方法返回的是 List 类型，那么就暴露了类使用 List 来储存该属性，并且调用者可以简单地通过得到的 List 对象来对类实例的内部数据进行修改，容易发生危险的事情。</p>
+      </li>
+      <li>
+        <p>返回 java.util.Collections.unmodifiableList，在下面的 <a href="https://softwareengineering.stackexchange.com/questions/316234/how-to-design-an-iterable-but-immutable-read-only-collection">stackexchange</a> 里有说明。当一下搬运工。</p>
+
+        <pre><code class="language-Java">public class Event {
+     
+  private List&lt;Player&gt; players;
+     
+  public List&lt;Player&gt; getPlayers() {
+    return Collections.unmodifiableList(players);
+  }
+     
+  public void addPlayer(Player p) {
+    players.add(p);
+  }
+}
+</code></pre>
+      </li>
+      <li>
+        <p>返回 Guava’s <a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/collect/ImmutableList.html">com.google.common.collect.ImmutableList</a> (进一步保证了 thread-safe)</p>
+
+        <pre><code class="language-Java">	public ImmutableList&lt;Timezone&gt; getSupportedTimezone() {
+		return ImmutableList.copyOf(supportedTimezone);
+	}
+</code></pre>
+
+        <p>另外，fastJson 不支持直接反序列化 ImmutableList。<a href="https://github.com/alibaba/fastjson/issues/1907">[3]</a></p>
+
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre><span class="nc">Exception</span> <span class="n">in</span> <span class="n">thread</span> <span class="s">"main"</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">JSONException</span><span class="o">:</span> <span class="n">create</span> <span class="n">instance</span> <span class="n">error</span><span class="o">,</span> <span class="kd">class</span> <span class="nc">com</span><span class="o">.</span><span class="na">google</span><span class="o">.</span><span class="na">common</span><span class="o">.</span><span class="na">collect</span><span class="o">.</span><span class="na">ImmutableList</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">TypeUtils</span><span class="o">.</span><span class="na">createCollection</span><span class="o">(</span><span class="nc">TypeUtils</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">2082</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">FastjsonASMDeserializer_2_AppName</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">Unknown</span> <span class="nc">Source</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">JavaBeanDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">JavaBeanDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">267</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">DefaultJSONParser</span><span class="o">.</span><span class="na">parseArray</span><span class="o">(</span><span class="nc">DefaultJSONParser</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">747</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">serializer</span><span class="o">.</span><span class="na">CollectionCodec</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">CollectionCodec</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">129</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">DefaultJSONParser</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="nc">DefaultJSONParser</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">661</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">MapDeserializer</span><span class="o">.</span><span class="na">parseMap</span><span class="o">(</span><span class="nc">MapDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">192</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">MapDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">MapDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">59</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">MapDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">MapDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">41</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">DefaultFieldDeserializer</span><span class="o">.</span><span class="na">parseField</span><span class="o">(</span><span class="nc">DefaultFieldDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">86</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">JavaBeanDeserializer</span><span class="o">.</span><span class="na">parseField</span><span class="o">(</span><span class="nc">JavaBeanDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">1078</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">JavaBeanDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">JavaBeanDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">773</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">JavaBeanDeserializer</span><span class="o">.</span><span class="na">parseRest</span><span class="o">(</span><span class="nc">JavaBeanDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">1283</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">FastjsonASMDeserializer_1_Device</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">Unknown</span> <span class="nc">Source</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">deserializer</span><span class="o">.</span><span class="na">JavaBeanDeserializer</span><span class="o">.</span><span class="na">deserialze</span><span class="o">(</span><span class="nc">JavaBeanDeserializer</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">267</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">parser</span><span class="o">.</span><span class="na">DefaultJSONParser</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="nc">DefaultJSONParser</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">661</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="no">JSON</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">365</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="no">JSON</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">269</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="no">JSON</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">488</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">serialization_tutorial</span><span class="o">.</span><span class="na">main</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="n">main</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">54</span><span class="o">)</span>
+      
+<span class="nc">Process</span> <span class="n">finished</span> <span class="n">with</span> <span class="n">exit</span> <span class="n">code</span> <span class="mi">1</span>  
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="结论">结论</h3>
+
+<p>不要对 Iterable、ImmutableList 进行反序列化，非常反人类。直接在 get 方法返回你想要的数据形态就可以啦~ fastJson 解析 json 字符串的时候是首先根据 set 方法的数据形态，然后根据 field 的数据形态来决定的，而 get 方法貌似只要能正常得到数据都是可以的。</p>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+  <li><a href="https://softwareengineering.stackexchange.com/questions/316234/how-to-design-an-iterable-but-immutable-read-only-collection">https://softwareengineering.stackexchange.com/questions/316234/how-to-design-an-iterable-but-immutable-read-only-collection</a></li>
+  <li><a href="https://softwareengineering.stackexchange.com/questions/318696/should-i-return-iterable-or-enumeration-in-java">https://softwareengineering.stackexchange.com/questions/318696/should-i-return-iterable-or-enumeration-in-java</a></li>
+  <li><a href="https://github.com/alibaba/fastjson/issues/1907">https://github.com/alibaba/fastjson/issues/1907</a></li>
+  <li><a href="https://czjxy881.github.io/踩坑经验/一个-FastJSON-反序列化泛型的问题/">https://czjxy881.github.io/踩坑经验/一个-FastJSON-反序列化泛型的问题/</a></li>
+  <li><a href="https://juejin.im/post/5afa250ef265da0b7e0c6636">https://juejin.im/post/5afa250ef265da0b7e0c6636</a></li>
+</ol>
+
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        October 2, 2019 &nbsp;|&nbsp;
+        约17分钟读完
+        大约5736个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=Java" title="Java">Java&nbsp;</a>
+        
+
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-4-medium"
+       title="学习笔记" rel="7"
+       href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" >
+        #学习笔记
+        <sup>7</sup>
+    </a><a class="tag-button tag-0-0"
+       title="反序列化" rel="1"
+       href="/blog/tags.html?tags=%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96" >
+        #反序列化
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="Iterable" rel="1"
+       href="/blog/tags.html?tags=Iterable" >
+        #Iterable
+        <sup>1</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
+    <a href="/blog/web%E5%AE%89%E5%85%A8/2019/09/19/session-cookie-jwt-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html">
+        <h2 class="post-title">
+            Session, JWT, Cookie 学习笔记
+        </h2>
+        
+        <h3 class="post-subtitle">
+            My note for Session, JWT, Cookie 学习
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <h3 id="session">Session</h3>
+
+<p>为维护无状态的 HTTP 请求之间的关联。每位用户的 Session 在他们第一次访问 (登录) 的时候建立，在服务端记录用户信息来跟踪整个会话。</p>
+
+<p>客户端需要保存一个 Session id，在请求服务端时带上，使得自己能够被识别。通常保存在 Cookie 中（maxAge=-1，设定为暂存的），或者将 Session id 信息重写到 URL 中。</p>
+
+<p><strong>Session id 应该保存在哪里会比较安全呢？</strong></p>
+
+<p>是在 url 中重写，还是保存在 Cookie 中？</p>
+
+<p>一般是保存在 Cookie 中，然后设定为 secure=true，HttpOnly=true ( 防御可能存在的 XSS 漏洞)。</p>
+
+<h3 id="cookie">Cookie</h3>
+
+<p>在客户端记录信息以确认用户身份。</p>
+
+<p>一个永久登录的案例 (https://blog.csdn.net/fangaoxin/article/details/6952954 发布于 2011-11-09 )。其实现方式有：</p>
+
+<ul>
+  <li>将能够验证登录的信息保存在 Cookie 中，于是下次浏览页面的时候，服务端只需比较 Cookie 中的信息和数据库中的信息就可以知道，是不是已经登录了。</li>
+  <li>把账号和加密后的账号保存到 Cookie 中，下次浏览页面的时候，只需要比较 Cookie 中的账号通过秘钥加密后是否与 Cookie 中的 ssid 相等。(代码如下)</li>
+</ul>
+
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> pageEncoding=</span><span class="s">"UTF-8"</span><span class="na"> isErrorPage=</span><span class="s">"false"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%!</span> <span class="c1">// JSP方法</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">KEY</span> <span class="o">=</span><span class="s">":cookie@helloweenvsfei.com"</span><span class="o">;</span> <span class="c1">// 密钥 </span>
+
+  <span class="c1">// MD1 加密算法，不可逆</span>
+  <span class="kd">public</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">calcMD1</span><span class="o">(</span><span class="nc">String</span> <span class="n">ss</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">ss</span><span class="o">==</span><span class="kc">null</span> <span class="o">?</span><span class="s">""</span> <span class="o">:</span> <span class="n">ss</span><span class="o">;</span> <span class="c1">// 若为null返回空</span>
+    <span class="kt">char</span> <span class="n">hexDigits</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span> <span class="sc">'0'</span><span class="o">,</span><span class="sc">'1'</span><span class="o">,</span> <span class="sc">'2'</span><span class="o">,</span> <span class="sc">'3'</span><span class="o">,</span> <span class="sc">'4'</span><span class="o">,</span> <span class="sc">'1'</span><span class="o">,</span> <span class="sc">'6'</span><span class="o">,</span> <span class="sc">'7'</span><span class="o">,</span> <span class="sc">'8'</span><span class="o">,</span> <span class="sc">'9'</span><span class="o">,</span>
+      <span class="sc">'a'</span><span class="o">,</span> <span class="sc">'b'</span><span class="o">,</span> <span class="sc">'c'</span><span class="o">,</span> <span class="sc">'d'</span><span class="o">,</span> <span class="sc">'e'</span><span class="o">,</span> <span class="sc">'f'</span> <span class="o">};</span> <span class="c1">// 字典</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="kt">byte</span><span class="o">[]</span> <span class="n">strTemp</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span> <span class="c1">// 获取字节</span>
+      <span class="nc">MessageDigestmdTemp</span> <span class="o">=</span> <span class="nc">MessageDigest</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"MD1"</span><span class="o">);</span> <span class="c1">// 获取MD1</span>
+      <span class="n">mdTemp</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">strTemp</span><span class="o">);</span> <span class="c1">// 更新数据</span>
+      <span class="kt">byte</span><span class="o">[]</span> <span class="n">md</span> <span class="o">=</span> <span class="n">mdTemp</span><span class="o">.</span><span class="na">digest</span><span class="o">();</span> <span class="c1">// 加密</span>
+      <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="c1">// 加密后的长度</span>
+      <span class="kt">char</span> <span class="n">str</span><span class="o">[]</span> <span class="o">=</span> <span class="n">newchar</span><span class="o">[</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span><span class="o">];</span> <span class="c1">// 新字符串数组</span>
+      <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="c1">// 计数器k</span>
+      <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">j</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span> <span class="c1">// 循环输出</span>
+        <span class="kt">byte</span> <span class="n">byte0</span> <span class="o">=</span> <span class="n">md</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="n">str</span><span class="o">[</span><span class="n">k</span><span class="o">++]</span> <span class="o">=</span> <span class="n">hexDigits</span><span class="o">[</span><span class="n">byte0</span> <span class="err">&gt;&gt;&gt;</span> <span class="mi">4</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="o">];</span>
+        <span class="n">str</span><span class="o">[</span><span class="n">k</span><span class="o">++]</span> <span class="o">=</span> <span class="n">hexDigits</span><span class="o">[</span><span class="n">byte0</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="o">];</span>
+      <span class="o">}</span>
+      <span class="k">return</span> <span class="nf">newString</span><span class="o">(</span><span class="n">str</span><span class="o">);</span> <span class="c1">// 加密后字符串</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="nt">%&gt;</span>
+
+<span class="nt">&lt;%</span>
+  <span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span> <span class="c1">// 设置request编码</span>
+  <span class="n">response</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span> <span class="c1">// 设置response编码</span>
+  <span class="nc">String</span> <span class="n">action</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"action"</span><span class="o">);</span> <span class="c1">// 获取action参数</span>
+  <span class="k">if</span><span class="o">(</span><span class="s">"login"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">action</span><span class="o">))</span> <span class="o">{</span> <span class="c1">// 如果为login动作</span>
+    <span class="nc">String</span> <span class="n">account</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"account"</span><span class="o">);</span> <span class="c1">// 获取account参数</span>
+    <span class="nc">String</span> <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"password"</span><span class="o">);</span> <span class="c1">// 获取password参数</span>
+    <span class="kt">int</span> <span class="n">timeout</span> <span class="o">=</span> <span class="n">newInteger</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"timeout"</span><span class="o">));</span> <span class="c1">// 获取timeout参数   </span>
+    <span class="nc">Cookie</span> <span class="n">accountCookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cookie</span><span class="o">(</span><span class="s">"account"</span><span class="o">,</span> <span class="n">account</span><span class="o">);</span>  <span class="c1">// 新建Cookie</span>
+    <span class="n">accountCookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="n">timeout</span><span class="o">);</span> <span class="c1">// 设置有效期</span>
+    
+    <span class="nc">String</span> <span class="n">ssid</span> <span class="o">=</span> <span class="n">calcMD1</span><span class="o">(</span><span class="n">account</span> <span class="o">+</span> <span class="no">KEY</span><span class="o">);</span> <span class="c1">// 把账号、密钥使用MD1加密后保存</span>
+    <span class="nc">Cookie</span> <span class="n">ssidCookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cookie</span><span class="o">(</span><span class="s">"ssid"</span><span class="o">,</span> <span class="n">ssid</span><span class="o">);</span> <span class="c1">// 新建Cookie</span>
+    <span class="n">ssidCookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="n">timeout</span><span class="o">);</span> <span class="c1">// 设置有效期</span>
+    
+    <span class="n">response</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">accountCookie</span><span class="o">);</span> <span class="c1">// 保存账号到 cookie</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">ssidCookie</span><span class="o">);</span> <span class="c1">// 保存 ssid 到 cookie</span>
+
+    <span class="c1">// 重新请求本页面，参数中带有时间戳，禁止浏览器缓存页面内容</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">()</span> <span class="o">+</span> <span class="s">"?"</span> <span class="o">+</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">());</span>
+    <span class="k">return</span><span class="o">;</span>
+  <span class="o">}</span>
+  <span class="n">elseif</span><span class="o">(</span><span class="s">"logout"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">action</span><span class="o">))</span> <span class="o">{</span> <span class="c1">// 如果为logout动作</span>
+    <span class="nc">Cookie</span> <span class="n">accountCookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cookie</span><span class="o">(</span><span class="s">"account"</span><span class="o">,</span> <span class="s">""</span><span class="o">);</span> <span class="c1">// 新建Cookie，内容为空</span>
+    <span class="n">ccountCookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span> <span class="c1">// 设置有效期为0，删除</span>
+    <span class="nc">Cookie</span> <span class="n">ssidCookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cookie</span><span class="o">(</span><span class="s">"ssid"</span><span class="o">,</span> <span class="s">""</span><span class="o">);</span> <span class="c1">// 新建Cookie，内容为空</span>
+    <span class="n">ssidCookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span> <span class="c1">// 设置有效期为0，删除</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">accountCookie</span><span class="o">);</span> <span class="c1">// 删除 cookie 中的账号</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">ssidCookie</span><span class="o">);</span> <span class="c1">// 删除 cookie 中的 ssid</span>
+
+    <span class="c1">//重新请求本页面，参数中带有时间戳，禁止浏览器缓存页面内容</span>
+    <span class="n">response</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">()</span> <span class="o">+</span> <span class="s">"?"</span> <span class="o">+</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">());</span>
+    <span class="k">return</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">boolean</span> <span class="n">login</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// 是否登录</span>
+  <span class="nc">String</span> <span class="n">account</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="c1">// 账号</span>
+  <span class="nc">String</span> <span class="n">ssid</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="c1">// SSID标识</span>
+
+  <span class="k">if</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getCookies</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 如果Cookie不为空</span>
+  <span class="k">for</span><span class="o">(</span><span class="nc">Cookie</span> <span class="n">cookie</span> <span class="o">:</span> <span class="n">request</span><span class="o">.</span><span class="na">getCookies</span><span class="o">()){</span> <span class="c1">// 遍历Cookie</span>
+      <span class="k">if</span><span class="o">(</span><span class="n">cookie</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">"account"</span><span class="o">))</span> <span class="c1">// 如果Cookie名为account</span>
+        <span class="n">account</span> <span class="o">=</span> <span class="n">cookie</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span> <span class="c1">// 保存account内容</span>
+      <span class="k">if</span><span class="o">(</span><span class="n">cookie</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">"ssid"</span><span class="o">))</span> <span class="c1">// 如果为SSID</span>
+        <span class="n">ssid</span> <span class="o">=</span> <span class="n">cookie</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span> <span class="c1">// 保存SSID内容</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="k">if</span><span class="o">(</span><span class="n">account</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">ssid</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 如果account、SSID都不为空</span>
+  <span class="n">login</span> <span class="o">=</span> <span class="n">ssid</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">calcMD1</span><span class="o">(</span><span class="n">account</span> <span class="o">+</span> <span class="no">KEY</span><span class="o">));</span> <span class="c1">// 如果加密规则正确, 则视为已经登录</span>
+  <span class="o">}</span>
+<span class="nt">%&gt;</span>
+
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01Transitional//EN"&gt;</span>
+     <span class="nt">&lt;legend&gt;&lt;%=</span> <span class="n">login</span> <span class="o">?</span> <span class="s">"欢迎您回来"</span> <span class="o">:</span> <span class="s">"请先登录"</span><span class="nt">%&gt;&lt;/legend&gt;</span>
+     <span class="nt">&lt;%</span> <span class="k">if</span><span class="o">(</span><span class="n">login</span><span class="o">)</span> <span class="o">{</span> <span class="nt">%&gt;</span>
+    欢迎您, ${ cookie.account.value }. <span class="ni">&amp;nbsp;&amp;nbsp;</span>
+     <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"${ pageContext.request.requestURI }?action=logout"</span><span class="nt">&gt;</span>
+    注销<span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;%</span> <span class="o">}</span> <span class="k">else</span>  <span class="o">{</span> <span class="nt">%&gt;</span>
+     <span class="nt">&lt;formaction</span><span class="err">="${</span> <span class="na">pageContext</span><span class="err">.</span><span class="na">request</span><span class="err">.</span><span class="na">requestURI</span> <span class="err">}?</span><span class="na">action=</span><span class="s">login"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;table&gt;</span>
+       <span class="nt">&lt;tr&gt;</span>
+         <span class="nt">&lt;td&gt;</span>账号： <span class="nt">&lt;/td&gt;</span>
+           <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"account"</span> <span class="na">style=</span><span class="s">"width:200px; "</span><span class="nt">&gt;&lt;/td&gt;</span>
+       <span class="nt">&lt;/tr&gt;</span>
+       <span class="nt">&lt;tr&gt;</span>
+          <span class="nt">&lt;td&gt;</span>密码： <span class="nt">&lt;/td&gt;</span>
+       <span class="nt">&lt;td&gt;&lt;inputtype</span><span class="err">="</span><span class="na">password</span><span class="err">"</span> <span class="na">name=</span><span class="s">"password"</span><span class="nt">&gt;&lt;/td&gt;</span>
+       <span class="nt">&lt;/tr&gt;</span>
+       <span class="nt">&lt;tr&gt;</span>
+          <span class="nt">&lt;td&gt;</span>有效期： <span class="nt">&lt;/td&gt;</span>
+       <span class="nt">&lt;td&gt;&lt;inputtype</span><span class="err">="</span><span class="na">radio</span><span class="err">"</span> <span class="na">name=</span><span class="s">"timeout"</span> <span class="na">value=</span><span class="s">"-1"</span> <span class="na">checked</span><span class="nt">&gt;</span> 
+         关闭浏览器即失效 <span class="nt">&lt;br/&gt;</span> 
+         <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"timeout"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="mi">30</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">&gt;</span>
+         30天内有效 <span class="nt">&lt;br/&gt;</span>
+         <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"timeout"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">&gt;</span> 
+         永久有效 <span class="nt">&lt;br/&gt;</span>
+           <span class="nt">&lt;/td&gt;</span>
+         <span class="nt">&lt;/tr&gt;</span>
+         <span class="nt">&lt;tr&gt;</span>
+          <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+       <span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">" 登  录 "</span> <span class="na">class=</span><span class="s">"button"</span><span class="nt">&gt;&lt;/td&gt;</span>
+       <span class="nt">&lt;/tr&gt;</span>
+     <span class="nt">&lt;/table&gt;</span>
+  <span class="nt">&lt;/form&gt;</span>
+  <span class="nt">&lt;%</span> <span class="o">}</span> <span class="nt">%&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="jwt--json-web-token">JWT ( JSON Web Token)</h3>
+
+<p>实现 token 技术的一种解决方案。</p>
+
+<p>Cookie 不能设置为 HTTPOnly。</p>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+  <li><a href="https://blog.csdn.net/fangaoxin/article/details/6952954">https://blog.csdn.net/fangaoxin/article/details/6952954</a></li>
+  <li><a href="https://learnku.com/articles/30051">理解 cookie、session、token、jwt</a></li>
+  <li><a href="https://learnku.com/articles/17883#08be9b">JWT 超详细分析</a></li>
+</ol>
+
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        September 19, 2019 &nbsp;|&nbsp;
+        约13分钟读完
+        大约4467个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=Web安全" title="Web安全">Web安全&nbsp;</a>
+        
+
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-0-0"
+       title="Session" rel="1"
+       href="/blog/tags.html?tags=Session" >
+        #Session
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="JWT" rel="1"
+       href="/blog/tags.html?tags=JWT" >
+        #JWT
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="Cookie" rel="1"
+       href="/blog/tags.html?tags=Cookie" >
+        #Cookie
+        <sup>1</sup>
+    </a><a class="tag-button tag-4-medium"
+       title="学习笔记" rel="7"
+       href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" >
+        #学习笔记
+        <sup>7</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<!-- Pager -->
+
+
+            </div>
+        </div>
+        <!-- Sidebar Container -->
+        <div class="
+            col-lg-3 col-lg-offset-0
+            col-md-3 col-md-offset-0
+            col-sm-12
+            col-xs-12
+            sidebar-container
+        ">
+            <!-- Featured Tags -->
+            
+
+
+
+
+            <!-- Short About -->
+            <section class="visible-md visible-lg">
+  <hr>
+  <h5><a href="/blog/about/">ABOUT ME</a></h5>
+  <div class="short-about">
+    
+    <img src="/blog/img/sword.jpg" />
+    
+    
+    <p>TZUW</p>
+    
+    <!-- SNS Link -->
+    
+
+
+<ul class="list-inline">
+
+
+  
+  
+  
+  
+  
+  
+  
+</ul>
+    <p>文章10&nbsp;|&nbsp;分类10&nbsp;|&nbsp;标签31</p>
+  </div>
+</section>
+
+
+            <!-- Friends Blog -->
+            
+<hr>
+<h5>WATCH LIST</h5>
+<ul class="list-inline">
+  
+  <li><a href="http://su.gallery/">Su</a></li>
+  
+  <li><a href="http://mida.re/">乱序</a></li>
+  
+  <li><a href="https://xuechundesign.github.io">Sherry Wu</a></li>
+  
+  <li><a href="http://hmqk1995.github.io">Luke 的自留地</a></li>
+  
+  <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
+  
+  <li><a href="http://blog.smdcn.net">SmdCn's Blog</a></li>
+  
+  <li><a href="http://tiye.me/">JiyinYiyong</a></li>
+  
+  <li><a href="https://www.ruoyaowu.com/">David's Game</a></li>
+  
+  <li><a href="http://dhong.co">DHong Say</a></li>
+  
+  <li><a href="http://ingf.github.io/">尹峰以为</a></li>
+  
+  <li><a href="https://duter2016.github.io/">优源博客</a></li>
+  
+  <li><a href="huangxuan.me">Hux Blog</a></li>
+  
+  <li><a href="https://yizibi.github.io/">一之笔</a></li>
+  
+  <li><a href="https://www.raymondcamden.com/">RAYMOND CAMDEN</a></li>
+  
+  <li><a href="https://www.jonathan-petitcolas.com/">Jonathan Petitcolas</a></li>
+  
+  <li><a href="https://blog.techbridge.cc/">TechBridge 技術共筆部落格</a></li>
+  
+  <li><a href="">冰封承诺</a></li>
+  
+  <li><a href="">梁音</a></li>
+  
+  <li><a href="">ChenYuan</a></li>
+  
+  <li><a href="">米米的博客</a></li>
+  
+  <li><a href="">星光的博客</a></li>
+  
+  <li><a href="">UncleChen</a></li>
+  
+  <li><a href="">横云断岭</a></li>
+  
+  <li><a href="">tidy的个人博客</a></li>
+  
+  <li><a href="">背不起来的就写下来吧</a></li>
+  
+  <li><a href="">forever杨的个人博客</a></li>
+  
+  <li><a href="">JerryQu的小站</a></li>
+  
+  <li><a href="">OneBlog开源博客</a></li>
+  
+  <li><a href="">Parian's Blog</a></li>
+  
+  <li><a href="">bieleyang的博客</a></li>
+  
+  <li><a href="">散尽浮华-博客园</a></li>
+  
+  <li><a href="">王清培-博客园</a></li>
+  
+  <li><a href="http://tengj.top/2017/05/05/javabook/">嘟嘟独立博客</a></li>
+  
+</ul>
+
+
+        </div>
+    
+	</div>
+</div>
+
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; GINGER 2020
+                    <span id="htmer_time" style=""></span>
+                    <br>
+                    Powered by Huxpro, Jekyll, Maintained By <a href="">tzuw</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=tzuw&repo=tzuw.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/blog/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="/blog/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/william-blog.min.js"></script>
+
+<!-- Service Worker -->
+
+<script src="/blog/js/snackbar.js"></script>
+<script src="/blog/js/sw-registration.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+<!-- Side Catalog -->
+
+
+
+<!-- Multi-Lingual -->
+
+
+<!-- 计算网站运行时间 -->
+<script language=JavaScript>
+function secondToDate(second) {
+ if (!second) {
+     return 0;
+ }
+
+ var time = new Array(0, 0, 0, 0, 0);
+
+ if (second >= 365 * 24 * 3600) {
+     time[0] = parseInt(second / (365 * 24 * 3600));
+     second %= 365 * 24 * 3600;
+ }
+
+ if (second >= 24 * 3600) {
+     time[1] = parseInt(second / (24 * 3600));
+     second %= 24 * 3600;
+ }
+
+ if (second >= 3600) {
+     time[2] = parseInt(second / 3600);
+     second %= 3600;
+ }
+
+ if (second >= 60) {
+     time[3] = parseInt(second / 60);
+     second %= 60;
+ }
+
+ if (second > 0) {
+     time[4] = second;
+ }
+ return time;
+}
+<!-- 动态显示网站运行时间 -->
+function setTime() {
+    var create_time = Math.round(new Date(Date.UTC(2020, 01, 08, 0, 0, 0)).getTime() / 1000);
+    var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000);
+    currentTime = secondToDate((timestamp - create_time));
+    currentTimeHtml = '本站已运行' + currentTime[0] + '年' + currentTime[1] + '天' + currentTime[2] + '时' + currentTime[3] + '分' + currentTime[4] + '秒';
+    document.getElementById("htmer_time").innerHTML = currentTimeHtml;
+}
+setInterval(setTime, 1000);
+</script>
+
+<script type="text/javascript">
+$('.navbar-nav a').click(function(e) {
+    e.stopPropagation();
+    $('.navbar-nav a').removeClass('active');
+    $(this).addClass('active');
+});
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/blog/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+
+    <script type="text/javascript" src="/blog/vendor.9ee51f46156dea4393fc.js"></script><script type="text/javascript" src="/blog/main.0a6f256f3cf60dcdae56.js"></script>
+
+</body>
+
+</html>
