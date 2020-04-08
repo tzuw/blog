@@ -5,8 +5,8 @@ subtitle:     "Start from MutationObserver"
 date:         2020-02-08 11:11:00
 author:       "tzuw"
 header-style: text
-tags:
-    - MutationObserver 
+tags: [MutationObserver]
+categories: [前端]
 ---
 ![mutationObserver](/public/assets/img/in-post/mutationObserver.png)
 
