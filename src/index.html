@@ -22,9 +22,9 @@ title: "HOME"
     </a>
     <div class="post-content-preview">
         {% if post.lang == 'zh' %}
-            {{ post.content }}
+        {{ post.content }}
         {% else %}
-            {{ post.content }}
+        {{ post.content }}
         {% endif %}
     </div>
 
@@ -32,27 +32,27 @@ title: "HOME"
     {% assign has_article_tags = false %}
     {% capture article_tags %}
     {% for tag_p in site.tags %}
-        {%- if post.tags contains tag_p[0] -%}
-        {% assign has_article_tags = true %}
-        {%- assign tagName = tag_p[0] -%}
-        {%- if site.data.tagLevels[tagName].level == 1 -%}
-        {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append: firstTagAmount %}
-        {%- elsif site.data.tagLevels[tagName].level == 2 -%}
-        {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append: secondTagAmount %}
-        {%- elsif site.data.tagLevels[tagName].level == 3 -%}
-        {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append: thirdTagAmount %}
-        {%- elsif site.data.tagLevels[tagName].level == 4 -%}
-        {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append:  fourthTagAmount %}
-        {% else %}
-        {%- assign tagColorId = 'tag-0-0' -%}
-        {%- endif -%}
-        <a class="tag-button {{ tagColorId }}"
-           title="{{ tag_p[0] }}" rel="{{ tag_p[1].size }}"
-           href="{{ site.baseurl }}/tags.html?tags={{ tag_p[0] | url_encode }}" >
-            #{{ tag_p[0] }}
-            <sup>{{tag_p[1].size}}</sup>
-        </a>
-        {%- endif -%}
+    {%- if post.tags contains tag_p[0] -%}
+    {% assign has_article_tags = true %}
+    {%- assign tagName = tag_p[0] -%}
+    {%- if site.data.tagLevels[tagName].level == 1 -%}
+    {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append: firstTagAmount %}
+    {%- elsif site.data.tagLevels[tagName].level == 2 -%}
+    {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append: secondTagAmount %}
+    {%- elsif site.data.tagLevels[tagName].level == 3 -%}
+    {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append: thirdTagAmount %}
+    {%- elsif site.data.tagLevels[tagName].level == 4 -%}
+    {%- assign tagColorId = 'tag-' | append: site.data.tagLevels[tagName].level | append: '-' | append:  fourthTagAmount %}
+    {% else %}
+    {%- assign tagColorId = 'tag-0-0' -%}
+    {%- endif -%}
+    <a class="tag-button {{ tagColorId }}"
+       title="{{ tag_p[0] }}" rel="{{ tag_p[1].size }}"
+       href="{{ site.baseurl }}/tags.html?tags={{ tag_p[0] | url_encode }}" >
+        #{{ tag_p[0] }}
+        <sup>{{tag_p[1].size}}</sup>
+    </a>
+    {%- endif -%}
     {% endfor %}
     {% endcapture %}
     <br/>
@@ -63,7 +63,7 @@ title: "HOME"
 
         {% for category in post.categories %}
         {%- if forloop.first -%}&nbsp;|&nbsp;{%- endif -%} &nbsp;
-            <a href="{{ site.baseurl }}/categories.html?categories={{ category }}" title="{{ category }}">{{ category }}&nbsp;</a>
+        <a href="{{ site.baseurl }}/categories.html?categories={{ category }}" title="{{ category }}">{{ category }}&nbsp;</a>
         {% endfor %}
 
         <!--        {% if has_article_tags == false %}-->

@@ -5,8 +5,8 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         uglify: {
             main: {
-                src: 'src/public/assets/js/<%= pkg.name %>.js',
-                dest: 'src/public/assets/js/<%= pkg.name %>.min.js'
+                src: 'src/js/<%= pkg.name %>.js',
+                dest: 'src/js/<%= pkg.name %>.min.js'
             }
         },
         less: {
@@ -15,7 +15,7 @@ module.exports = function(grunt) {
                     paths: ["css"]
                 },
                 files: {
-                    "src/public/assets/css/<%= pkg.name %>.css": "src/public/assets/less/<%= pkg.name %>.less"
+                    "src/css/<%= pkg.name %>.css": "src/less/<%= pkg.name %>.less"
                 }
             },
             minified: {
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
                     cleancss: true
                 },
                 files: {
-                    "src/public/assets/css/<%= pkg.name %>.min.css": "src/public/assets/less/<%= pkg.name %>.less"
+                    "src/css/<%= pkg.name %>.min.css": "src/public/assets/less/<%= pkg.name %>.less"
                 }
             }
         },
@@ -39,20 +39,20 @@ module.exports = function(grunt) {
                     banner: '<%= banner %>'
                 },
                 files: {
-                    src: ['src/public/assets/css/<%= pkg.name %>.css', 'src/public/assets/css/<%= pkg.name %>.min.css', 'public/assets/js/<%= pkg.name %>.min.js']
+                    src: ['src/css/<%= pkg.name %>.css', 'src/css/<%= pkg.name %>.min.css', 'js/<%= pkg.name %>.min.js']
                 }
             }
         },
         watch: {
             scripts: {
-                files: ['src/public/assets/js/<%= pkg.name %>.js'],
+                files: ['src/js/<%= pkg.name %>.js'],
                 tasks: ['uglify'],
                 options: {
                     spawn: false,
                 },
             },
             less: {
-                files: ['src/public/assets/less/*.less'],
+                files: ['src/less/*.less'],
                 tasks: ['less'],
                 options: {
                     spawn: false,

@@ -23,19 +23,19 @@
 </footer>
 
 <!-- jQuery -->
-<script src="{{ "/public/assets/js/jquery.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ '/js/jquery.min.js' | prepend: site.baseurl }}"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
-<script src="{{ "/public/assets/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ '/js/bootstrap.min.js' | prepend: site.baseurl }}"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="{{ "/public/assets/js/william-blog.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ '/js/william-blog.min.js' | prepend: site.baseurl }}"></script>
 
 <!-- Service Worker -->
 {% if site.service-worker %}
-<script src="{{ "/public/assets/js/snackbar.js" | prepend: site.baseurl }}"></script>
-<script src="{{ "/public/assets/js/sw-registration.js" | prepend: site.baseurl }}"></script>
+<script src="{{ '/js/snackbar.js' | prepend: site.baseurl }}"></script>
+<script src="{{ '/js/sw-registration.js' | prepend: site.baseurl }}"></script>
 {% endif %}
 
 <!-- async load function -->
@@ -82,7 +82,7 @@
 <!--        $('#tag_cloud a').tagcloud();-->
 <!--    })-->
 <!--</script>-->
-<script type="module" src='{{ "/public/assets/js/archive.js " | prepend: site.baseurl }}'></script>
+<script type="module" src='{{ "/js/archive.js " | prepend: site.baseurl }}'></script>
 {% endif %}
 
 <!--fastClick.js -->
@@ -174,7 +174,7 @@
      * Doc: https://github.com/davist11/jQuery-One-Page-Nav
      * Fork by Hux to support padding
      */
-    async("{{ '/public/assets/js/jquery.nav.js' | prepend: site.baseurl }}", function () {
+    async("{{ '/js/jquery.nav.js' | prepend: site.baseurl }}", function () {
         $('.catalog-body').onePageNav({
             currentClass: "active",
             changeHash: !1,
