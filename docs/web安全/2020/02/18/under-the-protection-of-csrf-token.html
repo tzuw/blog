@@ -250,7 +250,7 @@
                     </span>
                     <span>
                         约8分钟读完
-                        大约2776个字
+                        大约2758个字
                     </span>
                 </div>
             </div>
@@ -337,19 +337,19 @@
 14
 15
 </pre></td><td class="rouge-code"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">getToken</span><span class="o">()</span> <span class="o">{</span>
-	<span class="k">if</span> <span class="o">(</span> <span class="kc">null</span> <span class="o">==</span> <span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">).</span><span class="na">equals</span><span class="o">()</span> <span class="o">||</span>		
-		<span class="n">cookiesSetByPlatformBeingRefreshed</span> <span class="o">)</span> <span class="o">{</span>
-		<span class="nc">String</span> <span class="n">newToken</span> <span class="o">=</span> <span class="n">generateNewToken</span><span class="o">();</span>
-		<span class="n">response</span><span class="o">.</span><span class="na">setHttpHeader</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">,</span> <span class="n">newToken</span><span class="o">);</span>
-	<span class="o">}</span>
+    <span class="k">if</span> <span class="o">(</span> <span class="kc">null</span> <span class="o">==</span> <span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">).</span><span class="na">equals</span><span class="o">()</span> <span class="o">||</span>        
+        <span class="n">cookiesSetByPlatformBeingRefreshed</span> <span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">newToken</span> <span class="o">=</span> <span class="n">generateNewToken</span><span class="o">();</span>
+        <span class="n">response</span><span class="o">.</span><span class="na">setHttpHeader</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">,</span> <span class="n">newToken</span><span class="o">);</span>
+    <span class="o">}</span>
 <span class="o">}</span>
 
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoIntercept</span><span class="o">()</span> <span class="o">{</span>
-	<span class="k">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">()</span> <span class="n">not</span> <span class="n">in</span> <span class="n">ignores</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span>
-		<span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">).</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getHttpHeader</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">)))</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-		<span class="o">}</span>
-	<span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">()</span> <span class="n">not</span> <span class="n">in</span> <span class="n">ignores</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span>
+        <span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">).</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getHttpHeader</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">)))</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
 <span class="o">}</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
