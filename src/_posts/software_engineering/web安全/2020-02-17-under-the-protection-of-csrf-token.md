@@ -53,19 +53,19 @@ categories: [Web安全]
 
 ```java
 public void getToken() {
-	if ( null == request.getSession().getAttribute('csrfToken').equals() ||		
-		cookiesSetByPlatformBeingRefreshed ) {
-		String newToken = generateNewToken();
-		response.setHttpHeader('csrfToken', newToken);
-	}
+    if ( null == request.getSession().getAttribute('csrfToken').equals() ||        
+        cookiesSetByPlatformBeingRefreshed ) {
+        String newToken = generateNewToken();
+        response.setHttpHeader('csrfToken', newToken);
+    }
 }
 
 public void shouldDoIntercept() {
-	if (request.getRequestURI() not in ignores && !request.getSession().getAttribute(
-		'csrfToken').equals(request.getHttpHeader('csrfToken'))) {
-		return true;
-		}
-	return false;
+    if (request.getRequestURI() not in ignores && !request.getSession().getAttribute(
+        'csrfToken').equals(request.getHttpHeader('csrfToken'))) {
+        return true;
+        }
+    return false;
 }
 ```
 
