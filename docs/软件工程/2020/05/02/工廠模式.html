@@ -238,7 +238,7 @@
                     </span>
                     <span>
                         约7分钟读完
-                        大约2441个字
+                        大约2422个字
                     </span>
                 </div>
             </div>
@@ -287,7 +287,7 @@
 4
 </pre></td><td class="rouge-code"><pre><span class="c1">// Factory.java</span>
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Factory</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="nc">Phone</span> <span class="nf">createPhone</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="nc">Phone</span> <span class="nf">createPhone</span><span class="o">();</span>
 <span class="o">}</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
@@ -299,9 +299,9 @@
 6
 </pre></td><td class="rouge-code"><pre><span class="c1">// HtcFactory.java</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">HtcFactory</span> <span class="kd">implements</span> <span class="nc">Factory</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="nc">Phone</span> <span class="nf">createPhone</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nf">Htc</span><span class="o">();</span>
-  <span class="o">}</span>
+    <span class="kd">public</span> <span class="nc">Phone</span> <span class="nf">createPhone</span><span class="o">()</span> <span class="o">{</span>
+       <span class="k">return</span> <span class="k">new</span> <span class="nf">Htc</span><span class="o">();</span>
+    <span class="o">}</span>
 <span class="o">}</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
@@ -313,9 +313,9 @@
 6
 </pre></td><td class="rouge-code"><pre><span class="c1">// IphoneFactory.java</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">IphoneFactory</span> <span class="kd">implements</span> <span class="nc">Factory</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="nc">Phone</span> <span class="nf">createPhone</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nf">Iphone</span><span class="o">();</span>
-  <span class="o">}</span>
+    <span class="kd">public</span> <span class="nc">Phone</span> <span class="nf">createPhone</span><span class="o">()</span> <span class="o">{</span>
+       <span class="k">return</span> <span class="k">new</span> <span class="nf">Iphone</span><span class="o">();</span>
+    <span class="o">}</span>
 <span class="o">}</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
@@ -366,35 +366,43 @@
 31
 32
 33
+34
+35
+36
+37
 </pre></td><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CheesePizza</span> <span class="kd">extends</span> <span class="nc">Pizza</span> <span class="o">{</span>
     <span class="nc">PizzaIngredientFactory</span> <span class="o">=</span> <span class="n">ingredientFactory</span><span class="o">;</span>
+  
     <span class="kd">public</span> <span class="nf">CheesePizza</span><span class="o">(</span><span class="nc">PizzaIngredientFactory</span> <span class="n">ingredientFactory</span><span class="o">){</span>
-      	<span class="k">this</span><span class="o">.</span><span class="na">ingredientFactory</span> <span class="o">=</span> <span class="n">ingredientFactory</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">ingredientFactory</span> <span class="o">=</span> <span class="n">ingredientFactory</span><span class="o">;</span>
     <span class="o">}</span>
+  
     <span class="kt">void</span> <span class="nf">prepare</span><span class="o">()</span> <span class="o">{</span> <span class="c1">// 這邊將原料抽出來讓工廠 各地域的原料工廠維護</span>
-    	  <span class="n">dough</span> <span class="o">=</span> <span class="n">ingredientFactory</span><span class="o">.</span><span class="na">createDough</span><span class="o">();</span>
+        <span class="n">dough</span> <span class="o">=</span> <span class="n">ingredientFactory</span><span class="o">.</span><span class="na">createDough</span><span class="o">();</span>
         <span class="n">sauce</span> <span class="o">=</span> <span class="n">ingredientFactory</span><span class="o">.</span><span class="na">createSauce</span><span class="o">();</span>
-     		<span class="n">cheese</span> <span class="o">=</span> <span class="n">ingredientFactory</span><span class="o">.</span><span class="na">createCheese</span><span class="o">();</span>
+        <span class="n">cheese</span> <span class="o">=</span> <span class="n">ingredientFactory</span><span class="o">.</span><span class="na">createCheese</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">NYPizzaStore</span> <span class="kd">extends</span> <span class="nc">PizzaStore</span> <span class="o">{</span>
- 	 <span class="kd">protected</span> <span class="nc">Pizza</span> <span class="nf">createPizza</span><span class="o">(</span><span class="nc">String</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
- 	 		<span class="nc">Pizza</span> <span class="n">pizza</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
- 	 	  <span class="nc">PizzaIngredientFactory</span> <span class="n">ingredientFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NYPizzaIngredientFactory</span><span class="o">();</span>
- 	 	  <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"cheese"</span><span class="o">))</span> <span class="o">{</span> 
-	     	 <span class="n">pizza</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CheesePizza</span><span class="o">(</span><span class="n">ingredientFactory</span><span class="o">);</span>
- 		  <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"veggie"</span><span class="o">))</span> <span class="o">{</span>
-	    	  <span class="n">pizza</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">VeggiePizza</span><span class="o">(</span><span class="n">ingredientFactory</span><span class="o">);</span>
-	    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"clam"</span><span class="o">))</span> <span class="o">{</span>
-	   	   <span class="n">pizza</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClamPizza</span><span class="o">(</span><span class="n">ingredientFactory</span><span class="o">);</span>
-	    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"pepperoni"</span><span class="o">))</span> <span class="o">{</span>
-	   	   <span class="n">pizza</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PepperoniPizza</span><span class="o">(</span><span class="n">ingredientFactory</span><span class="o">);</span>   
-	    <span class="o">}</span> 
-	    <span class="k">return</span> <span class="n">pizza</span><span class="o">;</span>
-	 <span class="o">}</span>
+    <span class="kd">protected</span> <span class="nc">Pizza</span> <span class="nf">createPizza</span><span class="o">(</span><span class="nc">String</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Pizza</span> <span class="n">pizza</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+      
+        <span class="nc">PizzaIngredientFactory</span> <span class="n">ingredientFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NYPizzaIngredientFactory</span><span class="o">();</span>
+      
+        <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"cheese"</span><span class="o">))</span> <span class="o">{</span> 
+            <span class="n">pizza</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CheesePizza</span><span class="o">(</span><span class="n">ingredientFactory</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"veggie"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">pizza</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">VeggiePizza</span><span class="o">(</span><span class="n">ingredientFactory</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"clam"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">pizza</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClamPizza</span><span class="o">(</span><span class="n">ingredientFactory</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"pepperoni"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">pizza</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PepperoniPizza</span><span class="o">(</span><span class="n">ingredientFactory</span><span class="o">);</span>   
+        <span class="o">}</span> 
+      
+        <span class="k">return</span> <span class="n">pizza</span><span class="o">;</span>
+    <span class="o">}</span>
 <span class="o">}</span>
-
 
 <span class="nc">PizzaStore</span> <span class="n">nyStore</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NYPizzaStore</span><span class="o">();</span>
 <span class="nc">Pizza</span> <span class="n">pizza</span> <span class="o">=</span> <span class="n">nyStore</span><span class="o">.</span><span class="na">orderPizza</span><span class="o">(</span><span class="s">"cheese"</span><span class="o">);</span>
