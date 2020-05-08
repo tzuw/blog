@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="latte-a-little-sugar">
+    <meta name="keywords"  content="">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="RDBMS vs NoSQL - GINGER">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="
+  RDBMS 和 NoSQL 適用於不用的需求/場景，這可以從大數據時代的演變角度進行解讀。原本 RDBMS 的主要功能是，能夠正確的、同步的的處理具有特定結構的數據。 而現在隨著數據的產生速度加快，數據量也激增。新的功能需求因應而生，新的需求是希望數據庫能處理高速產生的大量數據，而不在特別需要做到同步和零錯誤。
+
+
+# RDBMS
+
+RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
+    
+    <meta property="article:published_time" content="2020-04-28T19:10:00Z">
+    
+    
+    <meta property="article:author" content="tzuw">
+    
+    
+    <meta property="article:tag" content="MySQL">
+    
+    <meta property="article:tag" content="RDBMS">
+    
+    <meta property="article:tag" content="NoSQL">
+    
+    <meta property="article:tag" content="data warehouse">
+    
+    
+    <meta property="og:image" content="http://0.0.0.0:4000/blog/blog/img/sword.jpg">
+    <meta property="og:url" content="http://0.0.0.0:4000/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/28/RDBMS-vs-NoSQL.html">
+    <meta property="og:site_name" content="GINGER">
+
+    <title>RDBMS vs NoSQL - GINGER</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/blog/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/blog/img/sword.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://0.0.0.0:4000/blog/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/28/RDBMS-vs-NoSQL.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/blog/css/william-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/blog/">GINGER</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/blog/">Home</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/about.html">About</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/archive.html">Archive</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/categories.html">Category</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/blog/tags.html">Tag</a>
+                    </li>
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script type="module">
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/blog/img/cement.png" width="0" height="0"> -->
+
+<!-- Post Header -->
+
+
+
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/blog/img/cement.png');
+        background: ;
+    }
+
+    
+</style>
+
+<header class="intro-header" >
+
+    <div class="header-mask"></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/blog/tags.html?tags=MySQL" title="MySQL">#MySQL</a>
+                        
+                        <a class="tag" href="/blog/tags.html?tags=RDBMS" title="RDBMS">#RDBMS</a>
+                        
+                        <a class="tag" href="/blog/tags.html?tags=NoSQL" title="NoSQL">#NoSQL</a>
+                        
+                        <a class="tag" href="/blog/tags.html?tags=data+warehouse" title="data warehouse">#data warehouse</a>
+                        
+                        <span>
+                        
+                        <a class="tag" href="/blog/categories.html?categories=資料倉儲" title="資料倉儲">☖資料倉儲</a>
+                        
+                        </span>
+                    </div>
+                    <h1>RDBMS vs NoSQL</h1>
+                    
+                    <h2 class="subheading">MySQL vs NoSQL</h2>
+                    <span class="meta">
+                        April 28, 2020
+                    </span>
+                    <span>
+                        约8分钟读完
+                        大约2790个字
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+
+                <div id="app">
+                    <blockquote>
+  <p>RDBMS 和 NoSQL 適用於不用的需求/場景，這可以從大數據時代的演變角度進行解讀。原本 RDBMS 的主要功能是，能夠正確的、同步的的處理具有特定結構的數據。 而現在隨著數據的產生速度加快，數據量也激增。新的功能需求因應而生，新的需求是希望數據庫能處理高速產生的大量數據，而不在特別需要做到同步和零錯誤。</p>
+</blockquote>
+
+<h3 id="-rdbms"># RDBMS</h3>
+
+<p>RDBMS 的全名是關聯式數據庫管理系統，它一般會使用 ER 模型進行建模，即需要維護资料之間的關係，並需要在資料保存之前就決定 Schema。此外，RDBMS 有兩個比較重要的概念。</p>
+
+<p>（1）RDBMS 通常會使用<strong>正規化</strong>技術來避免不同資料表儲存重複的資訊。</p>
+
+<p>（2）使用 Transation 即機制來保證數據的一致性。（Atomicity, Consistency, Isolation, Durability)</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>country</th>
+      <th>email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SP001</td>
+      <td>人民郵電出版社</td>
+      <td>Australia</td>
+      <td>feedback@renming.com</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>ISBN</th>
+      <th>title</th>
+      <th>author</th>
+      <th>format</th>
+      <th>price</th>
+      <th>publisher_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>9780992461225</td>
+      <td>數據挖掘 概念與技術</td>
+      <td>Jiawei Han</td>
+      <td>ebook</td>
+      <td>79.00</td>
+      <td>SP001</td>
+    </tr>
+    <tr>
+      <td>9780994182654</td>
+      <td>高效能程序員的訓練</td>
+      <td>Jeff Atwood</td>
+      <td>ebook</td>
+      <td>59.00</td>
+      <td>SP001</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="-nosql"># NoSQL</h3>
+
+<p>NoSQL 的全名為 Not Only SQL。可以說 SQL 是精確的，而 NoSQL 是多變的 (Schema-free)。</p>
+
+<p>MongoDB Sharding 分散式儲存架構建置 (概念篇)</p>
+
+<p>它們可以這樣理解。首先，”不止” SQL 指的是業務中可以混用 RDBMS 和 NoSQL 來達成最佳的儲存效果。第二點，指的是 NoSQL 擁有水平擴展的能力。比如，MongoDB 中的 Sharding 分片技術就可以達到擴展的目的，可以說 NoSQL 的設計就是<strong>為叢集執行而生的</strong>。在另一篇學習筆記裡面會詳細介紹。第三，NoSQL 是多變的。當你需要修改 schema 時會需要自行遍歷數據庫，或者只在數據又被讀取時在進行修改。第四，相較於 Transaction 機制，NoSQL 則採用了 CAP 機制 (Consistency, Availiablity, Partition Tolerance) 。然而，由於不可能同時滿足三個要求 (願望) ，當有分片的情況下，MongoDB 選擇了 C (Eventually Consistency) 和 P。<a href="https://www.quora.com/Why-doesnt-MongoDB-have-availability-in-the-CAP-theorem">ref</a> <a href="https://www.ithome.com.tw/news/92506">ref</a></p>
+
+<p>最後，”成熟度不足，版本升級風險高” 這個部分應該已經沒有了。「畢竟我看的這篇筆記是 10 年前寫的哈。」</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre><span class="err">//</span><span class="w"> </span><span class="err">文檔型</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="err">ISBN:</span><span class="w"> </span><span class="mi">9780992461225</span><span class="p">,</span><span class="w">
+  </span><span class="err">title:</span><span class="w"> </span><span class="s2">"數據挖掘 概念與技術"</span><span class="p">,</span><span class="w">
+  </span><span class="err">author:</span><span class="w"> </span><span class="s2">"Jiawei Han"</span><span class="p">,</span><span class="w">
+  </span><span class="err">format:</span><span class="w"> </span><span class="s2">"ebook"</span><span class="p">,</span><span class="w">
+  </span><span class="err">price:</span><span class="w"> </span><span class="mf">79.00</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="err">ISBN:</span><span class="w"> </span><span class="mi">9780992461225</span><span class="p">,</span><span class="w">
+  </span><span class="err">title:</span><span class="w"> </span><span class="s2">"數據挖掘 概念與技術"</span><span class="p">,</span><span class="w">
+  </span><span class="err">author:</span><span class="w"> </span><span class="s2">"Jiawei Han"</span><span class="p">,</span><span class="w">
+  </span><span class="err">year:</span><span class="w"> </span><span class="mi">2012</span><span class="p">,</span><span class="w">
+  </span><span class="err">format:</span><span class="w"> </span><span class="s2">"ebook"</span><span class="p">,</span><span class="w">
+  </span><span class="err">price:</span><span class="w"> </span><span class="mf">79.00</span><span class="p">,</span><span class="w">
+  </span><span class="err">description:</span><span class="w"> </span><span class="s2">"Learn JavaScript from scratch!"</span><span class="p">,</span><span class="w">
+  </span><span class="err">rating:</span><span class="w"> </span><span class="s2">"5/5"</span><span class="p">,</span><span class="w">
+  </span><span class="err">review:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="err">name:</span><span class="w"> </span><span class="s2">"美國CHOICE雜誌"</span><span class="p">,</span><span class="w"> </span><span class="err">text:</span><span class="w"> </span><span class="s2">"這是一本非常優秀的數據挖掘教材。"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="err">name:</span><span class="w"> </span><span class="s2">"Computing Reviews"</span><span class="p">,</span><span class="w"> </span><span class="err">text:</span><span class="w"> </span><span class="s2">"最新的第三版反映了數據挖掘領域的最新發展和變化。"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>NoSQL 大致有下面幾種類型：</p>
+
+<p><strong>列模型</strong>：在一列中存储所有相關的数据。它的特點是，查詢快，插入、更新慢。是 DSS（决策支持系统）、BI 的优秀選擇。一般使用在数据集市和数据仓库，適合批量數據處理和及時查詢，但不適合事務處理。典型的有 C-Store，Vertica， Sybase IQ。</p>
+
+<p><strong>鍵值對模型</strong>：数据按照键值对的形式进行组织。适合不涉及过多数据关系业务关系的业务数据。典型的鍵值對模型數據庫有 cassandra、 HBase、Redis。<del>有時間可以學習學習。</del></p>
+
+<p><strong>文檔類模型</strong>：一般保存半结构化内容，采用 JSON 或类似的方式描述数据。<strong>和 RDBMS 相比，文檔類模型支持數據的嵌套結構；和鍵值模型相比，文檔類模型支持搜尋嵌套對象。</strong>典型的有 MongoBD、CouchDB等。它將每一筆資料都當成一個文件 (每個文件的結構可以不一樣)。 <a href="https://blog.csdn.net/dellme99/article/details/16968979">ref</a>「什麼，MongoDB 對 SQL 和 ACID 特性也是支持的哦。」「BASE 原則」</p>
+
+<h3 id="-sqlrdbms-vs-nosql"># SQL(RDBMS) vs. NoSQL</h3>
+
+<p>主流的 RDBMS 有 Oracle，MySQL，PostgreSQL，Microsoft SQLServer，使用場景：具有事務需求的系統 (銀行/購物平台)。</p>
+
+<p>主流的 NoSQL 有 MongoDB (面向文檔)、Cassandra、HBase (面向列)。使用場景：文檔類模型、列模型適用於保存日誌</p>
+
+<p>不同點：</p>
+
+<ul>
+  <li>
+    <p>ACID vs. CAP</p>
+  </li>
+  <li>
+    <p>schema vs. schema-free</p>
+  </li>
+  <li>
+    <p>Normalization vs. Denormalization</p>
+
+    <p>MySQL 的 Normalization 可以有效地降低冗餘數據；NoSQL 中的 Denormalization 會使查詢速度變快，但在更年多筆數據時就會變慢。多數的文檔型 NoSQL 採用 Denormalization 的方式來存儲資料。</p>
+  </li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre></td><td class="rouge-code"><pre><span class="err">//</span><span class="w"> </span><span class="err">Normalization</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="err">ISBN:</span><span class="w"> </span><span class="mi">9780992461225</span><span class="p">,</span><span class="w">
+  </span><span class="err">title:</span><span class="w"> </span><span class="s2">"數據挖掘 概念與技術"</span><span class="p">,</span><span class="w">
+  </span><span class="err">author:</span><span class="w"> </span><span class="s2">"Jiawei Han"</span><span class="p">,</span><span class="w">
+  </span><span class="err">format:</span><span class="w"> </span><span class="s2">"ebook"</span><span class="p">,</span><span class="w">
+  </span><span class="err">price:</span><span class="w"> </span><span class="mf">79.00</span><span class="p">,</span><span class="w">
+  </span><span class="err">publisher_id:</span><span class="w"> </span><span class="s2">"SP001"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="err">id:</span><span class="w"> </span><span class="s2">"SP001"</span><span class="w">
+  </span><span class="err">name:</span><span class="w"> </span><span class="s2">"人民郵電出版社"</span><span class="p">,</span><span class="w">
+  </span><span class="err">country:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
+  </span><span class="err">email:</span><span class="w"> </span><span class="s2">"feedback@renming.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span><span class="err">//</span><span class="w"> </span><span class="err">Denormalization</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="err">ISBN:</span><span class="w"> </span><span class="mi">9780992461225</span><span class="p">,</span><span class="w">
+  </span><span class="err">title:</span><span class="w"> </span><span class="s2">"數據挖掘 概念與技術"</span><span class="p">,</span><span class="w">
+  </span><span class="err">author:</span><span class="w"> </span><span class="s2">"Jiawei Han"</span><span class="p">,</span><span class="w">
+  </span><span class="err">format:</span><span class="w"> </span><span class="s2">"ebook"</span><span class="p">,</span><span class="w">
+  </span><span class="err">price:</span><span class="w"> </span><span class="mf">29.00</span><span class="p">,</span><span class="w">
+  </span><span class="err">publisher:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">name:</span><span class="w"> </span><span class="s2">"人民郵電出版社"</span><span class="p">,</span><span class="w">
+    </span><span class="err">country:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
+    </span><span class="err">email:</span><span class="w"> </span><span class="s2">"feedback@renming.com"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>（3）集群</p>
+
+<p>MySQL 在大規模集群上幾乎沒有成功的案例；而 NoSQL 則在集群方面的擴展性很強。</p>
+
+<h3 id="參考資料">參考資料</h3>
+
+<ul>
+  <li><a href="https://www.cnblogs.com/beilin/p/6007080.html">[1]</a>  <a href="https://www.cnblogs.com/beilin/p/5981870.html">[2]</a>  裡面談了關係型數據庫和非關係型數據庫的對比。</li>
+  <li><a href="https://shininglionking.blogspot.com/2018/04/rdbms-vs-nosql.html">[3]</a>  RDBMS v.s. NoSQL</li>
+  <li><a href="https://www.kshuang.xyz/doku.php/database:sql_vs_nosql">SQL vs NoSQL: The Differences</a></li>
+  <li><a href="https://www.tamr.com/blog/rdbms-vs-nosql-data-flexibility/">[4]</a> 這篇總結的不錯。</li>
+  <li><a href="https://www.ithome.com.tw/news/92506">[5]</a>  <a href="https://dotblogs.com.tw/explooosion/2018/01/21/040728">[6]</a>  MongoDB 安裝教學</li>
+  <li><a href="https://kknews.cc/zh-tw/code/8oao9aq.html">[7]</a>  <a href="https://www.infoq.cn/article/2014/01/nosql-vs-rdbms">[8]</a>  <a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/556428/">NoSQL型別介紹及適用場景</a>  使用場景</li>
+  <li><a href="http://garyliutw.blogspot.com/2014/05/mongodb-nosql.html">MongoDB 學習筆記之一 - 從 NoSQL 談起</a></li>
+  <li><a href="https://www.kshuang.xyz/doku.php/database:sql_vs_nosql">SQL vs NoSQL: The Differences</a>  裡面有一些例子</li>
+</ul>
+
+
+                </div>
+
+                <!-- 版权声明 -->
+                <div style="color: brown;">
+    <hr>
+    <p>
+        <strong>版权声明</strong>：
+        本文由 <a href="http://0.0.0.0:4000">tzuw</a> 在 2020年04月28日发表。
+        大多是学习笔记和分享，才疏学浅，欢迎指正。本文采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">CC BY-NC-SA 4.0</a>许可协议，非商业转载请注明出处，不得用于商业目的。
+        <br>
+        文章题目及链接：<a href="/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/28/RDBMS-vs-NoSQL.html">《RDBMS vs NoSQL》</a>
+    </p>
+    <hr>
+</div>
+
+
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/blog/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/2020/03/08/Singleton%E6%A8%A1%E5%BC%8F.html" data-toggle="tooltip" data-placement="top" title="Singleton模式">
+                        Previous<br>
+                        <span>Singleton模式</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/2020/05/02/%E5%B7%A5%E5%BB%A0%E6%A8%A1%E5%BC%8F.html" data-toggle="tooltip" data-placement="top" title="設計模式之工廠模式">
+                        Next<br>
+                        <span>設計模式之工廠模式</span>
+                        </a>
+                </li>
+                
+            </ul>
+            <hr style="visibility: hidden;">
+
+            
+
+            
+        </div>
+
+    <!-- Side Catalog Container -->
+    
+        <div class="
+            col-lg-2 col-lg-offset-0
+            visible-lg-block
+            sidebar-container
+            catalog-container">
+            <div class="side-catalog">
+                <hr class="hidden-sm hidden-xs">
+                <h5>
+                    <a class="catalog-toggle" href="#">CATALOG</a>
+                </h5>
+                <ul class="catalog-body"></ul>
+            </div>
+        </div>
+
+    
+
+<!-- Sidebar Container -->
+        <div class="
+            col-lg-8 col-lg-offset-2
+            col-md-10 col-md-offset-1
+            sidebar-container">
+
+            <!-- Featured Tags -->
+            
+
+
+
+
+            <!-- Friends Blog -->
+            
+<hr>
+<h5>WATCH LIST</h5>
+<ul class="list-inline">
+  
+  <li><a href="http://su.gallery/">Su</a></li>
+  
+  <li><a href="http://mida.re/">乱序</a></li>
+  
+  <li><a href="https://xuechundesign.github.io">Sherry Wu</a></li>
+  
+  <li><a href="http://hmqk1995.github.io">Luke 的自留地</a></li>
+  
+  <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
+  
+  <li><a href="http://blog.smdcn.net">SmdCn's Blog</a></li>
+  
+  <li><a href="http://tiye.me/">JiyinYiyong</a></li>
+  
+  <li><a href="https://www.ruoyaowu.com/">David's Game</a></li>
+  
+  <li><a href="http://dhong.co">DHong Say</a></li>
+  
+  <li><a href="http://ingf.github.io/">尹峰以为</a></li>
+  
+  <li><a href="https://duter2016.github.io/">优源博客</a></li>
+  
+  <li><a href="huangxuan.me">Hux Blog</a></li>
+  
+  <li><a href="https://yizibi.github.io/">一之笔</a></li>
+  
+  <li><a href="https://www.raymondcamden.com/">RAYMOND CAMDEN</a></li>
+  
+  <li><a href="https://www.jonathan-petitcolas.com/">Jonathan Petitcolas</a></li>
+  
+  <li><a href="https://blog.techbridge.cc/">TechBridge 技術共筆部落格</a></li>
+  
+  <li><a href="">冰封承诺</a></li>
+  
+  <li><a href="">梁音</a></li>
+  
+  <li><a href="">ChenYuan</a></li>
+  
+  <li><a href="">米米的博客</a></li>
+  
+  <li><a href="">星光的博客</a></li>
+  
+  <li><a href="">UncleChen</a></li>
+  
+  <li><a href="">横云断岭</a></li>
+  
+  <li><a href="">tidy的个人博客</a></li>
+  
+  <li><a href="">背不起来的就写下来吧</a></li>
+  
+  <li><a href="">forever杨的个人博客</a></li>
+  
+  <li><a href="">JerryQu的小站</a></li>
+  
+  <li><a href="">OneBlog开源博客</a></li>
+  
+  <li><a href="">Parian's Blog</a></li>
+  
+  <li><a href="">bieleyang的博客</a></li>
+  
+  <li><a href="">散尽浮华-博客园</a></li>
+  
+  <li><a href="">王清培-博客园</a></li>
+  
+  <li><a href="http://tengj.top/2017/05/05/javabook/">嘟嘟独立博客</a></li>
+  
+</ul>
+
+
+        </div>
+    </div>
+</div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+
+
+
+
+
+
+
+    <!-- async load function -->
+    <script>
+        function async(u, c) {
+          var d = document, t = 'script',
+              o = d.createElement(t),
+              s = d.getElementsByTagName(t)[0];
+          o.src = u;
+          if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+          s.parentNode.insertBefore(o, s);
+        }
+    </script>
+    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+    <script>
+        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+            anchors.options = {
+              visible: 'hover',
+              placement: 'right',
+              // icon: '#'
+            };
+            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+        })
+    </script>
+    <style>
+        /* place left on bigger screen */
+        @media all and (min-width: 800px) {
+            .anchorjs-link{
+                position: absolute;
+                left: -0.75em;
+                font-size: 1.1em;
+                margin-top : -0.1em;
+            }
+        }
+    </style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; GINGER 2020
+                    <span id="htmer_time" style=""></span>
+                    <br>
+                    Powered by Huxpro, Jekyll, Maintained By <a href="">tzuw</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=tzuw&repo=tzuw.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/blog/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="/blog/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/william-blog.min.js"></script>
+
+<!-- Service Worker -->
+
+<script src="/blog/js/snackbar.js"></script>
+<script src="/blog/js/sw-registration.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+
+        // interop with multilangual
+        if ('' == 'true') {
+            _containerSelector = 'div.post-container.active'
+        } else {
+            _containerSelector = 'div.post-container'
+        }
+
+        // init
+        var P = $(_containerSelector),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        // clean
+        $(selector).html('')
+
+        // appending
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/blog/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+<!-- Multi-Lingual -->
+
+
+<!-- 计算网站运行时间 -->
+<script language=JavaScript>
+function secondToDate(second) {
+ if (!second) {
+     return 0;
+ }
+
+ var time = new Array(0, 0, 0, 0, 0);
+
+ if (second >= 365 * 24 * 3600) {
+     time[0] = parseInt(second / (365 * 24 * 3600));
+     second %= 365 * 24 * 3600;
+ }
+
+ if (second >= 24 * 3600) {
+     time[1] = parseInt(second / (24 * 3600));
+     second %= 24 * 3600;
+ }
+
+ if (second >= 3600) {
+     time[2] = parseInt(second / 3600);
+     second %= 3600;
+ }
+
+ if (second >= 60) {
+     time[3] = parseInt(second / 60);
+     second %= 60;
+ }
+
+ if (second > 0) {
+     time[4] = second;
+ }
+ return time;
+}
+<!-- 动态显示网站运行时间 -->
+function setTime() {
+    var create_time = Math.round(new Date(Date.UTC(2020, 01, 08, 0, 0, 0)).getTime() / 1000);
+    var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000);
+    currentTime = secondToDate((timestamp - create_time));
+    currentTimeHtml = '本站已运行' + currentTime[0] + '年' + currentTime[1] + '天' + currentTime[2] + '时' + currentTime[3] + '分' + currentTime[4] + '秒';
+    document.getElementById("htmer_time").innerHTML = currentTimeHtml;
+}
+setInterval(setTime, 1000);
+</script>
+
+<script type="text/javascript">
+$('.navbar-nav a').click(function(e) {
+    e.stopPropagation();
+    $('.navbar-nav a').removeClass('active');
+    $(this).addClass('active');
+});
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/blog/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+
+    <script type="text/javascript" src="/blog/vendor.9ee51f46156dea4393fc.js"></script><script type="text/javascript" src="/blog/main.0a6f256f3cf60dcdae56.js"></script>
+
+</body>
+
+</html>
