@@ -284,4 +284,5 @@ https://python-parallel-programmning-cookbook.readthedocs.io/zh_CN/latest/chapte
 5.  [Python Parallel Programming Cookbook- Second Edition](https://www.tenlong.com.tw/products/9781789533736)
 6.  [Concurrency與Parallelism的不同之處](https://medium.com/mr-efacani-teatime/concurrency%E8%88%87parallelism%E7%9A%84%E4%B8%8D%E5%90%8C%E4%B9%8B%E8%99%95-1b212a020e30)
 7.  [Python 的 concurrency 和 parallelization](https://medium.com/@alan81920/python-%E7%9A%84-concurrency-%E5%92%8C-parallelization-efeddcb30c4c)
+8.  [https://www.pythonf.cn/read/39234](https://www.pythonf.cn/read/39234) 例子
 
