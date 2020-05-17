@@ -247,8 +247,8 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
                         April 28, 2020
                     </span>
                     <span>
-                        约8分钟读完
-                        大约2790个字
+                        约9分钟读完
+                        大约2971个字
                     </span>
                 </div>
             </div>
@@ -409,11 +409,14 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
 
 <p>主流的 RDBMS 有 Oracle，MySQL，PostgreSQL，Microsoft SQLServer，使用場景：具有事務需求的系統 (銀行/購物平台)。</p>
 
-<p>主流的 NoSQL 有 MongoDB (面向文檔)、Cassandra、HBase (面向列)。使用場景：文檔類模型、列模型適用於保存日誌</p>
+<p>主流的 NoSQL 有 MongoDB (面向文檔)、Cassandra、HBase (面向列)。使用場景：文檔類模型、列模型適用於保存日誌。即通常用來存一些結構不固定的數據。</p>
 
 <p>不同點：</p>
 
 <ul>
+  <li>
+    <p>No JOIN in NoSQL</p>
+  </li>
   <li>
     <p>ACID vs. CAP</p>
   </li>
@@ -423,7 +426,7 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
   <li>
     <p>Normalization vs. Denormalization</p>
 
-    <p>MySQL 的 Normalization 可以有效地降低冗餘數據；NoSQL 中的 Denormalization 會使查詢速度變快，但在更年多筆數據時就會變慢。多數的文檔型 NoSQL 採用 Denormalization 的方式來存儲資料。</p>
+    <p>MySQL 的 Normalization 可以有效地降低冗餘數據；NoSQL 中的 Denormalization 會使查詢速度變快，但在更新多筆數據時就會變慢。多數的文檔型 NoSQL 採用 Denormalization 的方式來存儲資料。</p>
   </li>
 </ul>
 
@@ -499,13 +502,15 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
 
 <ul>
   <li><a href="https://www.cnblogs.com/beilin/p/6007080.html">[1]</a>  <a href="https://www.cnblogs.com/beilin/p/5981870.html">[2]</a>  裡面談了關係型數據庫和非關係型數據庫的對比。</li>
-  <li><a href="https://shininglionking.blogspot.com/2018/04/rdbms-vs-nosql.html">[3]</a>  RDBMS v.s. NoSQL</li>
+  <li><a href="https://shininglionking.blogspot.com/2018/04/rdbms-vs-nosql.html">[3]</a>  RDBMS v.s. NoSQL  (<a href="https://shininglionking.blogspot.com/">邁向王者的旅途</a>)</li>
   <li><a href="https://www.kshuang.xyz/doku.php/database:sql_vs_nosql">SQL vs NoSQL: The Differences</a></li>
   <li><a href="https://www.tamr.com/blog/rdbms-vs-nosql-data-flexibility/">[4]</a> 這篇總結的不錯。</li>
   <li><a href="https://www.ithome.com.tw/news/92506">[5]</a>  <a href="https://dotblogs.com.tw/explooosion/2018/01/21/040728">[6]</a>  MongoDB 安裝教學</li>
   <li><a href="https://kknews.cc/zh-tw/code/8oao9aq.html">[7]</a>  <a href="https://www.infoq.cn/article/2014/01/nosql-vs-rdbms">[8]</a>  <a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/556428/">NoSQL型別介紹及適用場景</a>  使用場景</li>
-  <li><a href="http://garyliutw.blogspot.com/2014/05/mongodb-nosql.html">MongoDB 學習筆記之一 - 從 NoSQL 談起</a></li>
-  <li><a href="https://www.kshuang.xyz/doku.php/database:sql_vs_nosql">SQL vs NoSQL: The Differences</a>  裡面有一些例子</li>
+  <li><a href="http://garyliutw.blogspot.com/2014/05/mongodb-nosql.html">MongoDB 學習筆記之一 - 從 NoSQL 談起</a>  (網路技術趨勢觀測站)</li>
+  <li><a href="https://www.kshuang.xyz/doku.php/database:sql_vs_nosql">SQL vs NoSQL: The Differences</a>  裡面有一些例子 (資訊人筆記)</li>
+  <li>https://tw.alphacamp.co/blog/sql-nosql-database-dbms-introduction 這裡面居然有題目做。(alphacamp)</li>
+  <li><a href="https://medium.com/@hugh_Program_learning_diary_Js/%E5%BE%8C%E7%AB%AF%E5%9F%BA%E7%A4%8E-%E8%B3%87%E6%96%99%E5%BA%AB-nosql-transaction-acid-%E8%88%87-lock-882f3079fd3d">後端基礎：資料庫 NoSQL、transaction、ACID 與 Lock</a>  進階</li>
 </ul>
 
 
@@ -529,9 +534,9 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/2020/03/08/Singleton%E6%A8%A1%E5%BC%8F.html" data-toggle="tooltip" data-placement="top" title="Singleton模式">
+                        <a href="/blog/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/18/MongoDB-%E9%96%8B%E7%AF%87.html" data-toggle="tooltip" data-placement="top" title="MongoDB 開篇">
                         Previous<br>
-                        <span>Singleton模式</span>
+                        <span>MongoDB 開篇</span>
                         </a>
                     </li>
                     

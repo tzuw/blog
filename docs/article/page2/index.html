@@ -225,6 +225,272 @@
 
 
 <div class="post-preview">
+    <a href="/blog/elasticsearch/%E4%B8%AD%E9%97%B4%E4%BB%B6/2019/12/09/TODO-ElasticSearch%E7%88%B6%E5%AD%90%E6%96%87%E6%A1%A3md.html">
+        <h2 class="post-title">
+            ElasticSearch父子文档结构 vs. Nested 结构
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Parent-Child Structure vs. Nested Structure
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <p>MySQL的相似字符串查找 “LIKE %keyword%” 是一个全表的操作，检索效率差，除非你将数据取出放在内存备用。但是随着数据量的上升，内存将无法负荷，MySQL的強項本就是在事務處理而不是數據檢索。搜尋引擎中間件的強項才是檢索。</p>
+
+<p>ElasticSearch 作为一个基于 Lucene 的分布式搜寻引擎已然是一个热门的大数据分析中间件。Lucene 是Apache下一個全文檢索和搜尋的開放原始碼程式庫。</p>
+
+<p>下面介绍 ES 中的两种数据结构。</p>
+
+<h3 id="父子文档结构">父子文档结构</h3>
+
+<p>可以理解為关系型数据库中的一对多关系，一个父文档可以对应多个子文档。</p>
+
+<ul>
+  <li>Join类型用于描述一对多的关系</li>
+</ul>
+
+<h3 id="nested-结构">Nested 结构</h3>
+
+<h3 id="对比图">对比图</h3>
+
+<p>来源: rockybean 教程</p>
+
+<p><img src="/blog/img/in-post/es-parent-child-vs-nested.png" alt="" /></p>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+  <li><a href="https://zhuanlan.zhihu.com/p/32112952">https://zhuanlan.zhihu.com/p/32112952</a></li>
+  <li><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/parent-child.html">https://www.elastic.co/guide/cn/elasticsearch/guide/current/parent-child.html</a></li>
+  <li><a href="https://blog.csdn.net/laoyang360/article/details/82950393">https://blog.csdn.net/laoyang360/article/details/82950393</a></li>
+  <li><a href="https://blog.csdn.net/u010454030/article/details/77840606">https://blog.csdn.net/u010454030/article/details/77840606</a></li>
+  <li><a href="https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742">https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742</a></li>
+  <li><a href="https://stackoverflow.com/questions/49941244/elastic-search-parent-child-vs-nested-document">https://stackoverflow.com/questions/49941244/elastic-search-parent-child-vs-nested-document</a></li>
+  <li><a href="https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742">https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742</a></li>
+</ol>
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        December 9, 2019 &nbsp;|&nbsp;
+        约3分钟读完
+        大约766个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=ElasticSearch" title="ElasticSearch">ElasticSearch&nbsp;</a>
+        &nbsp;
+        <a href="/blog/categories.html?categories=中间件" title="中间件">中间件&nbsp;</a>
+        
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-4-medium"
+       title="学习笔记" rel="9"
+       href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" >
+        #学习笔记
+        <sup>9</sup>
+    </a><a class="tag-button tag-0-0"
+       title="ES" rel="1"
+       href="/blog/tags.html?tags=ES" >
+        #ES
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="MySQL" rel="2"
+       href="/blog/tags.html?tags=MySQL" >
+        #MySQL
+        <sup>2</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
+    <a href="/blog/%E5%89%8D%E7%AB%AF/javascript/2019/10/19/Javascript-%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E7%B3%96%E6%95%B4%E7%90%86.html">
+        <h2 class="post-title">
+            [更新中] Javascript-常用语法糖整理
+        </h2>
+        
+        <h3 class="post-subtitle">
+            [Updating] Javascript-common-syntactic-sugar
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+        <p>最近需要用到一些前端代码，所以赶紧来看看相关的语法糖，加速开发。</p>
+
+<h3 id="this">this</h3>
+
+<p>在 js 的代码中，在没有任何知识的前提下，最让人费解的就是 var self = this; 这段代码了。后来了解到，它的出现其实和代码中的作用域有关：</p>
+
+<ul>
+  <li>在一个<strong>对象内部</strong>，this指向的是这个对象；</li>
+  <li>在普通函数内部，this指向的是 Window Object；</li>
+  <li>在没有被赋值给变量的匿名函数中，this 指向了 Window Object；</li>
+  <li>并且，在层叠函数中，内层函数会有新的作用域，this 的指向也会发生改变；</li>
+</ul>
+
+<h3 id="bindthis">.bind(this)</h3>
+
+<p>如果你觉得 var self = this; 太麻烦，每次还得多加一行，你也可以使用 .bind(this) 来达到一眼一样的目的。使用方法：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">timer</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">seconds</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="c1">// var self = this;</span>
+  <span class="nx">start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+      <span class="c1">// self.seconds++</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">seconds</span><span class="o">++</span>
+    <span class="p">},</span> <span class="mi">1000</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">timer</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nx">seconds</span><span class="p">)</span>
+<span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">3500</span><span class="p">)</span>
+
+<span class="c1">// the bind function 其实就是返回了一个带有 this 作用域的新的方法。</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="语法糖箭头函数">语法糖：箭头函数</h3>
+
+<p>箭头函数也可以有这个效果，匿名函数中的 this 不再指向 Window，而是指向声明它的对象。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">timer</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">seconds</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nx">start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">seconds</span><span class="o">++</span>
+    <span class="p">},</span> <span class="mi">1000</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">timer</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nx">seconds</span><span class="p">)</span>
+<span class="p">},</span> <span class="mi">3500</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="语法糖解构赋值">语法糖：解构赋值</h3>
+
+<h3 id="语法糖剩余参数和拓展符">语法糖：剩余参数和拓展符</h3>
+
+<h3 id="语法糖模板字符串">语法糖：模板字符串</h3>
+
+<h3 id="语法糖let--const-声明">语法糖：let &amp; const 声明</h3>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+  <li><a href="https://ponyfoo.com/books/practical-modern-javascript"><strong>《Pratical Modern JavaScript》</strong></a></li>
+  <li><a href="https://stackoverflow.com/questions/337878/var-self-this"><strong>https://stackoverflow.com/questions/337878/var-self-this</strong></a></li>
+  <li><a href="https://segmentfault.com/a/1190000010159725">https://segmentfault.com/a/1190000010159725</a></li>
+  <li><a href="https://pjchender.blogspot.com/2016/03/javascriptthisbug.html">https://pjchender.blogspot.com/2016/03/javascriptthisbug.html</a></li>
+</ol>
+
+        
+    </div>
+
+    <!-- capture tags for every article -->
+    
+    
+    <br/>
+    <p class="post-meta">
+        October 19, 2019 &nbsp;|&nbsp;
+        约3分钟读完
+        大约1000个字
+
+        &nbsp;|&nbsp;&nbsp;
+        <a href="/blog/categories.html?categories=前端" title="前端">前端&nbsp;</a>
+        &nbsp;
+        <a href="/blog/categories.html?categories=Javascript" title="Javascript">Javascript&nbsp;</a>
+        
+        <!--        -->
+        <!--            &nbsp;|&nbsp;-->
+        <!--            <span class="tags tags-sup">-->
+        <!--            
+    <a class="tag-button tag-4-medium"
+       title="学习笔记" rel="9"
+       href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" >
+        #学习笔记
+        <sup>9</sup>
+    </a><a class="tag-button tag-0-0"
+       title="ES5" rel="1"
+       href="/blog/tags.html?tags=ES5" >
+        #ES5
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="ES6" rel="1"
+       href="/blog/tags.html?tags=ES6" >
+        #ES6
+        <sup>1</sup>
+    </a><a class="tag-button tag-0-0"
+       title="语法糖" rel="2"
+       href="/blog/tags.html?tags=%E8%AF%AD%E6%B3%95%E7%B3%96" >
+        #语法糖
+        <sup>2</sup>
+    </a><a class="tag-button tag-0-0"
+       title="Syntactic-sugar" rel="2"
+       href="/blog/tags.html?tags=Syntactic-sugar" >
+        #Syntactic-sugar
+        <sup>2</sup>
+    </a>
+    -->
+        <!--            </span>-->
+        <!--        -->
+    </p>
+    <hr/>
+    <!--  Posted by tzuw-->
+</div>
+
+
+
+<div class="post-preview">
     <a href="/blog/java/2019/10/02/java-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%B8%A6%E6%9C%89iterable%E7%B1%BB%E5%9E%8Bfield%E7%9A%84%E5%AF%B9%E8%B1%A1.html">
         <h2 class="post-title">
             Java中反序列化带有Iterable类型field的对象?
@@ -901,7 +1167,7 @@
   
   
 </ul>
-    <p>文章12&nbsp;|&nbsp;分类12&nbsp;|&nbsp;标签40</p>
+    <p>文章14&nbsp;|&nbsp;分类13&nbsp;|&nbsp;标签44</p>
   </div>
 </section>
 

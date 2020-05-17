@@ -5,9 +5,416 @@
     <description>latte-a-little-sugar</description>
     <link>http://0.0.0.0:4000/blog/</link>
     <atom:link href="http://0.0.0.0:4000/blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 08 May 2020 21:18:31 +0800</pubDate>
-    <lastBuildDate>Fri, 08 May 2020 21:18:31 +0800</lastBuildDate>
+    <pubDate>Sun, 17 May 2020 22:12:06 +0800</pubDate>
+    <lastBuildDate>Sun, 17 May 2020 22:12:06 +0800</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Python threading 模塊帶範例</title>
+        <description>&lt;p&gt;之前剛好用到了 Python 的多線程模塊。一直有一個模糊的印象，大概有三種 threading、multiprocessing、concurrent.futures …… 等，趁這個機會來把相關的知識點整理整理。首先，釐清一個觀念，Python 中雖然有 GIL 去讓每次只有一個執行緒在跑，但是 Python 它不是 thread-free 的，比如常見的累加操作 &lt;code class=&quot;highlighter-rouge&quot;&gt;+=1&lt;/code&gt; 就不是 atomic 的。然後，按部就班地先來看如何定義 Python 中的一個線程吧。&lt;/p&gt;
+
+&lt;h3 id=&quot;先備知識---定義一個線程&quot;&gt;先備知識 - 定義一個線程&lt;/h3&gt;
+
+&lt;p&gt;線程，指的是作業系統處理工作的基本單元。作業系統會根據 Thread 的優先權，以及使用過的 CPU 時間，在不同的 Thread 之間切換，讓各個 Thread 都有執行的機會。而同一個 Process 下的 Thread 使用相同的內存空間，共享全局變量、記憶體。而這些 Thread 又擁有自己的 Stack。即，可以通過參照獲取相同的物件，但是局部變量 (local variable) 獨立。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;threading&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;function called by thread &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;threads&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;threading&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;threads&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Output:
+function called by thread 0
+
+function called by thread 1
+
+function called by thread 2
+
+function called by thread 3
+
+function called by thread 4
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;上面利用了 &lt;code class=&quot;highlighter-rouge&quot;&gt;threading.Thread(target=function)&lt;/code&gt; 定義了線程，並且使用 join() 使得每個線程執行結束後才會進行接下去的迴圈。除此之外，你也可以自己定義一個線程類繼承至 &lt;code class=&quot;highlighter-rouge&quot;&gt;Thread&lt;/code&gt;並實現 __ init __ 和 run 方法，同樣可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;start()&lt;/code&gt; 方法來開始一個線程，這邊就不展開啦。&lt;/p&gt;
+
+&lt;h3 id=&quot;什麼是線程同步-synchronous&quot;&gt;什麼是線程同步 Synchronous&lt;/h3&gt;
+
+&lt;p&gt;線程同步描述的是，線程之間在共享資源時的存取規則，即有一個線程在對某個&lt;strong&gt;共享變量&lt;/strong&gt;進行讀寫時，其他線程將被阻塞，知道上一個線程釋放了鎖。(按預定的先後順序執行) 它預防了&lt;strong&gt;死鎖&lt;/strong&gt;、異常線程順序的發生。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;shared_resource_lock = threading.Lock()&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;lock = threading.RLock()&lt;/code&gt; 、 &lt;code class=&quot;highlighter-rouge&quot;&gt;semaphore = threading.Semaphore(0)&lt;/code&gt;、 &lt;code class=&quot;highlighter-rouge&quot;&gt;condition = Condition()&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;event = Event()&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;Queue&lt;/code&gt;  ，這些鎖們都可以用來實現線程同步。它們分別是，鎖 Lock、遞歸鎖 Reentrant Lock (RLock)、信號量 Semaphore、條件 Condition、事件 Event。&lt;/p&gt;
+
+&lt;p&gt;此外，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 語句。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;# Reentrant Lock 遞歸鎖/重入锁&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;# Reentrant Lock Example 遞歸鎖/重入锁
+# 只有放鎖的人可以解鎖。解鈴還須繫鈴人。並且，同一個線程可以獲取多次這個 RLock。當然，同時也要釋放多次。
+# 實現一個往箱子裡放/取 item 的多線程程式。只有把東西放進去的人，將鎖釋放後，才可以有人把東西拿出來。
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;threading&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;threading&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RLock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;acquire&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 第二次獲取鎖
+&lt;/span&gt;        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# manipulate total_items synchronously
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;Box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;release&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 第一次釋放鎖
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;acquire&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blocking&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'add is waiting for lock being released'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;adding 1 item in the box&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;release&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Nothing to remove.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;acquire&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blocking&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'remove is waiting for lock being released'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;removing 1 item in the box&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;release&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;adder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+        
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;remover&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+        
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__main__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;putting &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s items in the box &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;threading&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;adder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;threading&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remover&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s items still remain in the box &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Output:
+putting 5 items in the box
+adding 1 item in the box
+removing 1 item in the box 1
+adding 1 item in the box
+removing 1 item in the box 1
+adding 1 item in the box
+Nothing to remove.
+removing 1 item in the box 1
+adding 1 item in the box
+removing 1 item in the box 1
+adding 1 item in the box
+removing 1 item in the box 1
+0 items still remain in the box
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;# threading.Semaphore 信號量&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;# threading.Semaphore 信號量
+# 信號量標明了一個共享資源可以有多少並發存取
+# 當信號量=1時，可以作為一個互斥量。即實現資源的互斥訪問。
+# 實現一個信號量標示箱子裡還有多少 item 可以被使用，比如這個 item 可以被用來對某網站進行爬蟲
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;threading&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;random&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;threading&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Semaphore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;order&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;crawler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# thread function
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;global&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;order&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;order&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'{} is crawlering on {}th url'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;threading&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;currentThread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;order&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+&lt;span class=&quot;n&quot;&gt;Threads&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;threading&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;crawler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Threads&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Threads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Spider end.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Output:
+Thread-6 is crawlering on 1th url
+Thread-5 is crawlering on 2th url
+Thread-7 is crawlering on 3th url
+Thread-9 is crawlering on 4th url
+Thread-8 is crawlering on 5th url
+Thread-10 is crawlering on 6th url
+Thread-11 is crawlering on 7th url
+Thread-12 is crawlering on 8th url
+Thread-13 is crawlering on 9th url
+Thread-14 is crawlering on 10th url
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;# Condition&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;注意，&lt;code class=&quot;highlighter-rouge&quot;&gt;condition.wait()&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;condition.notify()&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;condition.acquire()&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;condition.release()&lt;/code&gt; 的使用，和關於線程的面試題。（按照順序打印 ABC 10次）&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;# 使用條件 Condition
+# 解釋 Condition 同步機制可以用緩存，一個生產者-消費者機制的體現。
+# 只要緩存沒滿的時候，生產者持續寫入。
+# 只要緩存非空，消費者就不停的吃。
+# 所以，當緩存隊列不為空時，生產者通知消費者。當緩存隊列不滿的時候，消費者通知生產者。
+# 下面這段代碼是一個生產 20 個，然後消耗 20 個的例子。
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;python&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parallel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;programmning&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cookbook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;readthedocs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zh_CN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chapter2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Thread_synchronization_with_a_condition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt;
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;# Event&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;注意，&lt;code class=&quot;highlighter-rouge&quot;&gt;event.wait()&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;event.set()&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;event.clear()&lt;/code&gt;  的使用。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;# 使用事件 Event
+# 也可以用生產者-消費者作為例子
+# 在 event.set() 的時候會通知消費者的 event.wait()，啟動消費。然後，將事件清除。event.clear()
+&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;評估&quot;&gt;評估&lt;/h3&gt;
+
+&lt;p&gt;如果把多線程寫好了，但是卻跑的沒有別人寫得快，那情何以堪，所以自己進行評估就很重要了。講到 Python 中的多線程效能評估，就不得不提到 Python 中的 GIL (Global Interpreter Lock)。所以，這邊主要分為兩個部分介紹，&lt;strong&gt;Python 中的 GIL&lt;/strong&gt; 和&lt;strong&gt;如何評估 Python 的多線程程式效能&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;In CPython, the global interpreter lock, or GIL, is a mutex that prevents multiple native threads from executing Python bytecodes at once. This lock is necessary mainly because CPython’s memory management is not thread-safe. (However, since the GIL exists, other features have grown to depend on the guarantees that it enforces.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;上面是官方對 GIL 的解釋。可以理解為：在其中一個 Python 解析器 CPython 中，GIL 是一個互斥鎖，它避免了多個執行緒能同時執行 Python 的源碼。它使得：當有一個執行緒在執行 Python，其他 N 個執行緒都在睡覺或是等待 I/O。想到這裡，就可以想到：第一，Python 的 GIL 的由來和設計；第二，Python 的解釋器如何切換執行緒的執行。第三，如何判斷 Python 中的函數是不是 thread-free 的。&lt;/p&gt;
+
+&lt;p&gt;(1) 由來：&lt;/p&gt;
+
+&lt;p&gt;由于CPython实现的内存管理不是线程安全，所以需要。它阻止了不同的線程並發的訪問 Python 對象。&lt;/p&gt;
+
+&lt;p&gt;(1.1) 如何切換：&lt;/p&gt;
+
+&lt;p&gt;有兩種方式，第一種是 &lt;strong&gt;Preemptive (先佔式) MultiTasking&lt;/strong&gt;，Python2中若一個執行緒沒有直譯 1000 個 bytecode 指令該執行緒就會釋放 GIL 給其他執行需使用。Python3 中則是通過執行緒的使用時間，沒有超過 15ms 就結束了的話，就會被釋放給其他的執行緒。第二種是 &lt;strong&gt;Cooperative (協調式) multitasking&lt;/strong&gt;，即當執行緒被網路 I/O 阻擋時，它會將 GIL 釋放，讓其他執行緒可以執行。所以，兩個執行緒就可以同時等待網絡連接。&lt;/p&gt;
+
+&lt;p&gt;(2) 如何評估：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;使用 time.time()&lt;/li&gt;
+  &lt;li&gt;使用 perf 套件，&lt;code class=&quot;highlighter-rouge&quot;&gt;python -m perf timeit ' XXX '&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;(3) 如何判斷 Python 中的函數是不是 thread-free 的？&lt;/p&gt;
+
+&lt;p&gt;通過 dis 模塊來查看 bytecode，查看是不是在賦值對象的時候有可能被打斷。&lt;/p&gt;
+
+&lt;h3 id=&quot;參考資料&quot;&gt;參考資料&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/22885775/what-is-the-difference-between-lock-and-rlock&quot;&gt;https://stackoverflow.com/questions/22885775/what-is-the-difference-between-lock-and-rlock&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://python-parallel-programmning-cookbook.readthedocs.io/zh_CN/latest/chapter2/09_Thread_synchronization_with_a_condition.html&quot;&gt;python-parallel-programmning-cookbook&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://python3-cookbook.readthedocs.io/zh_CN/latest/c12/p09_dealing_with_gil_stop_worring_about_it.html&quot;&gt;12.9 Python的全局锁问题&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://cenalulu.github.io/python/gil-in-python/&quot;&gt;Python的GIL是什么鬼，多线程性能究竟如何&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.louie.lu/2017/05/19/%E6%B7%B1%E5%85%A5-gil-%E5%A6%82%E4%BD%95%E5%AF%AB%E5%87%BA%E5%BF%AB%E9%80%9F%E4%B8%94-thread-safe-%E7%9A%84-python-grok-the-gil-how-to-write-fast-and-thread-safe-python/&quot;&gt;深入 GIL: 如何寫出快速且 thread-safe 的 Python – Grok the GIL: How to write fast and thread-safe Python&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.louie.lu/2017/08/01/%E4%BD%A0%E6%89%80%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84-python-%E6%A8%99%E6%BA%96%E5%87%BD%E5%BC%8F%E5%BA%AB%E7%94%A8%E6%B3%95-06-concurrent-futures/&quot;&gt;concurrent.futures — 創立非同步任務 — 你所不知道的 Python 標準函式庫用法 06&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;延伸閱讀&quot;&gt;延伸閱讀&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://python3-cookbook.readthedocs.io/zh_CN/latest/preface.html&quot;&gt;https://python3-cookbook.readthedocs.io/zh_CN/latest/preface.html&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://linuxgazette.net/107/pai.html&quot;&gt;Understanding Threading in Python&lt;/a&gt; 推薦&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.dabeaz.com/python/GIL.pdf&quot;&gt;Inside the Python GIL&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://wiki.python.org/moin/GlobalInterpreterLock&quot;&gt;官方wiki&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.tenlong.com.tw/products/9781789533736&quot;&gt;Python Parallel Programming Cookbook- Second Edition&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://medium.com/mr-efacani-teatime/concurrency%E8%88%87parallelism%E7%9A%84%E4%B8%8D%E5%90%8C%E4%B9%8B%E8%99%95-1b212a020e30&quot;&gt;Concurrency與Parallelism的不同之處&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://medium.com/@alan81920/python-%E7%9A%84-concurrency-%E5%92%8C-parallelization-efeddcb30c4c&quot;&gt;Python 的 concurrency 和 parallelization&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.pythonf.cn/read/39234&quot;&gt;https://www.pythonf.cn/read/39234&lt;/a&gt; 例子&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Tue, 12 May 2020 00:23:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/blog/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/2020/05/12/Python-threading-%E6%A8%A1%E5%A1%8A-with-examples.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/blog/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/2020/05/12/Python-threading-%E6%A8%A1%E5%A1%8A-with-examples.html</guid>
+        
+        <category>thread</category>
+        
+        <category>lock</category>
+        
+        <category>Semaphore</category>
+        
+        <category>Python</category>
+        
+        <category>软件开发</category>
+        
+        
+        <category>软件开发</category>
+        
+      </item>
     
       <item>
         <title>設計模式之工廠模式</title>
@@ -319,11 +726,14 @@
 
 &lt;p&gt;主流的 RDBMS 有 Oracle，MySQL，PostgreSQL，Microsoft SQLServer，使用場景：具有事務需求的系統 (銀行/購物平台)。&lt;/p&gt;
 
-&lt;p&gt;主流的 NoSQL 有 MongoDB (面向文檔)、Cassandra、HBase (面向列)。使用場景：文檔類模型、列模型適用於保存日誌&lt;/p&gt;
+&lt;p&gt;主流的 NoSQL 有 MongoDB (面向文檔)、Cassandra、HBase (面向列)。使用場景：文檔類模型、列模型適用於保存日誌。即通常用來存一些結構不固定的數據。&lt;/p&gt;
 
 &lt;p&gt;不同點：&lt;/p&gt;
 
 &lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;No JOIN in NoSQL&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;ACID vs. CAP&lt;/p&gt;
   &lt;/li&gt;
@@ -333,7 +743,7 @@
   &lt;li&gt;
     &lt;p&gt;Normalization vs. Denormalization&lt;/p&gt;
 
-    &lt;p&gt;MySQL 的 Normalization 可以有效地降低冗餘數據；NoSQL 中的 Denormalization 會使查詢速度變快，但在更年多筆數據時就會變慢。多數的文檔型 NoSQL 採用 Denormalization 的方式來存儲資料。&lt;/p&gt;
+    &lt;p&gt;MySQL 的 Normalization 可以有效地降低冗餘數據；NoSQL 中的 Denormalization 會使查詢速度變快，但在更新多筆數據時就會變慢。多數的文檔型 NoSQL 採用 Denormalization 的方式來存儲資料。&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -409,13 +819,15 @@
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/beilin/p/6007080.html&quot;&gt;[1]&lt;/a&gt;  &lt;a href=&quot;https://www.cnblogs.com/beilin/p/5981870.html&quot;&gt;[2]&lt;/a&gt;  裡面談了關係型數據庫和非關係型數據庫的對比。&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://shininglionking.blogspot.com/2018/04/rdbms-vs-nosql.html&quot;&gt;[3]&lt;/a&gt;  RDBMS v.s. NoSQL&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://shininglionking.blogspot.com/2018/04/rdbms-vs-nosql.html&quot;&gt;[3]&lt;/a&gt;  RDBMS v.s. NoSQL  (&lt;a href=&quot;https://shininglionking.blogspot.com/&quot;&gt;邁向王者的旅途&lt;/a&gt;)&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.kshuang.xyz/doku.php/database:sql_vs_nosql&quot;&gt;SQL vs NoSQL: The Differences&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.tamr.com/blog/rdbms-vs-nosql-data-flexibility/&quot;&gt;[4]&lt;/a&gt; 這篇總結的不錯。&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.ithome.com.tw/news/92506&quot;&gt;[5]&lt;/a&gt;  &lt;a href=&quot;https://dotblogs.com.tw/explooosion/2018/01/21/040728&quot;&gt;[6]&lt;/a&gt;  MongoDB 安裝教學&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://kknews.cc/zh-tw/code/8oao9aq.html&quot;&gt;[7]&lt;/a&gt;  &lt;a href=&quot;https://www.infoq.cn/article/2014/01/nosql-vs-rdbms&quot;&gt;[8]&lt;/a&gt;  &lt;a href=&quot;https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/556428/&quot;&gt;NoSQL型別介紹及適用場景&lt;/a&gt;  使用場景&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://garyliutw.blogspot.com/2014/05/mongodb-nosql.html&quot;&gt;MongoDB 學習筆記之一 - 從 NoSQL 談起&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.kshuang.xyz/doku.php/database:sql_vs_nosql&quot;&gt;SQL vs NoSQL: The Differences&lt;/a&gt;  裡面有一些例子&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://garyliutw.blogspot.com/2014/05/mongodb-nosql.html&quot;&gt;MongoDB 學習筆記之一 - 從 NoSQL 談起&lt;/a&gt;  (網路技術趨勢觀測站)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.kshuang.xyz/doku.php/database:sql_vs_nosql&quot;&gt;SQL vs NoSQL: The Differences&lt;/a&gt;  裡面有一些例子 (資訊人筆記)&lt;/li&gt;
+  &lt;li&gt;https://tw.alphacamp.co/blog/sql-nosql-database-dbms-introduction 這裡面居然有題目做。(alphacamp)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://medium.com/@hugh_Program_learning_diary_Js/%E5%BE%8C%E7%AB%AF%E5%9F%BA%E7%A4%8E-%E8%B3%87%E6%96%99%E5%BA%AB-nosql-transaction-acid-%E8%88%87-lock-882f3079fd3d&quot;&gt;後端基礎：資料庫 NoSQL、transaction、ACID 與 Lock&lt;/a&gt;  進階&lt;/li&gt;
 &lt;/ul&gt;
 
 </description>
@@ -430,6 +842,61 @@
         <category>NoSQL</category>
         
         <category>data warehouse</category>
+        
+        
+        <category>資料倉儲</category>
+        
+      </item>
+    
+      <item>
+        <title>MongoDB 開篇</title>
+        <description>&lt;p&gt;看了很多篇博文的介紹後，對於 MongoDB 的理論知識上總是似懂非懂，於是決定還是自己來整理一下。MongoDB 的設計是結合了關係型資料庫的核心能力和 NoSQL 的關鍵技術。其中，關係型數據庫的關鍵能力有：易於表達的查詢語句、支持索引、一致性，以及方便和已有的技術架構整合。而作為 NoSQL 它還擁有，靈活的資料模型 (Schema-free)、可水平擴展性 (分散式架構)，以及高可用的部署 (某個節點掛掉還是可以用)。下面分別展開。然後接下來的文章就圍繞這些特性吧。&lt;/p&gt;
+
+&lt;h5 id=&quot;1-易於表達的查詢語句&quot;&gt;&lt;strong&gt;1. 易於表達的查詢語句&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-mongodb&quot;&gt;db.getCollection('houses').find({&quot;linkman&quot;:&quot;黃先生&quot;},{&quot;linkman&quot;:true,&quot;_id&quot;:false})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&quot;2-支持索引&quot;&gt;&lt;strong&gt;2. 支持索引&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;MongoDB 中的索引最簡單的有三種，單字段索引、復合索引，和多鍵值索引。其中，多鍵值索引針對鍵值是一個數組的情況。而復合索引則是針對經常會在一起查詢的字段進行優化，例如，對於租房信息中的聯繫人和地區，兩個信息一起創建索引。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-mongodb&quot;&gt;db.getCollection('houses').createIndex({linkman:1, regionid:1})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&quot;3-方便和企業中已有的技術架構整合&quot;&gt;&lt;strong&gt;3. 方便和企業中已有的技術架構整合&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;科普一個常用於構建Web項目的工具集 MEAN (MongoDB，Express，Angular 和 Node.js) 。其他，什麼時候用MongoDB 和 node.js 的常見應用可以參考這兩個鏈接 &lt;a href=&quot;https://cnodejs.org/topic/58d4b894b3e60b982d089b36&quot;&gt;ref&lt;/a&gt; &lt;a href=&quot;https://segmentfault.com/q/1010000016910793&quot;&gt;ref&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h5 id=&quot;4-靈活的資料模型&quot;&gt;&lt;strong&gt;4. 靈活的資料模型&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;Schema-free。在 MongoDb 中，儘管每一筆資料的欄位型態可以不同，甚至連欄位都不一定相同，但是倘若就這樣任由使用者保存，那真的就沒有意義了。給你方便不是讓你當隨便。所以，還是會有一些基本的設計模式。例如，One-to-One、One-to-Few、One-to-Many、One-to-Squillions，等等。&lt;/p&gt;
+
+&lt;h5 id=&quot;5-一致性&quot;&gt;&lt;strong&gt;5. 一致性&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;MongoDb 的一致性和 MySQL 中的一致性不太一樣，前者是 CAP 理論中的一致性，後者則是在 ACID 中的，這裡先不展開。主要先了解 MongoDB 只能做到 Eventually Consistency，即每次讀取的數據要嘛是最新的，要嘛就暫時無法讀取 (犧牲了可用性)。另外，MongoDB 中的 MongoDB Replica Set ，則有另一種意思的可用性，詳見高可用部署。&lt;/p&gt;
+
+&lt;h5 id=&quot;6-高可用部署&quot;&gt;&lt;strong&gt;6. 高可用部署&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;高可用在此指的是縮短日常維護時間和因突發的系統崩潰導致的停機時間。例如，主備模式，保證有一個備份數據庫是可以在主節點異常時進行支援。此外，記錄一下 MongDB 官方提供的三種架構：Three Member Replica Sets、Replica Sets with Four or More Members、Geographically Distributed Replica Sets。&lt;/p&gt;
+
+&lt;h5 id=&quot;7-可水平擴展性&quot;&gt;&lt;strong&gt;7. 可水平擴展性&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;p&gt;NoSQL 數據庫都有的特性。可以很融合通過增加服務器來達到拓展空間的目的。MongoDB 中的 Sharding 就是為了水平擴展設計。&lt;/p&gt;
+
+&lt;h3 id=&quot;參考資料--擴展&quot;&gt;參考資料 &amp;amp; 擴展&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;http://mongodbcanred.blogspot.com/2015/01/mongodb.html&quot;&gt;http://mongodbcanred.blogspot.com/2015/01/mongodb.html&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.mongodb.com/presentations/webinar-schema-design-1&quot;&gt;MongoDB 官方ppt&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Sat, 18 Apr 2020 06:09:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/blog/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/18/MongoDB-%E9%96%8B%E7%AF%87.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/blog/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/18/MongoDB-%E9%96%8B%E7%AF%87.html</guid>
+        
+        <category>MongoDB</category>
         
         
         <category>資料倉儲</category>
@@ -715,8 +1182,6 @@
         
         <category>synchronized</category>
         
-        <category>JVM</category>
-        
         
         <category>软件工程</category>
         
@@ -939,8 +1404,6 @@
         <pubDate>Wed, 19 Feb 2020 05:10:00 +0800</pubDate>
         <link>http://0.0.0.0:4000/blog/java/spring/2020/02/19/Spring-IOC.html</link>
         <guid isPermaLink="true">http://0.0.0.0:4000/blog/java/spring/2020/02/19/Spring-IOC.html</guid>
-        
-        <category>configuration</category>
         
         <category>反射机制</category>
         
@@ -1396,184 +1859,6 @@ FROM my_table;
         <category>Java</category>
         
         <category>wiki</category>
-        
-      </item>
-    
-      <item>
-        <title>ElasticSearch父子文档结构 vs. Nested 结构</title>
-        <description>&lt;p&gt;MySQL的相似字符串查找 “LIKE %keyword%” 是一个全表的操作，检索效率差，除非你将数据取出放在内存备用。但是随着数据量的上升，内存将无法负荷，MySQL的強項本就是在事務處理而不是數據檢索。搜尋引擎中間件的強項才是檢索。&lt;/p&gt;
-
-&lt;p&gt;ElasticSearch 作为一个基于 Lucene 的分布式搜寻引擎已然是一个热门的大数据分析中间件。Lucene 是Apache下一個全文檢索和搜尋的開放原始碼程式庫。&lt;/p&gt;
-
-&lt;p&gt;下面介绍 ES 中的两种数据结构。&lt;/p&gt;
-
-&lt;h3 id=&quot;父子文档结构&quot;&gt;父子文档结构&lt;/h3&gt;
-
-&lt;p&gt;可以理解為关系型数据库中的一对多关系，一个父文档可以对应多个子文档。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Join类型用于描述一对多的关系&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;nested-结构&quot;&gt;Nested 结构&lt;/h3&gt;
-
-&lt;h3 id=&quot;对比图&quot;&gt;对比图&lt;/h3&gt;
-
-&lt;p&gt;来源: rockybean 教程&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/blog/img/in-post/es-parent-child-vs-nested.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;参考资料&quot;&gt;参考资料&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/32112952&quot;&gt;https://zhuanlan.zhihu.com/p/32112952&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.elastic.co/guide/cn/elasticsearch/guide/current/parent-child.html&quot;&gt;https://www.elastic.co/guide/cn/elasticsearch/guide/current/parent-child.html&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/laoyang360/article/details/82950393&quot;&gt;https://blog.csdn.net/laoyang360/article/details/82950393&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/u010454030/article/details/77840606&quot;&gt;https://blog.csdn.net/u010454030/article/details/77840606&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742&quot;&gt;https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/49941244/elastic-search-parent-child-vs-nested-document&quot;&gt;https://stackoverflow.com/questions/49941244/elastic-search-parent-child-vs-nested-document&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742&quot;&gt;https://discuss.elastic.co/t/choosing-parent-child-vs-nested-document/6742&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Mon, 09 Dec 2019 05:17:00 +0800</pubDate>
-        <link>http://0.0.0.0:4000/blog/elasticsearch/%E4%B8%AD%E9%97%B4%E4%BB%B6/2019/12/09/TODO-ElasticSearch%E7%88%B6%E5%AD%90%E6%96%87%E6%A1%A3md.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/blog/elasticsearch/%E4%B8%AD%E9%97%B4%E4%BB%B6/2019/12/09/TODO-ElasticSearch%E7%88%B6%E5%AD%90%E6%96%87%E6%A1%A3md.html</guid>
-        
-        <category>ES</category>
-        
-        <category>MySQL</category>
-        
-        <category>学习笔记</category>
-        
-        
-        <category>ElasticSearch</category>
-        
-        <category>中间件</category>
-        
-      </item>
-    
-      <item>
-        <title>[更新中] Javascript-常用语法糖整理</title>
-        <description>&lt;p&gt;最近需要用到一些前端代码，所以赶紧来看看相关的语法糖，加速开发。&lt;/p&gt;
-
-&lt;h3 id=&quot;this&quot;&gt;this&lt;/h3&gt;
-
-&lt;p&gt;在 js 的代码中，在没有任何知识的前提下，最让人费解的就是 var self = this; 这段代码了。后来了解到，它的出现其实和代码中的作用域有关：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;在一个&lt;strong&gt;对象内部&lt;/strong&gt;，this指向的是这个对象；&lt;/li&gt;
-  &lt;li&gt;在普通函数内部，this指向的是 Window Object；&lt;/li&gt;
-  &lt;li&gt;在没有被赋值给变量的匿名函数中，this 指向了 Window Object；&lt;/li&gt;
-  &lt;li&gt;并且，在层叠函数中，内层函数会有新的作用域，this 的指向也会发生改变；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;bindthis&quot;&gt;.bind(this)&lt;/h3&gt;
-
-&lt;p&gt;如果你觉得 var self = this; 太麻烦，每次还得多加一行，你也可以使用 .bind(this) 来达到一眼一样的目的。使用方法：&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;timer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;// var self = this;&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;setInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-      &lt;span class=&quot;c1&quot;&gt;// self.seconds++&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;setTimeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// the bind function 其实就是返回了一个带有 this 作用域的新的方法。&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;语法糖箭头函数&quot;&gt;语法糖：箭头函数&lt;/h3&gt;
-
-&lt;p&gt;箭头函数也可以有这个效果，匿名函数中的 this 不再指向 Window，而是指向声明它的对象。&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;timer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;setInterval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;setTimeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;语法糖解构赋值&quot;&gt;语法糖：解构赋值&lt;/h3&gt;
-
-&lt;h3 id=&quot;语法糖剩余参数和拓展符&quot;&gt;语法糖：剩余参数和拓展符&lt;/h3&gt;
-
-&lt;h3 id=&quot;语法糖模板字符串&quot;&gt;语法糖：模板字符串&lt;/h3&gt;
-
-&lt;h3 id=&quot;语法糖let--const-声明&quot;&gt;语法糖：let &amp;amp; const 声明&lt;/h3&gt;
-
-&lt;h3 id=&quot;参考资料&quot;&gt;参考资料&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;https://ponyfoo.com/books/practical-modern-javascript&quot;&gt;&lt;strong&gt;《Pratical Modern JavaScript》&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/337878/var-self-this&quot;&gt;&lt;strong&gt;https://stackoverflow.com/questions/337878/var-self-this&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000010159725&quot;&gt;https://segmentfault.com/a/1190000010159725&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://pjchender.blogspot.com/2016/03/javascriptthisbug.html&quot;&gt;https://pjchender.blogspot.com/2016/03/javascriptthisbug.html&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        <pubDate>Sat, 19 Oct 2019 05:10:00 +0800</pubDate>
-        <link>http://0.0.0.0:4000/blog/%E5%89%8D%E7%AB%AF/javascript/2019/10/19/Javascript-%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E7%B3%96%E6%95%B4%E7%90%86.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/blog/%E5%89%8D%E7%AB%AF/javascript/2019/10/19/Javascript-%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E7%B3%96%E6%95%B4%E7%90%86.html</guid>
-        
-        <category>ES5</category>
-        
-        <category>ES6</category>
-        
-        <category>语法糖</category>
-        
-        <category>Syntactic-sugar</category>
-        
-        <category>学习笔记</category>
-        
-        
-        <category>前端</category>
-        
-        <category>Javascript</category>
         
       </item>
     
