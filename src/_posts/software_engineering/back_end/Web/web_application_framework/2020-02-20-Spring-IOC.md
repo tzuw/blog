@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "Sping - Inversion of Control - 笔记"
-subtitle: "Learning Sping IOC"
+subtitle: "Learning Sping Inversion of Control"
 date: 2020-02-18 21:10:00
 author: "tzuw"
 header-img:  "img/cement.png"
-tags: [configuration, 反射机制, Spring-IOC, IOC, 反转控制, DI, 依赖注入, 学习笔记] 
+tags: [反射机制, Spring-IOC, IOC, 反转控制, DI, 依赖注入, 学习笔记] 
 categories: [Java, Spring]
 ---
 
@@ -123,8 +123,21 @@ public class Test {
 ### 参考资料
 
 1. [https://juejin.im/post/598ea9116fb9a03c335a99a4](https://juejin.im/post/598ea9116fb9a03c335a99a4)
+
 2. [https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/11422/](https://codertw.com/程式語言/11422/)
+
 3. [http://tengj.top/2016/04/28/javareflect/](http://tengj.top/2016/04/28/javareflect/)
+
 4. [https://www.zhihu.com/question/23277575](https://www.zhihu.com/question/23277575)
+
 5. [Spring IoC有什么好处呢？ - Mingqi的回答 - 知乎](https://www.zhihu.com/question/23277575/answer/169698662)
+
 6. [https://www.jianshu.com/p/64aac6461d5b](https://www.jianshu.com/p/64aac6461d5b)
+
+7. https://zhuanlan.zhihu.com/p/55649936
+
+8. [https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/526770/](https://codertw.com/程式語言/526770/)
+
+    spring面試題
+
+9. [理解Spring中的IoC和DI](https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/712699/#outline__3)

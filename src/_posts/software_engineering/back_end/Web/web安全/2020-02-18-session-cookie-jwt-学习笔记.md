@@ -28,7 +28,7 @@ categories: [Web安全]
 一个永久登录的案例 (https://blog.csdn.net/fangaoxin/article/details/6952954 发布于 2011-11-09 )。其实现方式有：
 
 - 将能够验证登录的信息保存在 Cookie 中，于是下次浏览页面的时候，服务端只需比较 Cookie 中的信息和数据库中的信息就可以知道，是不是已经登录了。
-- 把账号和加密后的账号保存到 Cookie 中，下次浏览页面的时候，只需要比较 Cookie 中的账号通过秘钥加密后是否与 Cookie 中的 ssid 相等。(代码如下)
+- 把账号和加密后的账号保存到 Cookie 中，下次浏览页面的时候，只需要將 Cookie 中的账号通过秘钥加密后，比较是否与 Cookie 中的 ssid 相等。(代码如下)
 
 ```jsp
 <%@ page language="java" pageEncoding="UTF-8" isErrorPage="false" %>

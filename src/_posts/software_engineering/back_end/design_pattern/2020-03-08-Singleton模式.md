@@ -4,7 +4,7 @@ subtitle: "Singleton mode"
 layout: post
 author: "tzuw"
 date: 2020-03-07 16:22:00
-tags: [学习笔记, 设计模式, Singleton pattern, lazy initialization, volatile, synchronized, JVM]
+tags: [学习笔记, 设计模式, Singleton pattern, lazy initialization, volatile, synchronized]
 categories: [软件工程]
 ---
 

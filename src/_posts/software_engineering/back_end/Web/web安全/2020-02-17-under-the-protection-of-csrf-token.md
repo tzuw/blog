@@ -79,3 +79,4 @@ public void shouldDoIntercept() {
 2. https://stackoverflow.com/questions/20504846/why-is-it-common-to-put-csrf-prevention-tokens-in-cookies
 3. https://security.stackexchange.com/questions/175536/does-a-csrf-cookie-need-to-be-httponly
 4. https://stackoverflow.com/questions/54258233/do-i-have-to-store-tokens-in-cookies-or-localstorage-or-session
+5. [https://dotblogs.com.tw/supershowwei/2016/03/16/135939](https://dotblogs.com.tw/supershowwei/2016/03/16/135939)
