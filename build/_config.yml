@@ -5,11 +5,11 @@ destination: ../docs
 #destination: ../dist
 
 # Site settings
-title: GINGER
-SEOTitle: GINGER
+title: "程式 筆記"
+SEOTitle: "程式 筆記"
 header-img: img/concretewall.jpg
 email: your-email-address-here
-description: "latte-a-little-sugar"
+description: ""
 keyword: ""
 url: "" # your host, for absolute URL
 baseurl: "/blog" # for example, '/blog' if your blog hosted on 'host/blog'
@@ -87,8 +87,8 @@ netease_comment: false
 
 
 # Sidebar settings
-sidebar: true # whether or not using Sidebar.
-sidebar-about-description: "latte-a-little-sugar"
+sidebar: false # whether or not using Sidebar.
+sidebar-about-description: ""
 sidebar-avatar: /blog/img/sword.jpg # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
