@@ -11,37 +11,39 @@
     <meta name="theme-color" content="#000000">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="RDBMS vs NoSQL - 程式 筆記">
+    <meta property="og:title" content="Java Multi-threading 第一篇 - 程式 筆記">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="
-  RDBMS 和 NoSQL 適用於不用的需求/場景，這可以從大數據時代的演變角度進行解讀。原本 RDBMS 的主要功能是，能夠正確的、同步的的處理具有特定結構的數據。 而現在隨著數據的產生速度加快，數據量也激增。新的功能需求因應而生，新的需求是希望數據庫能處理高速產生的大量數據，而不在特別需要做到同步和零錯誤。
+    <meta property="og:description" content="Process vs. Thread
 
+Process 稱作進程，由一段程式碼 (Program) 生成的執行個體。它包含了一個 memory space，以及一個以上的執行緒。
 
-# RDBMS
-
-RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
+Thread 稱作執行緒，是作業系統能夠排程的最小單位。一個 Thread 又包含了 Stack ，它是用來記錄函數的呼叫路徑和函數中的區域變量的。執行緒有四種狀態：Running, Suspended, Blo...">
     
-    <meta property="article:published_time" content="2020-04-28T19:10:00Z">
+    <meta property="article:published_time" content="2020-04-01T18:18:00Z">
     
     
     <meta property="article:author" content="tzuw">
     
     
-    <meta property="article:tag" content="MySQL">
+    <meta property="article:tag" content="多線程">
     
-    <meta property="article:tag" content="RDBMS">
+    <meta property="article:tag" content="java高并发系列">
     
-    <meta property="article:tag" content="NoSQL">
+    <meta property="article:tag" content="synchronized">
     
-    <meta property="article:tag" content="data warehouse">
+    <meta property="article:tag" content="Semaphore">
+    
+    <meta property="article:tag" content="leetcode">
+    
+    <meta property="article:tag" content="学习笔记">
     
     
     <meta property="og:image" content="http://0.0.0.0:4000/blog/blog/img/sword.jpg">
-    <meta property="og:url" content="http://0.0.0.0:4000/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/28/RDBMS-vs-NoSQL.html">
+    <meta property="og:url" content="http://0.0.0.0:4000/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E5%88%97/2020/04/01/Java%E5%A4%9A%E7%B7%9A%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AF%87.html">
     <meta property="og:site_name" content="程式 筆記">
 
-    <title>RDBMS vs NoSQL - 程式 筆記</title>
+    <title>Java Multi-threading 第一篇 - 程式 筆記</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/blog/pwa/manifest.json">
@@ -50,7 +52,7 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
     <link rel="shortcut icon" href="/blog/img/sword.jpg">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://0.0.0.0:4000/blog/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/28/RDBMS-vs-NoSQL.html">
+    <link rel="canonical" href="http://0.0.0.0:4000/blog/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E5%88%97/2020/04/01/Java%E5%A4%9A%E7%B7%9A%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AF%87.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
@@ -200,7 +202,7 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/blog/img/cement.png" width="0" height="0"> -->
+<!-- <img src="/blog/img/concretewall.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 
@@ -209,7 +211,7 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/blog/img/cement.png');
+        background-image: url('/blog/img/concretewall.jpg');
         background: ;
     }
 
@@ -226,29 +228,33 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/blog/tags.html?tags=MySQL" title="MySQL">#MySQL</a>
+                        <a class="tag" href="/blog/tags.html?tags=%E5%A4%9A%E7%B7%9A%E7%A8%8B" title="多線程">#多線程</a>
                         
-                        <a class="tag" href="/blog/tags.html?tags=RDBMS" title="RDBMS">#RDBMS</a>
+                        <a class="tag" href="/blog/tags.html?tags=java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E5%88%97" title="java高并发系列">#java高并发系列</a>
                         
-                        <a class="tag" href="/blog/tags.html?tags=NoSQL" title="NoSQL">#NoSQL</a>
+                        <a class="tag" href="/blog/tags.html?tags=synchronized" title="synchronized">#synchronized</a>
                         
-                        <a class="tag" href="/blog/tags.html?tags=data+warehouse" title="data warehouse">#data warehouse</a>
+                        <a class="tag" href="/blog/tags.html?tags=Semaphore" title="Semaphore">#Semaphore</a>
+                        
+                        <a class="tag" href="/blog/tags.html?tags=leetcode" title="leetcode">#leetcode</a>
+                        
+                        <a class="tag" href="/blog/tags.html?tags=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">#学习笔记</a>
                         
                         <span>
                         
-                        <a class="tag" href="/blog/categories.html?categories=資料倉儲" title="資料倉儲">☖資料倉儲</a>
+                        <a class="tag" href="/blog/categories.html?categories=java高并发系列" title="java高并发系列">☖java高并发系列</a>
                         
                         </span>
                     </div>
-                    <h1>RDBMS vs NoSQL</h1>
+                    <h1>Java Multi-threading 第一篇</h1>
                     
-                    <h2 class="subheading">MySQL vs NoSQL</h2>
+                    <h2 class="subheading">Java Multi-threading (1)</h2>
                     <span class="meta">
-                        April 28, 2020
+                        April 1, 2020
                     </span>
                     <span>
-                        约9分钟读完
-                        大约2971个字
+                        约11分钟读完
+                        大约3503个字
                     </span>
                 </div>
             </div>
@@ -277,79 +283,48 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
                 
 
                 <div id="app">
-                    <blockquote>
-  <p>RDBMS 和 NoSQL 適用於不用的需求/場景，這可以從大數據時代的演變角度進行解讀。原本 RDBMS 的主要功能是，能夠正確的、同步的的處理具有特定結構的數據。 而現在隨著數據的產生速度加快，數據量也激增。新的功能需求因應而生，新的需求是希望數據庫能處理高速產生的大量數據，而不在特別需要做到同步和零錯誤。</p>
-</blockquote>
+                    <h3 id="process-vs-thread">Process vs. Thread</h3>
 
-<h3 id="-rdbms"># RDBMS</h3>
+<p>Process 稱作進程，由一段程式碼 (Program) 生成的執行個體。它包含了一個 memory space，以及一個以上的執行緒。</p>
 
-<p>RDBMS 的全名是關聯式數據庫管理系統，它一般會使用 ER 模型進行建模，即需要維護资料之間的關係，並需要在資料保存之前就決定 Schema。此外，RDBMS 有兩個比較重要的概念。</p>
+<p>Thread 稱作執行緒，是作業系統能夠排程的最小單位。一個 Thread 又包含了 Stack ，它是用來記錄函數的呼叫路徑和函數中的區域變量的。執行緒有四種狀態：Running, Suspended, Blocked, Terminated.</p>
 
-<p>（1）RDBMS 通常會使用<strong>正規化</strong>技術來避免不同資料表儲存重複的資訊。</p>
+<p>所以，可以小小的總結：</p>
 
-<p>（2）使用 Transation 即機制來保證數據的一致性。（Atomicity, Consistency, Isolation, Durability)</p>
+<ol>
+  <li>一個進程的多個執行緒們，共享了一個 memory space，並且他們都擁有自己獨立的 Stack。</li>
+  <li>作業系統會根據進程的優先順序，分別讓各個進程佔據一段CPU時間，而各個進程又會再安排 Thread 輪流執行。</li>
+</ol>
 
-<table>
-  <thead>
-    <tr>
-      <th>id</th>
-      <th>name</th>
-      <th>country</th>
-      <th>email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>SP001</td>
-      <td>人民郵電出版社</td>
-      <td>Australia</td>
-      <td>feedback@renming.com</td>
-    </tr>
-  </tbody>
-</table>
+<p>Thread 的方法</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>ISBN</th>
-      <th>title</th>
-      <th>author</th>
-      <th>format</th>
-      <th>price</th>
-      <th>publisher_id</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>9780992461225</td>
-      <td>數據挖掘 概念與技術</td>
-      <td>Jiawei Han</td>
-      <td>ebook</td>
-      <td>79.00</td>
-      <td>SP001</td>
-    </tr>
-    <tr>
-      <td>9780994182654</td>
-      <td>高效能程序員的訓練</td>
-      <td>Jeff Atwood</td>
-      <td>ebook</td>
-      <td>59.00</td>
-      <td>SP001</td>
-    </tr>
-  </tbody>
-</table>
+<ol>
+  <li>執行緒的 sleep() 或 yeild() 方法</li>
+  <li>synchronized 可以用於修飾方法或者一個區塊</li>
+</ol>
 
-<h3 id="-nosql"># NoSQL</h3>
+<p>參考資料</p>
 
-<p>NoSQL 的全名為 Not Only SQL。可以說 SQL 是精確的，而 NoSQL 是多變的 (Schema-free)。</p>
+<ol>
+  <li><a href="https://dotblogs.com.tw/frankblog/2017/03/06/210644">https://dotblogs.com.tw/frankblog/2017/03/06/210644</a></li>
+</ol>
 
-<p>MongoDB Sharding 分散式儲存架構建置 (概念篇)</p>
+<h3 id="死鎖">死鎖</h3>
 
-<p>它們可以這樣理解。首先，”不止” SQL 指的是業務中可以混用 RDBMS 和 NoSQL 來達成最佳的儲存效果。第二點，指的是 NoSQL 擁有水平擴展的能力。比如，MongoDB 中的 Sharding 分片技術就可以達到擴展的目的，可以說 NoSQL 的設計就是<strong>為叢集執行而生的</strong>。在另一篇學習筆記裡面會詳細介紹。第三，NoSQL 是多變的。當你需要修改 schema 時會需要自行遍歷數據庫，或者只在數據又被讀取時在進行修改。第四，相較於 Transaction 機制，NoSQL 則採用了 CAP 機制 (Consistency, Availiablity, Partition Tolerance) 。然而，由於不可能同時滿足三個要求 (願望) ，當有分片的情況下，MongoDB 選擇了 C (Eventually Consistency) 和 P。<a href="https://www.quora.com/Why-doesnt-MongoDB-have-availability-in-the-CAP-theorem">ref</a> <a href="https://www.ithome.com.tw/news/92506">ref</a></p>
+<p>執行緒之間互搶資源，則可能產生死結（Deadlock）。</p>
 
-<p>最後，”成熟度不足，版本升級風險高” 這個部分應該已經沒有了。「畢竟我看的這篇筆記是 10 年前寫的哈。」</p>
+<ul>
+  <li>禁止搶占 no preemption - 系統資源不能被強制從一個行程中登出</li>
+  <li>持有和等待 hold and wait - 一個行程可以在等待時持有系統資源</li>
+  <li>互斥 mutual exclusion - 只有一個行程能持有一個資源</li>
+  <li>迴圈等待 circular waiting - 一系列行程互相持有其他行程所需要的資源</li>
+</ul>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<h3 id="synchronized-和-lock">synchronized 和 lock</h3>
+
+<p>在 Lock 期間，鎖定同一物件的其他 Synchronized 區塊，會因為無法取得物件的 Lock 而等待</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -372,65 +347,80 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
 21
 22
 23
-</pre></td><td class="rouge-code"><pre><span class="err">//</span><span class="w"> </span><span class="err">文檔型</span><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="err">ISBN:</span><span class="w"> </span><span class="mi">9780992461225</span><span class="p">,</span><span class="w">
-  </span><span class="err">title:</span><span class="w"> </span><span class="s2">"數據挖掘 概念與技術"</span><span class="p">,</span><span class="w">
-  </span><span class="err">author:</span><span class="w"> </span><span class="s2">"Jiawei Han"</span><span class="p">,</span><span class="w">
-  </span><span class="err">format:</span><span class="w"> </span><span class="s2">"ebook"</span><span class="p">,</span><span class="w">
-  </span><span class="err">price:</span><span class="w"> </span><span class="mf">79.00</span><span class="w">
-</span><span class="p">}</span><span class="w">
+24
+25
+26
+27
+28
+29
+</pre></td><td class="rouge-code"><pre><span class="n">當程式會需要取出某一個共用的物件且會判斷物件內容值</span><span class="err">，</span><span class="n">或更新物件內容時</span><span class="err">，</span>
+<span class="n">為了保證這些代碼的同步性</span><span class="err">，</span><span class="n">一般要用到</span> <span class="kd">synchronized</span>
+  
+<span class="kd">synchronized</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">syncMethod</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// write your code here</span>
+<span class="o">}</span>
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="err">ISBN:</span><span class="w"> </span><span class="mi">9780992461225</span><span class="p">,</span><span class="w">
-  </span><span class="err">title:</span><span class="w"> </span><span class="s2">"數據挖掘 概念與技術"</span><span class="p">,</span><span class="w">
-  </span><span class="err">author:</span><span class="w"> </span><span class="s2">"Jiawei Han"</span><span class="p">,</span><span class="w">
-  </span><span class="err">year:</span><span class="w"> </span><span class="mi">2012</span><span class="p">,</span><span class="w">
-  </span><span class="err">format:</span><span class="w"> </span><span class="s2">"ebook"</span><span class="p">,</span><span class="w">
-  </span><span class="err">price:</span><span class="w"> </span><span class="mf">79.00</span><span class="p">,</span><span class="w">
-  </span><span class="err">description:</span><span class="w"> </span><span class="s2">"Learn JavaScript from scratch!"</span><span class="p">,</span><span class="w">
-  </span><span class="err">rating:</span><span class="w"> </span><span class="s2">"5/5"</span><span class="p">,</span><span class="w">
-  </span><span class="err">review:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="err">name:</span><span class="w"> </span><span class="s2">"美國CHOICE雜誌"</span><span class="p">,</span><span class="w"> </span><span class="err">text:</span><span class="w"> </span><span class="s2">"這是一本非常優秀的數據挖掘教材。"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="err">name:</span><span class="w"> </span><span class="s2">"Computing Reviews"</span><span class="p">,</span><span class="w"> </span><span class="err">text:</span><span class="w"> </span><span class="s2">"最新的第三版反映了數據挖掘領域的最新發展和變化。"</span><span class="w"> </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></div></div>
+<span class="kd">synchronized</span> <span class="kd">static</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">syncMethod</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// write your code here</span>
+<span class="o">}</span>
 
-<p>NoSQL 大致有下面幾種類型：</p>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">syncMethod</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kd">synchronized</span><span class="o">(</span><span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// write your code here</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 
-<p><strong>列模型</strong>：在一列中存储所有相關的数据。它的特點是，查詢快，插入、更新慢。是 DSS（决策支持系统）、BI 的优秀選擇。一般使用在数据集市和数据仓库，適合批量數據處理和及時查詢，但不適合事務處理。典型的有 C-Store，Vertica， Sybase IQ。</p>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">syncMethod</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kd">synchronized</span><span class="o">(</span><span class="nc">SomeObject</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// write your code here </span>
+    <span class="c1">// 不代表不能更改 SomeObject 中的屬性哦，而且和 synchronized 修飾的方法無法形成同步關係</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 
-<p><strong>鍵值對模型</strong>：数据按照键值对的形式进行组织。适合不涉及过多数据关系业务关系的业务数据。典型的鍵值對模型數據庫有 cassandra、 HBase、Redis。<del>有時間可以學習學習。</del></p>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">syncMethod</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kd">synchronized</span> <span class="o">(</span><span class="no">XXX</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//Class锁对类的所有对象实例起作用</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><strong>文檔類模型</strong>：一般保存半结构化内容，采用 JSON 或类似的方式描述数据。<strong>和 RDBMS 相比，文檔類模型支持數據的嵌套結構；和鍵值模型相比，文檔類模型支持搜尋嵌套對象。</strong>典型的有 MongoBD、CouchDB等。它將每一筆資料都當成一個文件 (每個文件的結構可以不一樣)。 <a href="https://blog.csdn.net/dellme99/article/details/16968979">ref</a>「什麼，MongoDB 對 SQL 和 ACID 特性也是支持的哦。」「BASE 原則」</p>
+<p><strong>synchronized(this) vs. synchronized(.class)</strong></p>
 
-<h3 id="-sqlrdbms-vs-nosql"># SQL(RDBMS) vs. NoSQL</h3>
+<p>对一个实例上锁；对所有的实例都会锁，就像一个静态的synchronized方法，即该类的所有实例调用这段代码时都是同步进行的。</p>
 
-<p>主流的 RDBMS 有 Oracle，MySQL，PostgreSQL，Microsoft SQLServer，使用場景：具有事務需求的系統 (銀行/購物平台)。</p>
+<h3 id="semaphore-class">Semaphore Class</h3>
 
-<p>主流的 NoSQL 有 MongoDB (面向文檔)、Cassandra、HBase (面向列)。使用場景：文檔類模型、列模型適用於保存日誌。即通常用來存一些結構不固定的數據。</p>
-
-<p>不同點：</p>
+<p>是 java.util.concurrent 包下的类，用于帮助程序员写关于 thread 的代码。<a href="https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Semaphore.html">這裡</a>是 Semaphore 的官方文檔。它可以理解为一种信号量控制，有效地限制资源被访问的次数。Semaphore 可以被用來實現互斥鎖，即只有一個許可的時候。</p>
 
 <ul>
   <li>
-    <p>No JOIN in NoSQL</p>
-  </li>
-  <li>
-    <p>ACID vs. CAP</p>
-  </li>
-  <li>
-    <p>schema vs. schema-free</p>
-  </li>
-  <li>
-    <p>Normalization vs. Denormalization</p>
+    <p>如何使用？</p>
 
-    <p>MySQL 的 Normalization 可以有效地降低冗餘數據；NoSQL 中的 Denormalization 會使查詢速度變快，但在更新多筆數據時就會變慢。多數的文檔型 NoSQL 採用 Denormalization 的方式來存儲資料。</p>
+    <p>有 acquire()，release() 兩個方法，分別標示獲取和釋放一個用來獲取資源的許可。資源獲取失敗的話，線程就會被 block。並且拋出 InterruptedException 異常。</p>
+
+    <ul>
+      <li>boolean tryAcquire()</li>
+      <li>boolean tryAcquire(int permits)</li>
+      <li>boolean tryAcquire(long timeout, TimeUnit unit) throws InterruptedException</li>
+      <li>boolean tryAcquire(int permits, long timeout, TimeUnit unit) throws InterruptedException</li>
+    </ul>
+  </li>
+  <li>
+    <p>可能产生的异常</p>
+
+    <p>在finally里面释放锁可能會有問題</p>
+
+    <p>响应线程中断，觸發 InterruptedException 異常。</p>
   </li>
 </ul>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<p><strong>官方文檔上的例子</strong></p>
+
+<ul>
+  <li>一个线程的release()方法happen-before另外线程的acquire()</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -461,58 +451,108 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
 29
 30
 31
-</pre></td><td class="rouge-code"><pre><span class="err">//</span><span class="w"> </span><span class="err">Normalization</span><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="err">ISBN:</span><span class="w"> </span><span class="mi">9780992461225</span><span class="p">,</span><span class="w">
-  </span><span class="err">title:</span><span class="w"> </span><span class="s2">"數據挖掘 概念與技術"</span><span class="p">,</span><span class="w">
-  </span><span class="err">author:</span><span class="w"> </span><span class="s2">"Jiawei Han"</span><span class="p">,</span><span class="w">
-  </span><span class="err">format:</span><span class="w"> </span><span class="s2">"ebook"</span><span class="p">,</span><span class="w">
-  </span><span class="err">price:</span><span class="w"> </span><span class="mf">79.00</span><span class="p">,</span><span class="w">
-  </span><span class="err">publisher_id:</span><span class="w"> </span><span class="s2">"SP001"</span><span class="w">
-</span><span class="p">}</span><span class="w">
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre></td><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">Pool</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">MAX_AVAILABLE</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Semaphore</span> <span class="n">available</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Semaphore</span><span class="o">(</span><span class="no">MAX_AVAILABLE</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="err">id:</span><span class="w"> </span><span class="s2">"SP001"</span><span class="w">
-  </span><span class="err">name:</span><span class="w"> </span><span class="s2">"人民郵電出版社"</span><span class="p">,</span><span class="w">
-  </span><span class="err">country:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
-  </span><span class="err">email:</span><span class="w"> </span><span class="s2">"feedback@renming.com"</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">getItem</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">InterruptedException</span> <span class="o">{</span>
+    <span class="n">available</span><span class="o">.</span><span class="na">acquire</span><span class="o">();</span>
+    <span class="k">return</span> <span class="nf">getNextAvailableItem</span><span class="o">();</span>
+  <span class="o">}</span>
 
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">putItem</span><span class="o">(</span><span class="nc">Object</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">markAsUnused</span><span class="o">(</span><span class="n">x</span><span class="o">))</span>
+      <span class="n">available</span><span class="o">.</span><span class="na">release</span><span class="o">();</span>
+  <span class="o">}</span>
 
-</span><span class="err">//</span><span class="w"> </span><span class="err">Denormalization</span><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="err">ISBN:</span><span class="w"> </span><span class="mi">9780992461225</span><span class="p">,</span><span class="w">
-  </span><span class="err">title:</span><span class="w"> </span><span class="s2">"數據挖掘 概念與技術"</span><span class="p">,</span><span class="w">
-  </span><span class="err">author:</span><span class="w"> </span><span class="s2">"Jiawei Han"</span><span class="p">,</span><span class="w">
-  </span><span class="err">format:</span><span class="w"> </span><span class="s2">"ebook"</span><span class="p">,</span><span class="w">
-  </span><span class="err">price:</span><span class="w"> </span><span class="mf">29.00</span><span class="p">,</span><span class="w">
-  </span><span class="err">publisher:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="err">name:</span><span class="w"> </span><span class="s2">"人民郵電出版社"</span><span class="p">,</span><span class="w">
-    </span><span class="err">country:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
-    </span><span class="err">email:</span><span class="w"> </span><span class="s2">"feedback@renming.com"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></div></div>
+  <span class="c1">// Not a particularly efficient data structure; just for demo</span>
 
-<p>（3）集群</p>
+  <span class="kd">protected</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">items</span> <span class="o">=</span> <span class="o">...</span> <span class="n">whatever</span> <span class="n">kinds</span> <span class="n">of</span> <span class="n">items</span> <span class="n">being</span> <span class="n">managed</span>
+    <span class="kd">protected</span> <span class="kt">boolean</span><span class="o">[]</span> <span class="n">used</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="no">MAX_AVAILABLE</span><span class="o">];</span>
 
-<p>MySQL 在大規模集群上幾乎沒有成功的案例；而 NoSQL 則在集群方面的擴展性很強。</p>
+  <span class="kd">protected</span> <span class="kd">synchronized</span> <span class="nc">Object</span> <span class="nf">getNextAvailableItem</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">MAX_AVAILABLE</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(!</span><span class="n">used</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+        <span class="n">used</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">items</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span> <span class="c1">// not reached</span>
+  <span class="o">}</span>
+
+  <span class="kd">protected</span> <span class="kd">synchronized</span> <span class="kt">boolean</span> <span class="nf">markAsUnused</span><span class="o">(</span><span class="nc">Object</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">MAX_AVAILABLE</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">item</span> <span class="o">==</span> <span class="n">items</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">used</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+          <span class="n">used</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+          <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span>
+          <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+  <span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ul>
+  <li>公平性</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="nc">Semaphore</span><span class="o">(</span><span class="kt">int</span> <span class="n">permits</span><span class="o">)</span> <span class="c1">// 随机</span>
+<span class="nc">Semaphore</span><span class="o">(</span><span class="kt">int</span> <span class="n">permits</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">fair</span><span class="o">)</span> <span class="c1">// 等待时间最长的线程优先</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>延伸閱讀</strong></p>
+
+<p>https://www.cnblogs.com/itsoku123/p/11223837.html</p>
+
+<p>https://blog.csdn.net/javazejian/article/details/76167357</p>
+
+<p>https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Semaphore.html</p>
+
+<p>https://docs.oracle.com/javase/tutorial/essential/concurrency/syncmeth.html</p>
+
+<p>http://tutorials.jenkov.com/java-util-concurrent/semaphore.html</p>
+
+<p>https://zhuanlan.zhihu.com/p/56961571</p>
+
+<p>https://blog.csdn.net/flyingdon/article/details/5110582</p>
+
+<p>https://blog.csdn.net/J080624/article/details/85625350?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task</p>
 
 <h3 id="參考資料">參考資料</h3>
 
-<ul>
-  <li><a href="https://www.cnblogs.com/beilin/p/6007080.html">[1]</a>  <a href="https://www.cnblogs.com/beilin/p/5981870.html">[2]</a>  裡面談了關係型數據庫和非關係型數據庫的對比。</li>
-  <li><a href="https://shininglionking.blogspot.com/2018/04/rdbms-vs-nosql.html">[3]</a>  RDBMS v.s. NoSQL  (<a href="https://shininglionking.blogspot.com/">邁向王者的旅途</a>)</li>
-  <li><a href="https://www.kshuang.xyz/doku.php/database:sql_vs_nosql">SQL vs NoSQL: The Differences</a></li>
-  <li><a href="https://www.tamr.com/blog/rdbms-vs-nosql-data-flexibility/">[4]</a> 這篇總結的不錯。</li>
-  <li><a href="https://www.ithome.com.tw/news/92506">[5]</a>  <a href="https://dotblogs.com.tw/explooosion/2018/01/21/040728">[6]</a>  MongoDB 安裝教學</li>
-  <li><a href="https://kknews.cc/zh-tw/code/8oao9aq.html">[7]</a>  <a href="https://www.infoq.cn/article/2014/01/nosql-vs-rdbms">[8]</a>  <a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/556428/">NoSQL型別介紹及適用場景</a>  使用場景</li>
-  <li><a href="http://garyliutw.blogspot.com/2014/05/mongodb-nosql.html">MongoDB 學習筆記之一 - 從 NoSQL 談起</a>  (網路技術趨勢觀測站)</li>
-  <li><a href="https://www.kshuang.xyz/doku.php/database:sql_vs_nosql">SQL vs NoSQL: The Differences</a>  裡面有一些例子 (資訊人筆記)</li>
-  <li>https://tw.alphacamp.co/blog/sql-nosql-database-dbms-introduction 這裡面居然有題目做。(alphacamp)</li>
-  <li><a href="https://medium.com/@hugh_Program_learning_diary_Js/%E5%BE%8C%E7%AB%AF%E5%9F%BA%E7%A4%8E-%E8%B3%87%E6%96%99%E5%BA%AB-nosql-transaction-acid-%E8%88%87-lock-882f3079fd3d">後端基礎：資料庫 NoSQL、transaction、ACID 與 Lock</a>  進階</li>
-</ul>
+<ol>
+  <li>
+    <p><a href="https://www.jackforfun.com/java-synchronized">https://www.jackforfun.com/java-synchronized</a></p>
+  </li>
+  <li>
+    <p><a href="https://blog.csdn.net/luckey_zh/article/details/53815694">https://blog.csdn.net/luckey_zh/article/details/53815694</a></p>
+  </li>
+  <li>
+    <p><a href="https://ithelp.ithome.com.tw/articles/10203988">系列文：30天介绍Java Thread</a></p>
+  </li>
+  <li>
+    <p><a href="https://docs.microsoft.com/zh-tw/dotnet/api/system.threading.semaphore.release?view=netframework-4.8">Semaphore.Release 方法</a></p>
+  </li>
+  <li>
+    <p>https://docs.microsoft.com/zh-tw/dotnet/api/system.threading.semaphore?view=netframework-4.8</p>
 
+    <p>C# otz</p>
+  </li>
+</ol>
 
                 </div>
 
@@ -521,10 +561,10 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
     <hr>
     <p>
         <strong>版权声明</strong>：
-        本文由 <a href="http://0.0.0.0:4000">tzuw</a> 在 2020年04月28日发表。
+        本文由 <a href="http://0.0.0.0:4000">tzuw</a> 在 2020年04月01日发表。
         大多是学习笔记和分享，才疏学浅，欢迎指正。本文采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">CC BY-NC-SA 4.0</a>许可协议，非商业转载请注明出处，不得用于商业目的。
         <br>
-        文章题目及链接：<a href="/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/28/RDBMS-vs-NoSQL.html">《RDBMS vs NoSQL》</a>
+        文章题目及链接：<a href="/java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%B3%BB%E5%88%97/2020/04/01/Java%E5%A4%9A%E7%B7%9A%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AF%87.html">《Java Multi-threading 第一篇》</a>
     </p>
     <hr>
 </div>
@@ -534,17 +574,17 @@ RDBMS 的全名是關聯式數據庫管理系統，它一般會使...">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/18/MongoDB-%E9%96%8B%E7%AF%87.html" data-toggle="tooltip" data-placement="top" title="MongoDB 開篇">
+                        <a href="/blog/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/2020/03/08/Singleton%E6%A8%A1%E5%BC%8F.html" data-toggle="tooltip" data-placement="top" title="Singleton模式">
                         Previous<br>
-                        <span>MongoDB 開篇</span>
+                        <span>Singleton模式</span>
                         </a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/2020/05/02/%E5%B7%A5%E5%BB%A0%E6%A8%A1%E5%BC%8F.html" data-toggle="tooltip" data-placement="top" title="設計模式之工廠模式">
+                        <a href="/blog/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/04/18/MongoDB-%E9%96%8B%E7%AF%87.html" data-toggle="tooltip" data-placement="top" title="MongoDB 開篇">
                         Next<br>
-                        <span>設計模式之工廠模式</span>
+                        <span>MongoDB 開篇</span>
                         </a>
                 </li>
                 

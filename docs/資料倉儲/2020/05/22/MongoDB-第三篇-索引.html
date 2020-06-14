@@ -11,39 +11,42 @@
     <meta name="theme-color" content="#000000">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="在 csrf token 的保护之下 - 程式 筆記">
+    <meta property="og:title" content="MongoDB 第三篇 索引 - 程式 筆記">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="# 前情提要
+    <meta property="og:description" content="索引能提高查詢效率，比如這個查詢 db.houses.find({price: 2000})，如果沒有索引的話，就需要遍歷所有的文檔來做全表掃描。所以，一般我們會在常常需要搜尋的欄位上建立索引，來確保 MongoDB 遍歷最少的文檔就能找到結果。
 
-为了避免跨站请求在你不知情的情况下，对你的后端接口发一些恶意的增删改查请求，需要给来自前端页面的请求加上csrf token，来确保服务器能够识别这个请求真的是使用者自己发的。
-
-# 最初的思路
-
-约定一个接口，在返回的时候给前端 vuex 的 state 里保存一个 csrf token，使前端在之后每次请求后端时都带着 token。即是一个由服务端生成 token ，并且...">
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&gt; db.houses.getIndexes()
+[{
+		"v" : 2,
+		"key" :...">
     
-    <meta property="article:published_time" content="2020-02-18T05:10:00Z">
+    <meta property="article:published_time" content="2020-05-22T05:14:00Z">
     
     
     <meta property="article:author" content="tzuw">
     
     
-    <meta property="article:tag" content="csrf">
+    <meta property="article:tag" content="MongoDB">
     
-    <meta property="article:tag" content="security">
-    
-    <meta property="article:tag" content="session">
-    
-    <meta property="article:tag" content="cookies">
-    
-    <meta property="article:tag" content="httpheader">
+    <meta property="article:tag" content="index">
     
     
     <meta property="og:image" content="http://0.0.0.0:4000/blog/blog/img/sword.jpg">
-    <meta property="og:url" content="http://0.0.0.0:4000/web%E5%AE%89%E5%85%A8/2020/02/18/under-the-protection-of-csrf-token.html">
+    <meta property="og:url" content="http://0.0.0.0:4000/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/05/22/MongoDB-%E7%AC%AC%E4%B8%89%E7%AF%87-%E7%B4%A2%E5%BC%95.html">
     <meta property="og:site_name" content="程式 筆記">
 
-    <title>在 csrf token 的保护之下 - 程式 筆記</title>
+    <title>MongoDB 第三篇 索引 - 程式 筆記</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/blog/pwa/manifest.json">
@@ -52,7 +55,7 @@
     <link rel="shortcut icon" href="/blog/img/sword.jpg">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://0.0.0.0:4000/blog/web%E5%AE%89%E5%85%A8/2020/02/18/under-the-protection-of-csrf-token.html">
+    <link rel="canonical" href="http://0.0.0.0:4000/blog/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/05/22/MongoDB-%E7%AC%AC%E4%B8%89%E7%AF%87-%E7%B4%A2%E5%BC%95.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
@@ -228,31 +231,25 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/blog/tags.html?tags=csrf" title="csrf">#csrf</a>
+                        <a class="tag" href="/blog/tags.html?tags=MongoDB" title="MongoDB">#MongoDB</a>
                         
-                        <a class="tag" href="/blog/tags.html?tags=security" title="security">#security</a>
-                        
-                        <a class="tag" href="/blog/tags.html?tags=session" title="session">#session</a>
-                        
-                        <a class="tag" href="/blog/tags.html?tags=cookies" title="cookies">#cookies</a>
-                        
-                        <a class="tag" href="/blog/tags.html?tags=httpheader" title="httpheader">#httpheader</a>
+                        <a class="tag" href="/blog/tags.html?tags=index" title="index">#index</a>
                         
                         <span>
                         
-                        <a class="tag" href="/blog/categories.html?categories=Web安全" title="Web安全">☖Web安全</a>
+                        <a class="tag" href="/blog/categories.html?categories=資料倉儲" title="資料倉儲">☖資料倉儲</a>
                         
                         </span>
                     </div>
-                    <h1>在 csrf token 的保护之下</h1>
+                    <h1>MongoDB 第三篇 索引</h1>
                     
-                    <h2 class="subheading">Under the protection of csrf token</h2>
+                    <h2 class="subheading">MongoDB 第三篇 索引</h2>
                     <span class="meta">
-                        February 18, 2020
+                        May 22, 2020
                     </span>
                     <span>
-                        约9分钟读完
-                        大约2812个字
+                        约7分钟读完
+                        大约2359个字
                     </span>
                 </div>
             </div>
@@ -281,49 +278,37 @@
                 
 
                 <div id="app">
-                    <h4 id="-前情提要"># 前情提要</h4>
+                    <p>索引能提高查詢效率，比如這個查詢 <code class="highlighter-rouge">db.houses.find({price: 2000})</code>，如果沒有索引的話，就需要遍歷所有的文檔來做全表掃描。所以，一般我們會在常常需要搜尋的欄位上建立索引，來確保 MongoDB 遍歷最少的文檔就能找到結果。</p>
 
-<p>为了避免跨站请求在你不知情的情况下，对你的后端接口发一些恶意的增删改查请求，需要给来自前端页面的请求加上csrf token，来确保服务器能够识别这个请求真的是使用者自己发的。</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">houses</span><span class="p">.</span><span class="nx">getIndexes</span><span class="p">()</span>
+<span class="p">[{</span>
+		<span class="dl">"</span><span class="s2">v</span><span class="dl">"</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+		<span class="dl">"</span><span class="s2">key</span><span class="dl">"</span> <span class="p">:</span> <span class="p">{</span>
+		    <span class="dl">"</span><span class="s2">_id</span><span class="dl">"</span> <span class="p">:</span> <span class="mi">1</span>
+		<span class="p">},</span>
+		<span class="dl">"</span><span class="s2">name</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">_id_</span><span class="dl">"</span><span class="p">,</span>
+		<span class="dl">"</span><span class="s2">ns</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">five9one.houses</span><span class="dl">"</span>
+<span class="p">}]</span>
 
-<h4 id="-最初的思路"># 最初的思路</h4>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>约定一个接口，在返回的时候给前端 vuex 的 state 里保存一个 csrf token，使前端在之后每次请求后端时都带着 token。即是一个由服务端生成 token ，并且于服务端进行校验的过程。采用了在响应时在前端的 cookies 里加入 csrf token 的方法，同时也一直有一个疑问：由于前端需要向后端请求一个 token，那么就必然会有一个接口会不需要校验 csrf token，那会不会存在不安全的可能。</p>
+<h3 id="索引">索引</h3>
 
-<p>就当时的了解而言，csrf token 主要是保护那些重要的接口，比如增加、删除和修改；于是，对于一个单纯获取 csrf token 的接口而言，是不是可以不进行校验呢？答案是肯定的。因为，就算攻击者拿到了你的 csrf token，他还是需要知道你的 session id 才能通过后端的校验，也就是这个用来请求 csrf token 的接口相比较于其他，少了一些校验。并且，这个获取 csrf token 的接口一般而言都是和登录的功能绑定的，也就是你需要能够正常的登录（让服务端确认你就是使用者本人），才能获取 csrf token。然而，也是有那种获取 csrf token 的接口只是一个普通的接口的情况，那风险或许就会比较高了。</p>
+<p>MongoDB 允許對不同情況建立索引，例如，<strong>Index on Single Fields, Index on Multiple Fields, Index on Embedded Fields, Index on Sub-documents</strong> ，他們分別是對某個欄位、多個欄位、某個嵌套的欄位、某個子文檔來建立。其中，前兩個都好理解但仍需注意欄位的順序要和常用查詢的順序一致，否則無法使用到索引。而在以某個子文檔來建立索引，也需要注意欄位的順序要一致才能查詢成功。</p>
 
-<h4 id="-谷歌到的解决方案"># 谷歌到的解决方案</h4>
+<p>接下來是索引的種類，<strong>Default Indexes, Single Field Index, Compound Indexes, Multikey Indexes, Hashed Indexes, Geospatial Indexes, Text Indexes</strong>。</p>
 
-<p>下面的陈诉整理自参考资料的第 <a href="https://blog.techbridge.cc/2017/02/25/csrf-introduction/">[1]</a>,<a href="https://stackoverflow.com/questions/20504846/why-is-it-common-to-put-csrf-prevention-tokens-in-cookies">[2]</a>,<a href="https://security.stackexchange.com/questions/175536/does-a-csrf-cookie-need-to-be-httponly">[3]</a>项。</p>
-
-<ol>
-  <li>由服务端生成 csrf token，并通过 response header（或者通过 Set-Cookie）将 token 传递到前端，并且让之后需要前端需要校验的接口都带上。在服务端完成校验，校验成功前端接口的请求才会正常执行，否则会被后端拦截。
-    <ul>
-      <li>放在 header 里会容易被攻击者从别的 domain 进行获取，因此为以防万一还可以加上 Referer 校验。</li>
-      <li>放在 cookie 里面就不存在这个问题，因为攻击者是无法获取使用者domain下的 cookie 的，但是需要将 cookies 的 Http-only 设置为 false。目前，Django, AngualrJS 等都是采用这种方式。</li>
-      <li>一般比较普遍的做法是通过 Set-Cookie 向前端传递 csrf token。</li>
-    </ul>
-  </li>
-  <li>通过在 response body 里面加入 csrf token传递到前端，目前 Express 是采用这种方式。</li>
-  <li>Double Submit Cookie ，一种完全不用在服务端存东西的方法。也就是说不需要担心 session id 被盗取后，csrf token 也会失效？它的方法主要是，由服务端生成 csrf token 并且保存于前端的 cookie 中；当前端进行请求时，服务端会比较请求中带的 token 和他来自的 domain 下的 cookie 的 csrf token 值是否一致；也就是说，攻击者的请求（来自于另一个domain）一定无法通过校验 ，因为攻击者的 domain 下是无法存在一个 使用者 domian 的 cookie 的。当然，如果攻击者掌握了使用者的 domain，那就另当别论了，这个后面可以再深入了解下 ( -&gt; <a href="https://security.stackexchange.com/questions/59470/double-submit-cookies-vulnerabilities">double-submit-cookies-vulnerabilities</a> )。</li>
-</ol>
-
-<h4 id="-最终方案与检验"># 最终方案与检验</h4>
-
-<p>主要的环境，依托于某平台进行登录，并且需要自行解决跨站请求伪造攻击。将原来通过 Set-Cookie 传递 token 到前端的方法改成了，通过 response header 传递的方法，并且将 csrf token 保存于服务端的 session 中；另外由于，没有了登录校验来保护 csrf token 的获取，因此在每个请求又加上了 Refer 校验（设置拦截器，检查请求的 domain ）。</p>
-
-<p>并且，当下面几种情况发生时，服务端需要生成或更新 csrf token：</p>
-
-<p>（1）第一次登录平台，并开启服务页面时；</p>
-
-<p>（2）在平台的校验 token 更新时（即开启新的 session ），将 csrf token 更新，并且同步更新我们服务端自己的 session id。如此，就可以较好的保证平台 session 过期时我们的服务端也能获取新  token 和 新 session id，每次发请求的时候都是使用者我本人，一个伪造的请求很大概率会持有的是过期的 token 和 session id；</p>
-
-<p>当调用请求 token 的接口时，服务端 session 中的 token 与请求的 header 里所携带的不一致时，拦截请求。</p>
-
-<p><del>（感觉只要攻击者盗取了你的 session id，那么什么 csrf token 阿的阿猫阿狗，都没有什么软用。此时，就体现了 Refer 校验的重要性。当攻击者掌握了你的 domain，又知道你的 session id，感觉也就无力回天了；所以，每次登录后一定要记得登出）</del></p>
-
-<p>大概的伪代码如下，</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -338,33 +323,142 @@
 13
 14
 15
-</pre></td><td class="rouge-code"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">getToken</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span> <span class="kc">null</span> <span class="o">==</span> <span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">).</span><span class="na">equals</span><span class="o">()</span> <span class="o">||</span>        
-        <span class="n">cookiesSetByPlatformBeingRefreshed</span> <span class="o">)</span> <span class="o">{</span>
-        <span class="nc">String</span> <span class="n">newToken</span> <span class="o">=</span> <span class="n">generateNewToken</span><span class="o">();</span>
-        <span class="n">response</span><span class="o">.</span><span class="na">setHttpHeader</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">,</span> <span class="n">newToken</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+</pre></td><td class="rouge-code"><pre><span class="c1">// Default Indexes 默認會為_id建立索引</span>
 
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoIntercept</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getRequestURI</span><span class="o">()</span> <span class="n">not</span> <span class="n">in</span> <span class="n">ignores</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span>
-        <span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">).</span><span class="na">equals</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getHttpHeader</span><span class="o">(</span><span class="err">'</span><span class="n">csrfToken</span><span class="err">'</span><span class="o">)))</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-<span class="o">}</span>
+<span class="c1">// Single Field Indexes </span>
+<span class="c1">// 1 means descending order</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">houses</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">(</span>
+    <span class="p">{</span> <span class="na">price</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">price_index</span><span class="dl">"</span> <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1">// Compound Indexes </span>
+<span class="c1">// (注意查詢條件需以 price 作為前綴才可使用此索引，以 area 作為前綴是不行的)</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">houses</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">(</span>
+    <span class="p">{</span> <span class="na">price</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">area</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">price_area_index</span><span class="dl">"</span> <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1">// Multikey Indexes </span>
+<span class="c1">// (當欄位的數據是數組形態時，會建立這種索引，無需其他操作。</span>
+<span class="c1">//  並且注意不能使用兩個數組形態欄位建立此索引)</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">houses</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">(</span>
+    <span class="p">{</span> <span class="na">houses</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">houses_index</span><span class="dl">"</span> <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1">// Hashed Indexes </span>
+<span class="c1">// 可以做等值比較，不能比較大小，並且注意float型態可能會有異常</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">houses</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">(</span>
+    <span class="p">{</span> <span class="na">linkman</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hashed</span><span class="dl">"</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">linkman_hashed_index</span><span class="dl">"</span> <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1">// Geospatial Indexes </span>
+<span class="c1">// 2.6v開始支持的地理坐標點欄位，該索引能提供快速搜尋附近的座標點資料的功能。</span>
+<span class="c1">// 比如，找附近的餐廳類似的應用。$center 圓形, $box 矩形, $polygon 多邊形</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">houses</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span>
+    <span class="na">pos</span><span class="p">:</span> <span class="p">{</span> <span class="na">$near</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">houses</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span>
+    <span class="p">{</span> <span class="na">pos</span><span class="p">:</span> <span class="p">{</span> <span class="na">$within</span><span class="p">:</span> <span class="p">{</span> <span class="na">$polygon</span><span class="p">:</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span> <span class="p">}</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">_id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1">// Text Indexes</span>
+<span class="c1">// 每個 collection 只能有一個 Text Indexes</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">houses</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">({</span>
+    <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">text</span><span class="dl">"</span><span class="p">,</span> 
+    <span class="dl">"</span><span class="s2">linkman.name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">text</span><span class="dl">"</span><span class="p">,</span> 
+<span class="p">})</span>
+
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">houses</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span>
+    <span class="dl">"</span><span class="s2">$text</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">"</span><span class="s2">$search</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">coffee -shop</span><span class="dl">"</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>最后，通过使用 Burp Suite 请求拦截器来发送错误的 token 来检验接口的安全性。</p>
+<p><strong>Unique index, Sparse index</strong></p>
 
-<h4 id="-参考资料"># 参考资料</h4>
+<p><code class="highlighter-rouge">db.collection.ensureIndex({ "id": 1 }, { unique: true })</code>，默認情況下 unique: false。當設置為 true 時代表這個欄位必須沒有重複值。<code class="highlighter-rouge">db.collection.ensureIndex({ "id": 1 }, { unique: true, dropDups: true }) })</code> 這個則用來對包含重複值的欄位建立 unique 索引。</p>
+
+<p>此外，Sparse Index 則是針對某欄位在一些文檔中不存在的情況建立索引。<code class="highlighter-rouge">db.houses.createIndex( { tel: 1 } , { sparse: true } )</code></p>
+
+<h3 id="qa">Q&amp;A</h3>
 
 <ol>
-  <li>https://blog.techbridge.cc/2017/02/25/csrf-introduction/</li>
-  <li>https://stackoverflow.com/questions/20504846/why-is-it-common-to-put-csrf-prevention-tokens-in-cookies</li>
-  <li>https://security.stackexchange.com/questions/175536/does-a-csrf-cookie-need-to-be-httponly</li>
-  <li>https://stackoverflow.com/questions/54258233/do-i-have-to-store-tokens-in-cookies-or-localstorage-or-session</li>
-  <li><a href="https://dotblogs.com.tw/supershowwei/2016/03/16/135939">https://dotblogs.com.tw/supershowwei/2016/03/16/135939</a></li>
+  <li>
+    <p>字符串索引 vs. 整數做索引</p>
+
+    <p>主要有兩個地方不同，第一，BSON保存的欄位類型是 NumberLong 的話，大小限制在 8 bytes。第二，範圍查詢時，字符串不會使用到正則而只是單純的比較，應該不會比較慢。</p>
+  </li>
+  <li>
+    <p>字符串索引 vs.  Text Indexes</p>
+
+    <p>在某字符串欄位的一個索引，和將這個欄位作為一個 Text Indexes 有很大不同。Text Indexes 會將字符串分詞並保存成字典，相比較於只使用簡單的索引，然後加上正則規則來查詢字符，它更快。<a href="https://stackoverflow.com/questions/24316117/mongodb-difference-between-index-on-text-field-and-text-index">ref</a>  <a href="https://stackoverflow.com/questions/58794422/mongodb-indexes-string-vs-int">ref</a></p>
+  </li>
+  <li>
+    <p>什麼是復合索引，放在一起查詢真的會比較快嗎？</p>
+
+    <p>例如，當你想將房租按照升序排列，而坪數按照降序排列 。那麼你的查詢語句可能會是 <code class="highlighter-rouge">db.houses.find().sort(prices: 1, area: -1)</code>。而你就有可能會需要一個對房租和坪數的復合索引，<code class="highlighter-rouge">db.houses.createIndexes({ prices: 1, area: -1})</code>來加速你的排序。</p>
+  </li>
+</ol>
+
+<p>延伸：</p>
+
+<p>(1) 復合索引不能有 hash indexed 類型？ <a href="https://stackoverflow.com/questions/21502216/how-to-define-a-compound-and-hashed-mongodb-index">ref</a></p>
+
+<h3 id="參考資料">參考資料</h3>
+
+<ol>
+  <li>Compound Index</li>
+  <li><a href="http://blog.maxkit.com.tw/2016/01/geospatial-index-in-mongodb.html">Geospatial Index in MongoDB</a></li>
+  <li><a href="https://blog.xuite.net/flyingidea/blog/68050501-%5BmongoDB%5Dindex%E5%8A%9F%E8%83%BD%E7%9A%84%E7%AD%86%E8%A8%98">[mongoDB]index功能的筆記</a></li>
+  <li><a href="https://www.c-sharpcorner.com/UploadFile/f0b2ed/mongodb-day13indexing/">MongoDB Indexing (Day 13)</a></li>
 </ol>
 
                 </div>
@@ -374,10 +468,10 @@
     <hr>
     <p>
         <strong>版权声明</strong>：
-        本文由 <a href="http://0.0.0.0:4000">tzuw</a> 在 2020年02月18日发表。
+        本文由 <a href="http://0.0.0.0:4000">tzuw</a> 在 2020年05月22日发表。
         大多是学习笔记和分享，才疏学浅，欢迎指正。本文采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">CC BY-NC-SA 4.0</a>许可协议，非商业转载请注明出处，不得用于商业目的。
         <br>
-        文章题目及链接：<a href="/web%E5%AE%89%E5%85%A8/2020/02/18/under-the-protection-of-csrf-token.html">《在 csrf token 的保护之下》</a>
+        文章题目及链接：<a href="/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/05/22/MongoDB-%E7%AC%AC%E4%B8%89%E7%AF%87-%E7%B4%A2%E5%BC%95.html">《MongoDB 第三篇 索引》</a>
     </p>
     <hr>
 </div>
@@ -387,20 +481,13 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/%E5%89%8D%E7%AB%AF/2020/02/08/start-from-mutation-observer.html" data-toggle="tooltip" data-placement="top" title="从 MutationObserver 开始">
+                        <a href="/blog/%E8%B3%87%E6%96%99%E5%80%89%E5%84%B2/2020/05/22/MongoDB-%E7%AC%AC%E4%BA%8C%E7%AF%87-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.html" data-toggle="tooltip" data-placement="top" title="MongoDB 第二篇 基本使用方法">
                         Previous<br>
-                        <span>从 MutationObserver 开始</span>
+                        <span>MongoDB 第二篇 基本使用方法</span>
                         </a>
                     </li>
                     
                     
-                    <li class="next">
-                        <a href="/blog/java/spring/2020/02/19/Spring-IOC.html" data-toggle="tooltip" data-placement="top" title="Sping - Inversion of Control - 笔记">
-                        Next<br>
-                        <span>Sping - Inversion of Control - 笔记</span>
-                        </a>
-                </li>
-                
             </ul>
             <hr style="visibility: hidden;">
 
@@ -410,6 +497,21 @@
         </div>
 
     <!-- Side Catalog Container -->
+    
+        <div class="
+            col-lg-2 col-lg-offset-0
+            visible-lg-block
+            sidebar-container
+            catalog-container">
+            <div class="side-catalog">
+                <hr class="hidden-sm hidden-xs">
+                <h5>
+                    <a class="catalog-toggle" href="#">CATALOG</a>
+                </h5>
+                <ul class="catalog-body"></ul>
+            </div>
+        </div>
+
     
 
 <!-- Sidebar Container -->
@@ -656,6 +758,64 @@
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+
+        // interop with multilangual
+        if ('' == 'true') {
+            _containerSelector = 'div.post-container.active'
+        } else {
+            _containerSelector = 'div.post-container'
+        }
+
+        // init
+        var P = $(_containerSelector),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        // clean
+        $(selector).html('')
+
+        // appending
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/blog/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 
