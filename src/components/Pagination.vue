@@ -8,9 +8,9 @@
         </div>
 
         <b-pagination
-                v-model="currentPage"
-                :total-rows="totalRows"
-                :per-page="perPage"
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
         ></b-pagination>
 
         <ul class="pagination">

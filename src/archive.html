@@ -6,7 +6,7 @@ description: 日常搬砖。
 
 {% comment %} get tag levels from tagLevels.yml {% endcomment %}
 
-<!-- Main Content -->
+<!-- Main Content month list-->
 <table>
 {% assign mod = 6 %}
 {% assign counter = 0 %}
@@ -32,38 +32,39 @@ description: 日常搬砖。
 {% endfor %}
 </table>
 
+<!-- Main Content post list-->
 <ul style="list-style: none;">
 {% for post in site.posts %}
-{%- assign _tags = '' -%}
-{%- assign _tag_names = '' -%}
-{%- for _tag_entry in post.tags -%}
-{%- assign _tag_encode = _tag_entry | strip | url_encode -%}
-{%- if forloop.last -%}
-{%- assign _tags = _tags | append: _tag_encode -%}
-{%- else -%}
-{%- assign _tags = _tags | append: _tag_encode | append: ',' -%}
-{%- endif -%}
-{%- endfor -%}
+    {%- assign _tags = '' -%}
+    {%- assign _tag_names = '' -%}
+    {%- for _tag_entry in post.tags -%}
+        {%- assign _tag_encode = _tag_entry | strip | url_encode -%}
+        {%- if forloop.last -%}
+            {%- assign _tags = _tags | append: _tag_encode -%}
+        {%- else -%}
+            {%- assign _tags = _tags | append: _tag_encode | append: ',' -%}
+        {%- endif -%}
+    {%- endfor -%}
 
-{% unless post.next %}
-<h4 id="{{ post.date | date: '%Y年%m月'}}">{{ post.date | date: '%Y年%m月' }}</h4>
-{% else %}
-{% capture currdate %}{{ post.date | date: '%Y%m' }}{% endcapture %}
-{% capture nextDate %}{{ post.next.date | date: '%Y%m' }}{% endcapture %}
-{% if currdate != nextDate %}
-<h4 id="{{ post.date | date: '%Y年%m月'}}">{{ post.date | date: '%Y年%m月' }}</h4>
-{% endif %}
-{% endunless %}
-
-<li>
-    &nbsp;&nbsp;{{ post.date | date: '%Y/%m/%d' }}&nbsp;&nbsp
-    <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-    {% if post.progress <= 20 %}
-    &nbsp;&nbsp;<b>{{ post.progress }}%</b>
+    {% unless post.next %}
+        <h4 id="{{ post.date | date: '%Y年%m月'}}">{{ post.date | date: '%Y年%m月' }}</h4>
     {% else %}
-    &nbsp;&nbsp;{{ post.progress }}%
-    {% endif %}
-</li>
+        {% capture currdate %}{{ post.date | date: '%Y%m' }}{% endcapture %}
+        {% capture nextDate %}{{ post.next.date | date: '%Y%m' }}{% endcapture %}
+        {% if currdate != nextDate %}
+            <h4 id="{{ post.date | date: '%Y年%m月'}}">{{ post.date | date: '%Y年%m月' }}</h4>
+        {% endif %}
+    {% endunless %}
+
+    <li>
+        &nbsp;&nbsp;{{ post.date | date: '%Y/%m/%d' }}&nbsp;&nbsp
+        <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        {% if post.progress <= 20 %}
+            &nbsp;&nbsp;<b>{{ post.progress }}%</b>
+        {% else %}
+            &nbsp;&nbsp;{{ post.progress }}%
+        {% endif %}
+    </li>
 {% endfor %}
 </ul>
 <div id="app">
