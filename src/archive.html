@@ -1,91 +1,81 @@
 ---
-title: Archive
-layout: default
-description: "日常搬砖。"
-header-img: img/cement.png
+title: ARCHIVE
+layout: page
+description: 日常搬砖。
 ---
-
-<!-- Page Header -->
-{% include intro-header.html type='page' short=true %}
 
 {% comment %} get tag levels from tagLevels.yml {% endcomment %}
 
 <!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <section class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <table>
-            {% assign mod = 6 %}
-            {% assign counter = 0 %}
-            {% assign rowCounter = 0 %}
-            {% assign isNewRow = 0 %}
-            {% for post in site.posts %}
-                {% assign isNewRow = rowCounter | modulo: mod %}
-                {% assign thisYearMonth = post.date | date: "%Y/%m" %}
-                {% assign prevYearMonth = post.previous.date | date: "%Y/%m" %}
-                {% assign counter = counter | plus: 1 %}
-                {% if thisYearMonth != prevYearMonth %}
-                    {% if forloop.first or isNewRow == 0 %}<tr>{% endif %}
-                    <td>
-                        <a href="#{{ post.date | date: '%Y年%m月' }}">
-                        {{ thisYearMonth }}
-                        </a>
-                        ({{ counter }})
-                    </td>
-                    {% assign rowCounter = rowCounter | plus: 1 %}
-                    {% assign counter = 0 %}
-                    {% if rowCounter == mod and isNewRow == 0 %}</tr>{% endif %}
-                {% endif %}
-            {% endfor %}
-            </table>
+<table>
+{% assign mod = 6 %}
+{% assign counter = 0 %}
+{% assign rowCounter = 0 %}
+{% assign isNewRow = 0 %}
+{% for post in site.posts %}
+    {% assign isNewRow = rowCounter | modulo: mod %}
+    {% assign thisYearMonth = post.date | date: "%Y/%m" %}
+    {% assign prevYearMonth = post.previous.date | date: "%Y/%m" %}
+    {% assign counter = counter | plus: 1 %}
+    {% if thisYearMonth != prevYearMonth %}
+        {% if forloop.first or isNewRow == 0 %}<tr>{% endif %}
+        <td>
+            <a href="#{{ post.date | date: '%Y年%m月' }}">
+            {{ thisYearMonth }}
+            </a>
+            ({{ counter }})
+        </td>
+        {% assign rowCounter = rowCounter | plus: 1 %}
+        {% assign counter = 0 %}
+        {% if rowCounter == mod and isNewRow == 0 %}</tr>{% endif %}
+    {% endif %}
+{% endfor %}
+</table>
 
-        <hr/>
+<hr/>
 
-        {% for post in site.posts %}
-        {% if post.istodo %}
-            <ul style="list-style: none;">
-            <li>
-                &nbsp;&nbsp;{{ post.date | date: '%Y/%m/%d' }}&nbsp;&nbsp;
-                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-            </li>
-            </ul>
-        {% endif %}
-        {% endfor %}
+{% for post in site.posts %}
+    {% if post.istodo %}
+    <ul style="list-style: none;">
+    <li>
+        &nbsp;&nbsp;{{ post.date | date: '%Y/%m/%d' }}&nbsp;&nbsp;
+        <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    </li>
+    </ul>
+    {% endif %}
+{% endfor %}
 
-        <hr/>
+<hr/>
 
-        <ul style="list-style: none;">
-          {% for post in site.posts %}
-            {%- assign _tags = '' -%}
-            {%- assign _tag_names = '' -%}
-            {%- for _tag_entry in post.tags -%}
-            {%- assign _tag_encode = _tag_entry | strip | url_encode -%}
-            {%- if forloop.last -%}
-            {%- assign _tags = _tags | append: _tag_encode -%}
-            {%- else -%}
-            {%- assign _tags = _tags | append: _tag_encode | append: ',' -%}
-            {%- endif -%}
-            {%- endfor -%}
+<ul style="list-style: none;">
+{% for post in site.posts %}
+{%- assign _tags = '' -%}
+{%- assign _tag_names = '' -%}
+{%- for _tag_entry in post.tags -%}
+{%- assign _tag_encode = _tag_entry | strip | url_encode -%}
+{%- if forloop.last -%}
+{%- assign _tags = _tags | append: _tag_encode -%}
+{%- else -%}
+{%- assign _tags = _tags | append: _tag_encode | append: ',' -%}
+{%- endif -%}
+{%- endfor -%}
 
-            {% unless post.next %}
-            <h4 id="{{ post.date | date: '%Y年%m月'}}">{{ post.date | date: '%Y年%m月' }}</h4>
-            {% else %}
-            {% capture currdate %}{{ post.date | date: '%Y%m' }}{% endcapture %}
-            {% capture nextDate %}{{ post.next.date | date: '%Y%m' }}{% endcapture %}
-            {% if currdate != nextDate %}
-            <h4 id="{{ post.date | date: '%Y年%m月'}}">{{ post.date | date: '%Y年%m月' }}</h4>
-            {% endif %}
-            {% endunless %}
+{% unless post.next %}
+<h4 id="{{ post.date | date: '%Y年%m月'}}">{{ post.date | date: '%Y年%m月' }}</h4>
+{% else %}
+{% capture currdate %}{{ post.date | date: '%Y%m' }}{% endcapture %}
+{% capture nextDate %}{{ post.next.date | date: '%Y%m' }}{% endcapture %}
+{% if currdate != nextDate %}
+<h4 id="{{ post.date | date: '%Y年%m月'}}">{{ post.date | date: '%Y年%m月' }}</h4>
+{% endif %}
+{% endunless %}
 
-            <li>
-                &nbsp;&nbsp;{{ post.date | date: '%Y/%m/%d' }}&nbsp;&nbsp
-                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-        <div id="app">
+<li>
+    &nbsp;&nbsp;{{ post.date | date: '%Y/%m/%d' }}&nbsp;&nbsp
+    <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+</li>
+{% endfor %}
+</ul>
+<div id="app">
 
-        </div>
-        </section>
-    </div>
 </div>

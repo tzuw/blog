@@ -1,6 +1,6 @@
 /*!
  * Williiam Blog v1.8.2 ()
- * Copyright 2020 William <>
+ * Copyright 2020 William
  */
 
 @media (min-width: 1200px) {
@@ -1552,7 +1552,7 @@ img::-moz-selection {
 }
 @media only screen and (min-width: 768px) {
   #tag-heading {
-    padding: 55px 0;
+    padding: 25px 0;
   }
 }
 #tag_cloud {
