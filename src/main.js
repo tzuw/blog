@@ -1,7 +1,7 @@
 import Vue from 'vue'
 // import HelloWorld from './components/HelloWorld'
 // import TagColorLoader from './components/TagColorLoader'
-import ArchivePagination  from './components/ArchivePagination'
+import Pagination  from './components/Pagination'
 // import {mapState, mapGetters, mapActions} from 'vuex';
 import { BPagination, BTable } from 'bootstrap-vue';
 
@@ -26,6 +26,6 @@ const app = new Vue({
     el: '#app',
     delimiters: ['#{', '}'],
     components: {
-        archivePagination: ArchivePagination,
+        Pagination: Pagination,
     }
 });
