@@ -23,7 +23,7 @@
 <script>
     import { onTagSelect } from '../js/archive';
     export default {
-        name: 'ArchivePagination',
+        name: 'Pagination',
         data: function() {
             return {
                 totalPage: -1,
