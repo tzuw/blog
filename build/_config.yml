@@ -109,6 +109,15 @@ service-worker: true
 page-mathjax: false
 
 
+defaults:
+  -
+    scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      progress: 10
+      layout: post
+
 
 friends: [
 {

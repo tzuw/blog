@@ -8,7 +8,6 @@ hide-in-nav: true
 {% include getTagLevelAmounts.html %}
 
 {% for post in paginator.posts %}
-{% if post.istodo != true %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
         <h2 class="post-title">
@@ -76,7 +75,6 @@ hide-in-nav: true
     <hr/>
     <!--  Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %}-->
 </div>
-{% endif %}
 {% endfor %}
 
 <!-- Pager -->

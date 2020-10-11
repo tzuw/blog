@@ -32,21 +32,6 @@ description: 日常搬砖。
 {% endfor %}
 </table>
 
-<hr/>
-
-{% for post in site.posts %}
-    {% if post.istodo %}
-    <ul style="list-style: none;">
-    <li>
-        &nbsp;&nbsp;{{ post.date | date: '%Y/%m/%d' }}&nbsp;&nbsp;
-        <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-    </li>
-    </ul>
-    {% endif %}
-{% endfor %}
-
-<hr/>
-
 <ul style="list-style: none;">
 {% for post in site.posts %}
 {%- assign _tags = '' -%}
@@ -73,6 +58,11 @@ description: 日常搬砖。
 <li>
     &nbsp;&nbsp;{{ post.date | date: '%Y/%m/%d' }}&nbsp;&nbsp
     <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    {% if post.progress <= 20 %}
+    &nbsp;&nbsp;<b>{{ post.progress }}%</b>
+    {% else %}
+    &nbsp;&nbsp;{{ post.progress }}%
+    {% endif %}
 </li>
 {% endfor %}
 </ul>
