@@ -12,7 +12,12 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/cache@v2
+      - name: Cache Primes
+        id: cache-primes
+        uses: actions/cache@v2
+        with:
+          path: prime-numbers
+          key: ${{ runner.os }}-primes
 
       - name: Setup Ruby, JRuby and TruffleRuby
         uses: ruby/setup-ruby@v1.47.0

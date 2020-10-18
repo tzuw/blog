@@ -24,3 +24,5 @@ src/.jekyll-cache/
 */*/.DS_Store
 README_HUX.md
 README_HUX.zh.md
+src/main.*.js
+src/vendor.*.js
