@@ -13,7 +13,8 @@ node_modules
 src/_drafts/*
 
 dist/
-#docs/
+docs/
+posts/
 package-lock.json
 src/.jekyll-cache/
 .idea/
